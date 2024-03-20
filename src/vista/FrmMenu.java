@@ -338,7 +338,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         public EscritorioPersonalizado() {
             try {
-                img = ImageIO.read(getClass().getResourceAsStream("/img/bullet_BOMS.png"));
+                img = ImageIO.read(getClass().getResourceAsStream("/img/fondo1.png"));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -347,7 +347,8 @@ public class FrmMenu extends javax.swing.JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(img, 850, 350, null);
+            g.drawImage(img, 0, 0, 1950, 1000,null);
+            //g.drawImage(img, 850, 350,null);
         }
 
     }
