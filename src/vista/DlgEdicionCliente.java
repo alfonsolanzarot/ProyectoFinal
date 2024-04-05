@@ -23,7 +23,8 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
     public void setClienteSeleccionado(Cliente clienteSeleccionado) {
         this.clienteSeleccionado = clienteSeleccionado;
     }
-    int xMouse, yMouse;
+
+    private int xMouse, yMouse;
 
     /**
      * Creates new form DlgClientes
@@ -463,24 +464,25 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
      * MÉTODO QUE ENVÍA LOS DATOS SELECCIONADOS.
      *
      * *****************************************
+     * @param datos
      */
-    public void EnviarDatosClienteSeleccionado() {
+    public void mostrarDatos(Object[] datos) {
 
-        txtNombre.setText(clienteSeleccionado.getNombre());
-        txtNif.setText(clienteSeleccionado.getNif());
-        txtCorreo.setText(clienteSeleccionado.getEmail());
-        txtDireccion.setText(clienteSeleccionado.getDireccion());
-        txtTelefono.setText(clienteSeleccionado.getTelefono());
-        txtMovil.setText(clienteSeleccionado.getMovil());
-        txtPoblacion.setText(clienteSeleccionado.getPoblacion());
-        txtCodigo.setText(clienteSeleccionado.getC_postal());
-        txtWeb.setText(clienteSeleccionado.getWebsite());
-        txtProvincia.setText(clienteSeleccionado.getProvincia());
-        txtPais.setText(clienteSeleccionado.getPais());
-        txtNComercial.setText(clienteSeleccionado.getN_comercial());
-        txtCondicionesPago.setText(clienteSeleccionado.getCondiciones_pago());
+        txtNombre.setText((String) datos[0]);
+        txtNif.setText((String) datos[1]);
+        txtCorreo.setText((String) datos[2]);
+        txtDireccion.setText((String) datos[5]);
+        txtTelefono.setText((String) datos[3]);
+        txtMovil.setText((String) datos[4]);
+        txtPoblacion.setText((String) datos[6]);
+        txtCodigo.setText((String) datos[7]);
+        txtWeb.setText((String) datos[12]);
+        txtProvincia.setText((String) datos[8]);
+        txtPais.setText((String) datos[9]);
+        txtNComercial.setText((String) datos[10]);
+        txtCondicionesPago.setText((String) datos[11]);
         DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-        modelo.addElement(clienteSeleccionado.getTipo_precio());
+        modelo.addElement((String) datos[13]);
         cbTipo.setModel(modelo);
 
     }
