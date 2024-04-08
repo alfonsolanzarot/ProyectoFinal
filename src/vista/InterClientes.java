@@ -114,7 +114,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
-        System.out.println("Hola");
+        
     }
 
     /**
