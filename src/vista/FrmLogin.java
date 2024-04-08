@@ -3,6 +3,7 @@ package vista;
 import controlador.Ctrl_Usuario;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import modelo.Usuario;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
-    int xMouse, yMouse;
+    private int xMouse, yMouse;
 
     public FrmLogin() {
         initComponents();
@@ -54,7 +55,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         panLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEntrar.setBackground(new java.awt.Color(186, 213, 237));
+        btnEntrar.setBackground(new java.awt.Color(180, 209, 236));
         btnEntrar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         btnEntrar.setForeground(new java.awt.Color(140, 118, 68));
         btnEntrar.setText("ENTRAR");
@@ -74,12 +75,17 @@ public class FrmLogin extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEntrarKeyPressed(evt);
+            }
+        });
         panLogin.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 432, 90, 30));
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_BOMS.png"))); // NOI18N
         lblLogo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panLogin.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
+        panLogin.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 160, -1));
 
         txtUsuario.setBackground(new java.awt.Color(255, 255, 255));
         txtUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -215,11 +221,11 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCierreMouseExited
 
     private void btnEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseEntered
-        btnEntrar.setBackground(new Color(139, 185, 226));
+        btnEntrar.setBackground(new Color(119, 167, 212));
     }//GEN-LAST:event_btnEntrarMouseEntered
 
     private void btnEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseExited
-        btnEntrar.setBackground(new Color(186, 213, 237));
+        btnEntrar.setBackground(new Color(180, 209, 236));
     }//GEN-LAST:event_btnEntrarMouseExited
 
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
@@ -235,14 +241,14 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtClave.requestFocus();
             txtClave.removeAll();
         }
     }//GEN-LAST:event_txtUsuarioKeyPressed
 
     private void txtClaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyPressed
-        if (evt.getKeyCode() == evt.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.login();
         }
     }//GEN-LAST:event_txtClaveKeyPressed
@@ -263,6 +269,12 @@ public class FrmLogin extends javax.swing.JFrame {
         focoUsuario();
     }//GEN-LAST:event_txtClaveFocusLost
 
+    private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.login();
+        }
+    }//GEN-LAST:event_btnEntrarKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -272,9 +284,11 @@ public class FrmLogin extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Color color = new Color(186,213,238);
+        Color color = new Color(186, 213, 238);
         UIManager.put("nimbusBase", color);
+        UIManager.put("Table[Enabled+Selected].textBackground", new Color(157, 195, 230));
         
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -291,10 +305,12 @@ public class FrmLogin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrmLogin().setVisible(true);
             }
@@ -314,7 +330,12 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
-    //MÉTODO DE LOGIN
+    /**
+     * ****************
+     * MÉTODO DE LOGIN.
+     *
+     * ****************
+     */
     private void login() {
         if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty()) {
             Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
@@ -327,15 +348,20 @@ public class FrmLogin extends javax.swing.JFrame {
                 menu.setVisible(true);
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "El usuario o la contraseña no son correctos.", "Atención", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                JOptionPane.showMessageDialog(null, "El usuario o la contraseña no son correctos.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Ingrese sus crecenciales.", "Información", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         }
     }
 
-    //MÉTODOS DE FOCO PARA LOS CAMPOS USUARIO Y CLAVE.
+    /**
+     * ************************************************
+     * MÉTODOS DE FOCO PARA LOS CAMPOS USUARIO Y CLAVE.
+     *
+     * ************************************************
+     */
     private void focoUsuario() {
         if (txtUsuario.getText().equals("Ingrese su correo electrónico")) {
             txtUsuario.setText("");
@@ -358,7 +384,16 @@ public class FrmLogin extends javax.swing.JFrame {
         }
     }
 
-    //MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+    /**
+     * *********************************************
+     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     *
+     * *********************************************
+     * @param path
+     * @param width
+     * @param heigth
+     * @return 
+     */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;

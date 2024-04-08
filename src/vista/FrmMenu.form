@@ -89,6 +89,9 @@
                   <Dimension value="[200, 33]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miClientesActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miProveedores">
               <Properties>
@@ -475,6 +478,9 @@
               <Dimension value="[142, 50]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mnSalirMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

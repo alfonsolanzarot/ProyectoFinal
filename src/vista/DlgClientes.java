@@ -2,7 +2,6 @@ package vista;
 
 import controlador.Ctrl_Cliente;
 import java.awt.Dimension;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -12,10 +11,9 @@ import modelo.Cliente;
  *
  * @author Alfonso Lanzarot
  */
-public class DlgEdicionCliente extends javax.swing.JDialog {
+public class DlgClientes extends javax.swing.JDialog {
 
     private int xMouse, yMouse;
-    private int idCliente;
     private InterClientes ifCliente;
 
     /**
@@ -24,12 +22,11 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public DlgEdicionCliente(java.awt.Frame parent, boolean modal) {
+    public DlgClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(new Dimension(800, 480));
         this.setLocationRelativeTo(null);
-        
 
     }
 
@@ -73,7 +70,7 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         txtCondicionesPago = new javax.swing.JTextField();
         cbTipo = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
-        btnActualizar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -97,7 +94,7 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
 
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(52, 98, 139));
-        lblTitulo.setText("Editar cliente");
+        lblTitulo.setText("Nuevo cliente");
 
         lblNombre.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(102, 102, 102));
@@ -252,15 +249,15 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         lblTipo.setForeground(new java.awt.Color(102, 102, 102));
         lblTipo.setText("Tipo de precio");
 
-        btnActualizar.setBackground(new java.awt.Color(157, 195, 230));
-        btnActualizar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizar.setText("ACTUALIZAR");
-        btnActualizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
-        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+        btnCrear.setBackground(new java.awt.Color(157, 195, 230));
+        btnCrear.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrear.setText("CREAR");
+        btnCrear.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
+        btnCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
+                btnCrearActionPerformed(evt);
             }
         });
 
@@ -332,7 +329,7 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
                             .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(PnlClientesLayout.createSequentialGroup()
                                     .addGap(118, 118, 118)
-                                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(txtNComercial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,7 +414,7 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
                     .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -453,86 +450,67 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtMovilKeyTyped
 
-    /**
-     * *******************************************
-     * MÉTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
-     *
-     * *******************************************
-     * @param idCliente
-     * @param datosFila
-     */
-    public void mostrarDatos(int idCliente, Object[] datosFila) {
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        Cliente cliente = new Cliente();
+        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
 
-        txtNombre.setText((String) datosFila[0]);
-        txtNif.setText((String) datosFila[1]);
-        txtCorreo.setText((String) datosFila[2]);
-        txtDireccion.setText((String) datosFila[5]);
-        txtTelefono.setText((String) datosFila[3]);
-        txtMovil.setText((String) datosFila[4]);
-        txtPoblacion.setText((String) datosFila[6]);
-        txtCodigo.setText((String) datosFila[7]);
-        txtWeb.setText((String) datosFila[12]);
-        txtProvincia.setText((String) datosFila[8]);
-        txtPais.setText((String) datosFila[9]);
-        txtNComercial.setText((String) datosFila[10]);
-        txtCondicionesPago.setText((String) datosFila[11]);
-
-        // Crear un modelo de ComboBox con los valores "Seleccionar", "Alto" y "Bajo"
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-        modelo.addElement("Seleccionar");
-        modelo.addElement("Alto");
-        modelo.addElement("Bajo");
-
-        // Establecer el modelo en el JComboBox
-        cbTipo.setModel(modelo);
-
-        // Seleccionar el valor correspondiente al cliente seleccionado
-        String tipoPrecio = (String) datosFila[13];
-        cbTipo.setSelectedItem(tipoPrecio);
-    }
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-
+        /**
+         * ***************************************************
+         * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE CLIENTES.
+         *
+         * ***************************************************
+         */
         if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
             JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
-                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+                    "Información", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
         } else {
 
-            Cliente cliente = new Cliente();
-            Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+            if (!controlCliente.existeCliente(txtNombre.getText().trim())) {
 
-            cliente.setNombre(txtNombre.getText().trim());
-            cliente.setNif(txtNif.getText().trim());
-            cliente.setEmail(txtCorreo.getText().trim());
-            cliente.setDireccion(txtDireccion.getText().trim());
-            cliente.setTelefono(txtTelefono.getText().trim());
-            cliente.setMovil(txtMovil.getText().trim());
-            cliente.setPoblacion(txtPoblacion.getText().trim());
-            cliente.setC_postal(txtCodigo.getText().trim());
-            cliente.setProvincia(txtProvincia.getText().trim());
-            cliente.setPais(txtPais.getText().trim());
-            cliente.setN_comercial(txtNComercial.getText().trim());
-            cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
-            cliente.setWebsite(txtWeb.getText().trim());
-            cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
+                cliente.setNombre(txtNombre.getText().trim());
+                cliente.setNif(txtNif.getText().trim());
+                cliente.setEmail(txtCorreo.getText().trim());
+                cliente.setDireccion(txtDireccion.getText().trim());
+                cliente.setTelefono(txtTelefono.getText().trim());
+                cliente.setMovil(txtMovil.getText().trim());
+                cliente.setPoblacion(txtPoblacion.getText().trim());
+                cliente.setC_postal(txtCodigo.getText().trim());
+                cliente.setWebsite(txtWeb.getText().trim());
+                cliente.setProvincia(txtProvincia.getText().trim());
+                cliente.setPais(txtPais.getText().trim());
+                cliente.setN_comercial(txtNComercial.getText().trim());
+                cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
+                cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
 
-            if (controlCliente.actualizar(cliente, idCliente)) {
-                
-                this.ifCliente.recargarTabla();
-                JOptionPane.showMessageDialog(null, "Datos del cliente actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                this.dispose();
-
+                if (controlCliente.crear(cliente)) {
+                    this.ifCliente.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Cliente creado correctamente.", "Información", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                    this.Limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al crear el cliente.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                    this.Limpiar();
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el cliente.",
+                JOptionPane.showMessageDialog(null, "El cliente ya está registrado en la base de datos.",
                         "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                this.Limpiar();
             }
 
         }
 
-    }//GEN-LAST:event_btnActualizarActionPerformed
 
-    //MÉTODO PARA MOVER LA VENTANA.
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    /**
+     * *****************************
+     * MÉTODO PARA MOVER LA VENTANA.
+     *
+     * *****************************
+     * @param evt
+     */
+
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -561,22 +539,21 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DlgEdicionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DlgEdicionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DlgEdicionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DlgEdicionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DlgEdicionCliente dialog = new DlgEdicionCliente(new javax.swing.JFrame(), true);
+                DlgClientes dialog = new DlgClientes(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -586,13 +563,12 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlClientes;
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCrear;
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCondicionesPago;
@@ -625,19 +601,43 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
 
-//MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+    /**
+     * *********************************************
+     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     *
+     * *********************************************
+     *
+     * @param path
+     * @param width
+     * @param heigth
+     * @return
+     */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
     }
 
     /**
-     * Método para establecer el ID del cliente.
+     * *******************************
+     * MÉTODO PARA LIMPIAR LOS CAMPOS.
      *
-     * @param idCliente El ID del cliente a establecer.
+     * *******************************
      */
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    private void Limpiar() {
+        txtNombre.setText("");
+        txtNif.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
+        txtMovil.setText("");
+        txtPoblacion.setText("");
+        txtCodigo.setText("");
+        txtWeb.setText("");
+        txtProvincia.setText("");
+        txtPais.setText("");
+        txtNComercial.setText("");
+        txtCondicionesPago.setText("");
+        cbTipo.setSelectedItem("Seleccionar");
     }
 
     public InterClientes getIfCliente() {

@@ -2,8 +2,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -102,6 +102,11 @@ public class FrmMenu extends javax.swing.JFrame {
         miClientes.setText("Clientes");
         miClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miClientes.setPreferredSize(new java.awt.Dimension(200, 33));
+        miClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miClientesActionPerformed(evt);
+            }
+        });
         mnContactos.add(miClientes);
 
         miProveedores.setBackground(new java.awt.Color(186, 213, 238));
@@ -264,12 +269,27 @@ public class FrmMenu extends javax.swing.JFrame {
         mnSalir.setMargin(new java.awt.Insets(5, 10, 3, 10));
         mnSalir.setMinimumSize(new java.awt.Dimension(160, 50));
         mnSalir.setPreferredSize(new java.awt.Dimension(142, 50));
+        mnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mnSalirMouseClicked(evt);
+            }
+        });
         menuGeneral.add(mnSalir);
 
         setJMenuBar(menuGeneral);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void miClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClientesActionPerformed
+        InterClientes interClientes = new InterClientes();
+        Escritorio.add(interClientes);
+        interClientes.setVisible(true);
+    }//GEN-LAST:event_miClientesActionPerformed
+
+    private void mnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_mnSalirMouseClicked
 
     /**
      * @param args the command line arguments
@@ -302,6 +322,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FrmMenu().setVisible(true);
             }
@@ -331,24 +352,32 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu mnVentas;
     // End of variables declaration//GEN-END:variables
 
-    //CLASE PARA DIBUJAR IMAGEN EN EL JDesktopPane.
+    /**
+     * **********************************************
+     * CLASE PARA DIBUJAR IMAGEN EN EL JDesktopPane.
+     *
+     * **********************************************
+     */
     public class EscritorioPersonalizado extends JDesktopPane {
 
         private BufferedImage img;
 
         public EscritorioPersonalizado() {
             try {
-                img = ImageIO.read(getClass().getResourceAsStream("/img/fondo1.png"));
-            } catch (Exception ex) {
+                img = ImageIO.read(getClass().getResourceAsStream("/img/bullet_BOMS.png"));
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
 
+        /**
+         *
+         * @param g
+         */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(img, 0, 0, 1950, 1000,null);
-            //g.drawImage(img, 850, 350,null);
+            g.drawImage(img, 800, 350, null);
         }
 
     }
