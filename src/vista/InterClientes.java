@@ -49,6 +49,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
+    //CONSTRUCTOR
     public InterClientes() {
         initComponents();
         this.setSize(ancho, alto);
@@ -114,7 +115,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
-        
+
     }
 
     /**
@@ -186,6 +187,8 @@ public class InterClientes extends javax.swing.JInternalFrame {
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
+        txtBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setBorder(null);
@@ -267,9 +270,26 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         getContentPane().add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 1620, 770));
 
+        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 210, 30));
+
+        btnBuscar.setBackground(new java.awt.Color(106, 141, 162));
+        btnBuscar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 80, 30));
+
         lblFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
-        lblFondo.setToolTipText("");
         lblFondo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 950));
 
@@ -317,7 +337,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
         if (filaSeleccionada != -1) {
             // Obtener el ID del cliente de la fila seleccionada utilizando el HashMap
             idCliente = idClientePorFila.get(filaSeleccionada);
-            
+
             // Obtener los datos de la fila seleccionada.
             DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
             Object[] datosFila = new Object[modelo.getColumnCount()];
@@ -329,19 +349,36 @@ public class InterClientes extends javax.swing.JInternalFrame {
             Frame f = JOptionPane.getFrameForComponent(this);
             DlgEdicionCliente dlgEdicionCliente = new DlgEdicionCliente(f, true);
             dlgEdicionCliente.setIdCliente(idCliente);
-            dlgEdicionCliente.mostrarDatos(idCliente,datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
+            dlgEdicionCliente.mostrarDatos(idCliente, datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
             dlgEdicionCliente.setIfCliente(this);
             dlgEdicionCliente.setVisible(true);
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para editarlo.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        List<Cliente> listaFiltrada = new ArrayList<>();
+        for (Cliente c : this.listaClientes) {
+            if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+                listaFiltrada.add(c);
+            }
+        }
+        Object[] arrayObjetos = new Object[listaFiltrada.size()];
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
+        for (int i = 0; i < listaFiltrada.size(); i++) {
+            arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
+            model.addRow((Object[]) arrayObjetos[i]);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     public static javax.swing.JScrollPane jScrollPane1;
@@ -349,6 +386,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlTabla;
     public static javax.swing.JTable tblClientes;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -373,6 +411,8 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
             try (Statement st = conexion.con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
+                listaClientes = new ArrayList<>();
+
                 while (rs.next()) {
 
                     Cliente cliente = this.asignarDatosCliente(rs);
@@ -389,7 +429,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
                     // Asociar el ID del cliente con el índice de fila en el HashMap
                     idClientePorFila.put(fila, idCliente);
-
+                 
                 }
 
             } catch (SQLException e) {
@@ -502,5 +542,5 @@ public class InterClientes extends javax.swing.JInternalFrame {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
     }
-    
+
 }
