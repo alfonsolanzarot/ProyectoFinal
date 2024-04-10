@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -200,47 +201,56 @@ public class InterClientes extends javax.swing.JInternalFrame {
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 40)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(52, 98, 139));
         lblTitulo.setText("Clientes");
-        getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 35, -1, -1));
+        getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 35, -1, -1));
 
-        btnAnadir.setBackground(new java.awt.Color(157, 195, 230));
-        btnAnadir.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        btnAnadir.setBackground(new java.awt.Color(106, 141, 162));
+        btnAnadir.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnAnadir.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnadir.setText("+");
-        btnAnadir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
+        btnAnadir.setText("Nuevo");
+        btnAnadir.setBorder(null);
+        btnAnadir.setBorderPainted(false);
         btnAnadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAnadir.setFocusPainted(false);
         btnAnadir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAnadir.setOpaque(true);
         btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnadirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1760, 28, 100, 60));
+        getContentPane().add(btnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1728, 80, 130, 55));
 
-        btnEditar.setBackground(new java.awt.Color(157, 195, 230));
-        btnEditar.setFont(new java.awt.Font("Roboto", 1, 22)); // NOI18N
+        btnEditar.setBackground(new java.awt.Color(106, 141, 162));
+        btnEditar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
-        btnEditar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
+        btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.setFocusPainted(false);
+        btnEditar.setOpaque(true);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 140, 60));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 162, 130, 55));
 
         btnEliminar.setBackground(new java.awt.Color(255, 124, 128));
-        btnEliminar.setFont(new java.awt.Font("Roboto", 1, 22)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
-        btnEliminar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 102), 4, true));
+        btnEliminar.setBorder(null);
+        btnEliminar.setBorderPainted(false);
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setOpaque(true);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 140, 60));
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 240, 130, 55));
 
         pnlTabla.setBackground(new java.awt.Color(247, 247, 252));
         pnlTabla.setPreferredSize(new java.awt.Dimension(1000, 300));
@@ -268,25 +278,34 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         pnlTabla.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1600, 750));
 
-        getContentPane().add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 1620, 770));
+        getContentPane().add(pnlTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 1620, 770));
 
         txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
-        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 210, 30));
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 105, 210, 30));
 
         btnBuscar.setBackground(new java.awt.Color(106, 141, 162));
-        btnBuscar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnBuscar.setBorder(null);
+        btnBuscar.setBorderPainted(false);
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.setFocusPainted(false);
+        btnBuscar.setPreferredSize(new java.awt.Dimension(48, 30));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 80, 30));
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 102, 80, 35));
 
         lblFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
@@ -360,20 +379,14 @@ public class InterClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        List<Cliente> listaFiltrada = new ArrayList<>();
-        for (Cliente c : this.listaClientes) {
-            if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
-                listaFiltrada.add(c);
-            }
-        }
-        Object[] arrayObjetos = new Object[listaFiltrada.size()];
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
-        for (int i = 0; i < listaFiltrada.size(); i++) {
-            arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
-            model.addRow((Object[]) arrayObjetos[i]);
-        }
+        this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.buscar();
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -429,7 +442,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
                     // Asociar el ID del cliente con el índice de fila en el HashMap
                     idClientePorFila.put(fila, idCliente);
-                 
+
                 }
 
             } catch (SQLException e) {
@@ -455,6 +468,27 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
                 }
             }
+        }
+    }
+
+    /**
+     * ****************************************
+     * MÉTODO PARA BUSCAR CLIENTES EN LA TABLA.
+     * ****************************************
+     */
+    public void buscar() {
+        List<Cliente> listaFiltrada = new ArrayList<>();
+        for (Cliente c : this.listaClientes) {
+            if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+                listaFiltrada.add(c);
+            }
+        }
+        Object[] arrayObjetos = new Object[listaFiltrada.size()];
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
+        for (int i = 0; i < listaFiltrada.size(); i++) {
+            arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
+            model.addRow((Object[]) arrayObjetos[i]);
         }
     }
 
