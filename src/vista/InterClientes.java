@@ -117,6 +117,9 @@ public class InterClientes extends javax.swing.JInternalFrame {
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
+        //Cambiar el color de fondo del jScrollPane.
+        jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
+
     }
 
     /**
@@ -206,13 +209,20 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnAnadir.setBackground(new java.awt.Color(106, 141, 162));
         btnAnadir.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnAnadir.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnadir.setText("Nuevo");
-        btnAnadir.setBorder(null);
-        btnAnadir.setBorderPainted(false);
+        btnAnadir.setText("Nuevo cliente");
+        btnAnadir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 137), 3));
         btnAnadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAnadir.setFocusPainted(false);
         btnAnadir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAnadir.setOpaque(true);
+        btnAnadir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAnadirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAnadirMouseExited(evt);
+            }
+        });
         btnAnadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnadirActionPerformed(evt);
@@ -224,11 +234,18 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
-        btnEditar.setBorder(null);
-        btnEditar.setBorderPainted(false);
+        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 137), 3));
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditar.setFocusPainted(false);
         btnEditar.setOpaque(true);
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditarMouseExited(evt);
+            }
+        });
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -240,11 +257,18 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnEliminar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
-        btnEliminar.setBorder(null);
-        btnEliminar.setBorderPainted(false);
+        btnEliminar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(250, 0, 102), 3));
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.setFocusPainted(false);
         btnEliminar.setOpaque(true);
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseExited(evt);
+            }
+        });
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -256,6 +280,11 @@ public class InterClientes extends javax.swing.JInternalFrame {
         pnlTabla.setPreferredSize(new java.awt.Dimension(1000, 300));
         pnlTabla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tblClientes = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         tblClientes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -268,6 +297,8 @@ public class InterClientes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblClientes.setFocusable(false);
+        tblClientes.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tblClientes);
         if (tblClientes.getColumnModel().getColumnCount() > 0) {
             tblClientes.getColumnModel().getColumn(0).setHeaderValue("Title 1");
@@ -295,11 +326,18 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnBuscar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(null);
-        btnBuscar.setBorderPainted(false);
+        btnBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 137), 2));
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.setFocusPainted(false);
         btnBuscar.setPreferredSize(new java.awt.Dimension(48, 30));
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseExited(evt);
+            }
+        });
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -387,6 +425,38 @@ public class InterClientes extends javax.swing.JInternalFrame {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
+        btnEditar.setBackground(new Color(81, 111, 129));
+    }//GEN-LAST:event_btnEditarMouseEntered
+
+    private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
+        btnEditar.setBackground(new Color(106, 141, 162));
+    }//GEN-LAST:event_btnEditarMouseExited
+
+    private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
+        btnBuscar.setBackground(new Color(81, 111, 129));
+    }//GEN-LAST:event_btnBuscarMouseEntered
+
+    private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
+        btnBuscar.setBackground(new Color(106, 141, 162));
+    }//GEN-LAST:event_btnBuscarMouseExited
+
+    private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
+        btnAnadir.setBackground(new Color(81, 111, 129));
+    }//GEN-LAST:event_btnAnadirMouseEntered
+
+    private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
+        btnAnadir.setBackground(new Color(106, 141, 162));
+    }//GEN-LAST:event_btnAnadirMouseExited
+
+    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
+        btnEliminar.setBackground(new Color(255, 91, 95));
+    }//GEN-LAST:event_btnEliminarMouseEntered
+
+    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
+        btnEliminar.setBackground(new Color(255, 124, 128));
+    }//GEN-LAST:event_btnEliminarMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

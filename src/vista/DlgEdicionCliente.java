@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.Ctrl_Cliente;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -29,7 +30,6 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         initComponents();
         this.setSize(new Dimension(800, 480));
         this.setLocationRelativeTo(null);
-        
 
     }
 
@@ -252,12 +252,20 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         lblTipo.setForeground(new java.awt.Color(102, 102, 102));
         lblTipo.setText("Tipo de precio");
 
-        btnActualizar.setBackground(new java.awt.Color(157, 195, 230));
-        btnActualizar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnActualizar.setBackground(new java.awt.Color(106, 141, 162));
+        btnActualizar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizar.setText("ACTUALIZAR");
-        btnActualizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 139), 3));
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseExited(evt);
+            }
+        });
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
@@ -265,11 +273,19 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
-        btnCancelar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("CANCELAR");
-        btnCancelar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 102), 4, true));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102), 3));
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseExited(evt);
+            }
+        });
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -518,7 +534,7 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
             cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
 
             if (controlCliente.actualizar(cliente, idCliente)) {
-                
+
                 this.ifCliente.recargarTabla();
                 JOptionPane.showMessageDialog(null, "Datos del cliente actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
                 this.dispose();
@@ -543,6 +559,22 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
+
+    private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
+        btnActualizar.setBackground(new Color(81, 111, 129));
+    }//GEN-LAST:event_btnActualizarMouseEntered
+
+    private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
+        btnActualizar.setBackground(new Color(106, 141, 162));
+    }//GEN-LAST:event_btnActualizarMouseExited
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        btnCancelar.setBackground(new Color(255, 91, 95));
+    }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
+        btnCancelar.setBackground(new Color(255, 124, 128));
+    }//GEN-LAST:event_btnCancelarMouseExited
 
     /**
      * @param args the command line arguments

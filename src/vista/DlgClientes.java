@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.Ctrl_Cliente;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -249,12 +250,20 @@ public class DlgClientes extends javax.swing.JDialog {
         lblTipo.setForeground(new java.awt.Color(102, 102, 102));
         lblTipo.setText("Tipo de precio");
 
-        btnCrear.setBackground(new java.awt.Color(157, 195, 230));
-        btnCrear.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCrear.setBackground(new java.awt.Color(106, 141, 162));
+        btnCrear.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("CREAR");
-        btnCrear.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 4, true));
+        btnCrear.setText("Crear");
+        btnCrear.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 139), 3));
         btnCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCrear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCrearMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCrearMouseExited(evt);
+            }
+        });
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
@@ -262,11 +271,19 @@ public class DlgClientes extends javax.swing.JDialog {
         });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
-        btnCancelar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("CANCELAR");
-        btnCancelar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 102), 4, true));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 102), 3));
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseExited(evt);
+            }
+        });
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -521,6 +538,22 @@ public class DlgClientes extends javax.swing.JDialog {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        btnCancelar.setBackground(new Color(255, 91, 95));
+    }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
+        btnCancelar.setBackground(new Color(255, 124, 128));
+    }//GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
+        btnCrear.setBackground(new Color(81, 111, 129));
+    }//GEN-LAST:event_btnCrearMouseEntered
+
+    private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
+        btnCrear.setBackground(new Color(106, 141, 162));
+    }//GEN-LAST:event_btnCrearMouseExited
 
     /**
      * @param args the command line arguments

@@ -284,10 +284,9 @@ public class FrmLogin extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        Color color = new Color(186, 213, 238);
+        Color color = new Color(151, 192, 229);
         UIManager.put("nimbusBase", color);
         UIManager.put("Table[Enabled+Selected].textBackground", new Color(157, 195, 230));
-        
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -305,7 +304,7 @@ public class FrmLogin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         //</editor-fold>
 
         /* Create and display the form */
@@ -392,7 +391,7 @@ public class FrmLogin extends javax.swing.JFrame {
      * @param path
      * @param width
      * @param heigth
-     * @return 
+     * @return
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
