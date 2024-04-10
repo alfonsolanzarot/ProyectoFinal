@@ -1,29 +1,29 @@
 package vista;
 
-import controlador.Ctrl_Cliente;
+import controlador.Ctrl_Proveedor;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import modelo.Cliente;
+import modelo.Proveedor;
 
 /**
  *
  * @author Alfonso Lanzarot
  */
-public class DlgClientes extends javax.swing.JDialog {
+public class DlgProveedores extends javax.swing.JDialog {
 
     private int xMouse, yMouse;
-    private InterClientes ifCliente;
+    private InterProveedores ifProveedor;
 
     /**
-     * Creates new form DlgClientes
+     * Creates new form DlgProveedores
      *
      * @param parent
      * @param modal
      */
-    public DlgClientes(java.awt.Frame parent, boolean modal) {
+    public DlgProveedores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(new Dimension(800, 480));
@@ -40,7 +40,7 @@ public class DlgClientes extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PnlClientes = new javax.swing.JPanel();
+        PnlProveedores = new javax.swing.JPanel();
         lblHeader = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -69,8 +69,6 @@ public class DlgClientes extends javax.swing.JDialog {
         txtNComercial = new javax.swing.JTextField();
         lblCondicionesPago = new javax.swing.JLabel();
         txtCondicionesPago = new javax.swing.JTextField();
-        cbTipo = new javax.swing.JComboBox<>();
-        lblTipo = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -78,9 +76,9 @@ public class DlgClientes extends javax.swing.JDialog {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        PnlClientes.setBackground(new java.awt.Color(247, 247, 252));
-        PnlClientes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 1, true));
-        PnlClientes.setPreferredSize(new java.awt.Dimension(800, 480));
+        PnlProveedores.setBackground(new java.awt.Color(247, 247, 252));
+        PnlProveedores.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 1, true));
+        PnlProveedores.setPreferredSize(new java.awt.Dimension(800, 480));
 
         lblHeader.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -95,7 +93,7 @@ public class DlgClientes extends javax.swing.JDialog {
 
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(52, 98, 139));
-        lblTitulo.setText("Nuevo cliente");
+        lblTitulo.setText("Nuevo proveedor");
 
         lblNombre.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(102, 102, 102));
@@ -239,17 +237,6 @@ public class DlgClientes extends javax.swing.JDialog {
         txtCondicionesPago.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtCondicionesPago.setPreferredSize(new java.awt.Dimension(64, 27));
 
-        cbTipo.setBackground(new java.awt.Color(255, 255, 255));
-        cbTipo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbTipo.setForeground(new java.awt.Color(0, 0, 0));
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Alto", "Bajo" }));
-        cbTipo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
-        cbTipo.setPreferredSize(new java.awt.Dimension(72, 27));
-
-        lblTipo.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        lblTipo.setForeground(new java.awt.Color(102, 102, 102));
-        lblTipo.setText("Tipo de precio");
-
         btnCrear.setBackground(new java.awt.Color(106, 141, 162));
         btnCrear.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,153 +277,143 @@ public class DlgClientes extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout PnlClientesLayout = new javax.swing.GroupLayout(PnlClientes);
-        PnlClientes.setLayout(PnlClientesLayout);
-        PnlClientesLayout.setHorizontalGroup(
-            PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlClientesLayout.createSequentialGroup()
+        javax.swing.GroupLayout PnlProveedoresLayout = new javax.swing.GroupLayout(PnlProveedores);
+        PnlProveedores.setLayout(PnlProveedoresLayout);
+        PnlProveedoresLayout.setHorizontalGroup(
+            PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlProveedoresLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlClientesLayout.createSequentialGroup()
-                        .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                        .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre)
                             .addComponent(lblTitulo)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDireccion))
-                        .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(PnlClientesLayout.createSequentialGroup()
+                        .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(PnlProveedoresLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblNif)
                                 .addGap(60, 60, 60))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlClientesLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlProveedoresLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtNif, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(PnlClientesLayout.createSequentialGroup()
-                        .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PnlClientesLayout.createSequentialGroup()
+                    .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                        .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PnlProveedoresLayout.createSequentialGroup()
                                 .addComponent(lblPoblacion)
                                 .addGap(235, 235, 235)
                                 .addComponent(lblCodigo))
                             .addComponent(lblCondicionesPago))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PnlClientesLayout.createSequentialGroup()
-                        .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                        .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(PnlClientesLayout.createSequentialGroup()
+                            .addGroup(PnlProveedoresLayout.createSequentialGroup()
                                 .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(PnlClientesLayout.createSequentialGroup()
-                                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblProvincia)
                                     .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtPais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(PnlClientesLayout.createSequentialGroup()
+                                    .addGroup(PnlProveedoresLayout.createSequentialGroup()
                                         .addComponent(lblPais)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addComponent(txtCondicionesPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlClientesLayout.createSequentialGroup()
-                        .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(PnlClientesLayout.createSequentialGroup()
-                                    .addGap(118, 118, 118)
-                                    .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(txtNComercial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtWeb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PnlClientesLayout.createSequentialGroup()
-                                    .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblTelefono)
-                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblMovil)
-                                        .addComponent(txtMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(PnlClientesLayout.createSequentialGroup()
-                                    .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblWeb, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblCorreo, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblNComercial, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addGap(0, 0, Short.MAX_VALUE)))
-                            .addComponent(lblTipo)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23))
-                    .addGroup(PnlClientesLayout.createSequentialGroup()
-                        .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(PnlClientesLayout.createSequentialGroup()
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                            .addGap(118, 118, 118)
+                            .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtNComercial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtWeb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                            .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTelefono)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblMovil)
+                                .addComponent(txtMovil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(PnlProveedoresLayout.createSequentialGroup()
+                            .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblWeb, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblCorreo, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblNComercial, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+            .addGroup(PnlProveedoresLayout.createSequentialGroup()
                 .addComponent(lblHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        PnlClientesLayout.setVerticalGroup(
-            PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlClientesLayout.createSequentialGroup()
+        PnlProveedoresLayout.setVerticalGroup(
+            PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PnlProveedoresLayout.createSequentialGroup()
                 .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(lblNif)
                     .addComponent(lblCorreo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNif, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDireccion)
                     .addComponent(lblTelefono)
                     .addComponent(lblMovil))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMovil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPoblacion)
                     .addComponent(lblCodigo)
                     .addComponent(lblWeb))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPoblacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProvincia)
                     .addComponent(lblPais)
                     .addComponent(lblNComercial))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNComercial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCondicionesPago)
-                    .addComponent(lblTipo))
+                .addComponent(lblCondicionesPago)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCondicionesPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtCondicionesPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
-                .addGroup(PnlClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PnlProveedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        getContentPane().add(PnlClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
+        getContentPane().add(PnlProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -468,53 +445,52 @@ public class DlgClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_txtMovilKeyTyped
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        Cliente cliente = new Cliente();
-        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+        Proveedor proveedor = new Proveedor();
+        Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
 
         /**
-         * ***************************************************
-         * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE CLIENTES.
+         * ******************************************************
+         * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE PROVEEDORES.
          *
-         * ***************************************************
+         * ******************************************************
          */
-        if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
+        if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
         } else {
-            
-            // Comprobar si el cliente ya existe por nombre o por NIF
-            String nombreCliente = txtNombre.getText().trim();
-            String nifCliente = txtNif.getText().trim();
-            
-            if (!controlCliente.existeCliente(nombreCliente, nifCliente)) {
 
-                cliente.setNombre(txtNombre.getText().trim());
-                cliente.setNif(txtNif.getText().trim());
-                cliente.setEmail(txtCorreo.getText().trim());
-                cliente.setDireccion(txtDireccion.getText().trim());
-                cliente.setTelefono(txtTelefono.getText().trim());
-                cliente.setMovil(txtMovil.getText().trim());
-                cliente.setPoblacion(txtPoblacion.getText().trim());
-                cliente.setC_postal(txtCodigo.getText().trim());
-                cliente.setWebsite(txtWeb.getText().trim());
-                cliente.setProvincia(txtProvincia.getText().trim());
-                cliente.setPais(txtPais.getText().trim());
-                cliente.setN_comercial(txtNComercial.getText().trim());
-                cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
-                cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
+            // Comprobar si el proveedor ya existe por nombre o por NIF 
+            String nombreProveedor = txtNombre.getText().trim();
+            String nifProveedor = txtNif.getText().trim();
 
-                if (controlCliente.crear(cliente)) {
-                    this.ifCliente.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Cliente creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+            if (!controlProveedor.existeProveedor(nombreProveedor, nifProveedor)) {
+
+                proveedor.setNombre(txtNombre.getText().trim());
+                proveedor.setNif(txtNif.getText().trim());
+                proveedor.setEmail(txtCorreo.getText().trim());
+                proveedor.setDireccion(txtDireccion.getText().trim());
+                proveedor.setTelefono(txtTelefono.getText().trim());
+                proveedor.setMovil(txtMovil.getText().trim());
+                proveedor.setPoblacion(txtPoblacion.getText().trim());
+                proveedor.setC_postal(txtCodigo.getText().trim());
+                proveedor.setWebsite(txtWeb.getText().trim());
+                proveedor.setProvincia(txtProvincia.getText().trim());
+                proveedor.setPais(txtPais.getText().trim());
+                proveedor.setN_comercial(txtNComercial.getText().trim());
+                proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
+
+                if (controlProveedor.crear(proveedor)) {
+                    this.ifProveedor.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Proveedor creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
                     this.Limpiar();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Error al crear el cliente.",
+                    JOptionPane.showMessageDialog(null, "Error al crear el proveedor.",
                             "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
                     this.Limpiar();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El cliente ya está registrado en la base de datos.",
+                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado en la base de datos.",
                         "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 this.Limpiar();
             }
@@ -576,21 +552,22 @@ public class DlgClientes extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DlgClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgProveedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                DlgClientes dialog = new DlgClientes(new javax.swing.JFrame(), true);
+                DlgProveedores dialog = new DlgProveedores(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -603,10 +580,9 @@ public class DlgClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PnlClientes;
+    private javax.swing.JPanel PnlProveedores;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
-    private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCondicionesPago;
     private javax.swing.JLabel lblCorreo;
@@ -620,7 +596,6 @@ public class DlgClientes extends javax.swing.JDialog {
     private javax.swing.JLabel lblPoblacion;
     private javax.swing.JLabel lblProvincia;
     private javax.swing.JLabel lblTelefono;
-    private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblWeb;
     private javax.swing.JTextField txtCodigo;
@@ -674,15 +649,15 @@ public class DlgClientes extends javax.swing.JDialog {
         txtPais.setText("");
         txtNComercial.setText("");
         txtCondicionesPago.setText("");
-        cbTipo.setSelectedItem("Seleccionar");
+
     }
 
-    public InterClientes getIfCliente() {
-        return ifCliente;
+    public InterProveedores getIfProveedor() {
+        return ifProveedor;
     }
 
-    public void setIfCliente(InterClientes ifCliente) {
-        this.ifCliente = ifCliente;
+    public void setIfProveedor(InterProveedores ifProveedor) {
+        this.ifProveedor = ifProveedor;
     }
 
 }

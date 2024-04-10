@@ -5,28 +5,28 @@ import conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import modelo.Cliente;
+import modelo.Proveedor;
 import java.sql.ResultSet;
 
 /**
  *
  * @author Alfonso Lanzarot
  */
-public class Ctrl_Cliente {
+public class Ctrl_Proveedor {
 
     /**
-     * *******************************
-     * MÉTODO PARA REGISTRAR CLIENTES.
+     * **********************************
+     * MÉTODO PARA REGISTRAR PROVEEDORES.
      *
-     * *******************************
+     * **********************************
      * @param objeto
      * @return
      */
-    public boolean crear(Cliente objeto) {
+    public boolean crear(Proveedor objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_clientes values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_proveedores values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setString(3, objeto.getNif());
@@ -41,7 +41,6 @@ public class Ctrl_Cliente {
             consulta.setString(12, objeto.getTelefono());
             consulta.setString(13, objeto.getMovil());
             consulta.setString(14, objeto.getWebsite());
-            consulta.setString(15, objeto.getTipo_precio());
 
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
@@ -50,23 +49,23 @@ public class Ctrl_Cliente {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear el cliente: " + e);
+            System.out.println("Error al crear el proveedor: " + e);
         }
         return respuesta;
     }
 
     /**
-     * *******************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN CLIENTE.
-     * *******************************************
+     * *********************************************
+     * MÉTODO PARA COMPROBAR SI EXISTE UN PROVEEDOR.
+     * *********************************************
      *
-     * @param cliente
+     * @param proveedor
      * @param nif
      * @return
      */
-    public boolean existeCliente(String cliente, String nif) {
+    public boolean existeProveedor(String proveedor, String nif) {
         boolean respuesta = false;
-        String sql = "SELECT nombre FROM tb_clientes where nombre = '" + cliente + "' OR nif = '" + nif + "'";
+        String sql = "SELECT nombre FROM tb_proveedores where nombre = '" + proveedor + "' OR nif = '" + nif + "'";
         Statement st;
 
         try {
@@ -81,29 +80,29 @@ public class Ctrl_Cliente {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al consultar el cliente: " + e);
+            System.out.println("Error al consultar el proveedor: " + e);
         }
         return respuesta;
     }
 
     /**
-     * **********************************
-     * MÉTODO PARA ACTUALIZAR UN CLIENTE.
+     * ************************************
+     * MÉTODO PARA ACTUALIZAR UN PROVEEDOR.
      *
-     * **********************************
+     * ************************************
      *
-     * @param objeto El cliente a actualizar.
-     * @param idCliente El ID del cliente que se va a actualizar.
+     * @param objeto El proveedor a actualizar.
+     * @param idProveedor El ID del proveedor que se va a actualizar.
      * @return true si la actualización fue exitosa, false si falló.
      */
-    public boolean actualizar(Cliente objeto, int idCliente) {
+    public boolean actualizar(Proveedor objeto, int idProveedor) {
         boolean respuesta = false;
         Connection cn = null;
         PreparedStatement consulta = null;
         try {
             cn = Conexion.conectar();
-            consulta = cn.prepareStatement("UPDATE tb_clientes SET nombre = ?, nif = ?, email = ?, telefono = ?, movil = ?, direccion = ?, poblacion = ?, c_postal = ?, "
-                    + "provincia = ?, pais = ?, n_comercial = ?, condiciones_pago = ?,  website = ?, tipo_precio = ? WHERE idCliente = '" + idCliente + "'");
+            consulta = cn.prepareStatement("UPDATE tb_proveedores SET nombre = ?, nif = ?, email = ?, telefono = ?, movil = ?, direccion = ?, poblacion = ?, c_postal = ?, "
+                    + "provincia = ?, pais = ?, n_comercial = ?, condiciones_pago = ?,  website = ? WHERE idProveedor = '" + idProveedor + "'");
             consulta.setString(1, objeto.getNombre());
             consulta.setString(2, objeto.getNif());
             consulta.setString(3, objeto.getEmail());
@@ -117,8 +116,7 @@ public class Ctrl_Cliente {
             consulta.setString(11, objeto.getN_comercial());
             consulta.setString(12, objeto.getCondiciones_pago());
             consulta.setString(13, objeto.getWebsite());
-            consulta.setString(14, objeto.getTipo_precio());
-
+            
             int filasActualizadas = consulta.executeUpdate();
             if (filasActualizadas > 0) {
                 respuesta = true;
@@ -127,7 +125,7 @@ public class Ctrl_Cliente {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar el cliente: " + e);
+            System.out.println("Error al actualizar el proveedor: " + e);
         } finally {
             // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
@@ -150,29 +148,29 @@ public class Ctrl_Cliente {
     }
 
     /**
-     * ********************************
-     * MÉTODO PARA ELIMINAR UN CLIENTE.
+     * **********************************
+     * MÉTODO PARA ELIMINAR UN PROVEEDOR.
      *
-     * ********************************
+     * **********************************
      *
-     * @param idCliente
+     * @param idProveedor
      * @return
      */
-    public boolean eliminar(int idCliente) {
+    public boolean eliminar(int idProveedor) {
         boolean respuesta = false;
         Connection cn = null;
         Statement consulta = null;
         try {
             cn = Conexion.conectar();
             consulta = cn.createStatement();
-            String sql = "DELETE FROM tb_clientes WHERE idCliente = " + idCliente;
+            String sql = "DELETE FROM tb_proveedores WHERE idProveedor = " + idProveedor;
 
             int filasEliminadas = consulta.executeUpdate(sql);
             if (filasEliminadas > 0) {
                 respuesta = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el cliente: " + e);
+            System.out.println("Error al eliminar el proveedor: " + e);
         } finally {
             // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {

@@ -115,6 +115,11 @@ public class FrmMenu extends javax.swing.JFrame {
         miProveedores.setText("Proveedores");
         miProveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miProveedores.setPreferredSize(new java.awt.Dimension(200, 33));
+        miProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miProveedoresActionPerformed(evt);
+            }
+        });
         mnContactos.add(miProveedores);
 
         menuGeneral.add(mnContactos);
@@ -282,6 +287,7 @@ public class FrmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClientesActionPerformed
+        Escritorio.removeAll();
         InterClientes interClientes = new InterClientes();
         Escritorio.add(interClientes);
         interClientes.setVisible(true);
@@ -290,6 +296,13 @@ public class FrmMenu extends javax.swing.JFrame {
     private void mnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSalirMouseClicked
         System.exit(0);
     }//GEN-LAST:event_mnSalirMouseClicked
+
+    private void miProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProveedoresActionPerformed
+        Escritorio.removeAll();
+        InterProveedores interProveedores = new InterProveedores();
+        Escritorio.add(interProveedores);
+        interProveedores.setVisible(true);
+    }//GEN-LAST:event_miProveedoresActionPerformed
 
     /**
      * @param args the command line arguments
