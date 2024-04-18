@@ -207,6 +207,11 @@ public class FrmMenu extends javax.swing.JFrame {
         miProductosServicios.setText("Productos/Servicios");
         miProductosServicios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miProductosServicios.setPreferredSize(new java.awt.Dimension(200, 33));
+        miProductosServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miProductosServiciosActionPerformed(evt);
+            }
+        });
         mnProductos.add(miProductosServicios);
 
         menuGeneral.add(mnProductos);
@@ -303,6 +308,13 @@ public class FrmMenu extends javax.swing.JFrame {
         Escritorio.add(interProveedores);
         interProveedores.setVisible(true);
     }//GEN-LAST:event_miProveedoresActionPerformed
+
+    private void miProductosServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductosServiciosActionPerformed
+        Escritorio.removeAll();
+        InterProductos interProductos = new InterProductos();
+        Escritorio.add(interProductos);
+        interProductos.setVisible(true);
+    }//GEN-LAST:event_miProductosServiciosActionPerformed
 
     /**
      * @param args the command line arguments

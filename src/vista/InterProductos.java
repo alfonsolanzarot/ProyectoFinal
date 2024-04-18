@@ -1,6 +1,6 @@
 package vista;
 
-import controlador.Ctrl_Cliente;
+import controlador.Ctrl_Producto;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.DriverManager;
@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,17 +35,17 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import modelo.Cliente;
+import modelo.Producto;
 
 /**
  *
  * @author Alfonso Lanzarot
  */
-public class InterClientes extends javax.swing.JInternalFrame {
+public class InterProductos extends javax.swing.JInternalFrame {
 
-    private final Map<Integer, Integer> idClientePorFila = new HashMap<>();
-    private int idCliente;
-    List<Cliente> listaClientes = new ArrayList<>();
+    private final Map<Integer, Integer> idProductoPorFila = new HashMap<>();
+    private int idProducto;
+    List<Producto> listaProductos = new ArrayList<>();
 
     Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension d = tk.getScreenSize();
@@ -52,18 +54,18 @@ public class InterClientes extends javax.swing.JInternalFrame {
     int alto = (int) d.getHeight();
 
     //CONSTRUCTOR
-    public InterClientes() {
+    public InterProductos() {
         initComponents();
         this.setSize(ancho, alto);
-        this.setTitle("CLIENTES");
-        CargarTablaClientes();
-        configurarTablaClientes();
+        this.setTitle("PRODUCTOS");
+        CargarTablaProductos();
+        configurarTablaProductos();
 
         // Añadimos WindowListener para detectar cuándo se abre el frame interno
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                CargarTablaClientes(); // Llama al método para cargar la tabla cuando se abre el frame
+                CargarTablaProductos(); // Llama al método para cargar la tabla cuando se abre el frame
             }
         });
 
@@ -75,31 +77,24 @@ public class InterClientes extends javax.swing.JInternalFrame {
      *
      * ******************************
      */
-    private void configurarTablaClientes() {
+    private void configurarTablaProductos() {
         // Crear un modelo de tabla
         DefaultTableModel model = new DefaultTableModel();
 
         // Agregar columnas al modelo de tabla
-        model.addColumn("Nombre");
-        model.addColumn("NIF");
-        model.addColumn("E-mail");
-        model.addColumn("Teléfono");
-        model.addColumn("Móvil");
-        model.addColumn("Dirección");
-        model.addColumn("Población");
-        model.addColumn("C.P.");
-        model.addColumn("Provincia");
-        model.addColumn("País");
-        model.addColumn("Nombre comercial");
-        model.addColumn("Condiciones pago");
-        model.addColumn("Website");
-        model.addColumn("Tipo de precio");
+        model.addColumn("Código del producto o servicio");
+        model.addColumn("Descripción");
+        model.addColumn("Formato");
+        model.addColumn("Peso unitario (en kg)");
+        model.addColumn("Precio alto (en €)");
+        model.addColumn("Precio bajo (en €)");
+        model.addColumn("Precio del servicio (en €)");
 
         // Establecer el modelo de tabla en la tabla
-        tblClientes.setModel(model);
+        tblProductos.setModel(model);
 
         // Personalizar el encabezado de la tabla
-        JTableHeader header = tblClientes.getTableHeader();
+        JTableHeader header = tblProductos.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
         // Aumentar la altura del encabezado de la tabla
@@ -107,32 +102,72 @@ public class InterClientes extends javax.swing.JInternalFrame {
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
         // Obtener el renderizador predeterminado del encabezado
-        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblClientes.getTableHeader().getDefaultRenderer();
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblProductos.getTableHeader().getDefaultRenderer();
 
         // Establecer alineación centrada para el renderizador del encabezado
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Personalizar el tamaño de las filas
-        tblClientes.setRowHeight(60); // Cambiar el tamaño de las filas
+        tblProductos.setRowHeight(60); // Cambiar el tamaño de las filas
 
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
-        tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
+        tblProductos.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
         //Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
-        
-        // Renderizador para alinear al centro las celdas de las columnas de nif y código postal
+
+        // Renderizador para alinear al centro las celdas de las columnas de código, formato, peso y los precios
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblClientes.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif
-        tblClientes.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal
-                
-        // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblClientes.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono
-        tblClientes.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil
-        
+        tblProductos.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // Código
+        tblProductos.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Formato
+
+        // Crear un renderizador personalizado para las celdas de las columnas con decimales
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator('.');
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", symbols);
+
+        DefaultTableCellRenderer decimalRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof Double) {
+                    value = decimalFormat.format(value) + " €"; // Añadir el símbolo del euro después del valor
+                }
+                super.setValue(value);
+
+            }
+
+            // Asegurar que la alineación se mantenga centrada
+            @Override
+            public void setHorizontalAlignment(int alignment) {
+                super.setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        };
+
+        // Aplicar el renderizador personalizado a las columnas de los precios
+        tblProductos.getColumnModel().getColumn(4).setCellRenderer(decimalRenderer);
+        tblProductos.getColumnModel().getColumn(5).setCellRenderer(decimalRenderer);
+        tblProductos.getColumnModel().getColumn(6).setCellRenderer(decimalRenderer);
+
+        // Renderizador para las unidades de peso
+        DefaultTableCellRenderer unitRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof Double) {
+                    value = decimalFormat.format(value) + " kg"; // Añadir la unidad kg después del valor
+                }
+                super.setValue(value);
+            }
+
+            // Asegurar que la alineación se mantenga centrada
+            @Override
+            public void setHorizontalAlignment(int alignment) {
+                super.setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        };
+        tblProductos.getColumnModel().getColumn(3).setCellRenderer(unitRenderer); // Peso unitario
     }
 
     /**
@@ -203,7 +238,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        tblProductos = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
@@ -216,13 +251,13 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 40)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(52, 98, 139));
-        lblTitulo.setText("Clientes");
+        lblTitulo.setText("Productos y servicios");
         getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 35, -1, -1));
 
         btnAnadir.setBackground(new java.awt.Color(106, 141, 162));
-        btnAnadir.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        btnAnadir.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         btnAnadir.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnadir.setText("Nuevo cliente");
+        btnAnadir.setText("Nuevo producto");
         btnAnadir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 137), 3));
         btnAnadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAnadir.setFocusPainted(false);
@@ -293,13 +328,13 @@ public class InterClientes extends javax.swing.JInternalFrame {
         pnlTabla.setPreferredSize(new java.awt.Dimension(1000, 300));
         pnlTabla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tblClientes = new javax.swing.JTable(){
+        tblProductos = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }
         };
-        tblClientes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -310,14 +345,14 @@ public class InterClientes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblClientes.setFocusable(false);
-        tblClientes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblClientes);
-        if (tblClientes.getColumnModel().getColumnCount() > 0) {
-            tblClientes.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            tblClientes.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            tblClientes.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-            tblClientes.getColumnModel().getColumn(3).setHeaderValue("Title 4");
+        tblProductos.setFocusable(false);
+        tblProductos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblProductos);
+        if (tblProductos.getColumnModel().getColumnCount() > 0) {
+            tblProductos.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            tblProductos.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            tblProductos.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+            tblProductos.getColumnModel().getColumn(3).setHeaderValue("Title 4");
         }
 
         pnlTabla.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1600, 750));
@@ -368,34 +403,34 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
-        DlgClientes dlgClientes = new DlgClientes(f, true);
-        dlgClientes.setIfCliente(this);
-        dlgClientes.setVisible(true);
+        DlgProductos dlgProductos = new DlgProductos(f, true);
+        dlgProductos.setIfProducto(this);
+        dlgProductos.setVisible(true);
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+        Ctrl_Producto controlProducto = new Ctrl_Producto();
         //Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
+        int filaSeleccionada = tblProductos.getSelectedRow();
         if (filaSeleccionada != -1) {
 
-            idCliente = idClientePorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el cliente seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+            idProducto = idProductoPorFila.get(filaSeleccionada);
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el producto seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
             if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlCliente.eliminar(idCliente)) {
+                if (controlProducto.eliminar(idProducto)) {
 
                     this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                    JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
                 } else {
 
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.",
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el producto.",
                             "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para eliminarlo.",
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para eliminarlo.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         }
 
@@ -403,28 +438,28 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
+        int filaSeleccionada = tblProductos.getSelectedRow();
         if (filaSeleccionada != -1) {
-            // Obtener el ID del cliente de la fila seleccionada utilizando el HashMap
-            idCliente = idClientePorFila.get(filaSeleccionada);
+            // Obtener el ID del producto de la fila seleccionada utilizando el HashMap
+            idProducto = idProductoPorFila.get(filaSeleccionada);
 
             // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
             Object[] datosFila = new Object[modelo.getColumnCount()];
             for (int i = 0; i < modelo.getColumnCount(); i++) {
                 datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
             }
 
-            // Pasar el ID del cliente y los datos de la fila al diálogo de edición.
+            // Pasar el ID del producto y los datos de la fila al diálogo de edición.
             Frame f = JOptionPane.getFrameForComponent(this);
-            DlgEdicionCliente dlgEdicionCliente = new DlgEdicionCliente(f, true);
-            dlgEdicionCliente.setIdCliente(idCliente);
-            dlgEdicionCliente.mostrarDatos(idCliente, datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
-            dlgEdicionCliente.setIfCliente(this);
-            dlgEdicionCliente.setVisible(true);
+            DlgProductos dlgEdicionProducto = new DlgProductos(f, true);
+            dlgEdicionProducto.setIdProducto(idProducto);
+            dlgEdicionProducto.mostrarDatos(idProducto, datosFila); // Pasa el ID del producto y los datos de la fila al diálogo
+            dlgEdicionProducto.setIfProducto(this);
+            dlgEdicionProducto.setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para editarlo.",
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para editarlo.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -481,56 +516,56 @@ public class InterClientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlTabla;
-    public static javax.swing.JTable tblClientes;
+    public static javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS.
-     * ***************************************************************
+     * ****************************************************************
+     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS.
+     * ****************************************************************
      */
-    private void CargarTablaClientes() {
+    private void CargarTablaProductos() {
         ConexionBD conexion = new ConexionBD();
 
         try {
             try {
                 Class.forName(conexion.driver);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(InterClientes.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InterProductos.class.getName()).log(Level.SEVERE, null, ex);
             }
             conexion.con = DriverManager.getConnection(conexion.url, conexion.usuario, conexion.clave);
 
-            DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+            DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-            String sql = "select idCliente, nombre, nif, email, telefono, movil, direccion, poblacion, c_postal, provincia, pais, n_comercial, condiciones_pago, website, tipo_precio from tb_clientes";
+            String sql = "select idProducto, codigo_producto, descripcion, formato, peso_unitario, precio_alto, precio_bajo, precio_servicio from tb_productos";
 
             try (Statement st = conexion.con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
-                listaClientes = new ArrayList<>();
+                listaProductos = new ArrayList<>();
 
                 while (rs.next()) {
 
-                    Cliente cliente = this.asignarDatosCliente(rs);
-                    listaClientes.add(cliente);
+                    Producto producto = this.asignarDatosProducto(rs);
+                    listaProductos.add(producto);
 
-                    Object[] datosFila = this.asignarDatosModelo(cliente);
+                    Object[] datosFila = this.asignarDatosModelo(producto);
                     model.addRow(datosFila);
 
-                    // Obtener el ID del cliente de la fila actual
-                    idCliente = rs.getInt("idCliente");
+                    // Obtener el ID del producto de la fila actual
+                    idProducto = rs.getInt("idProducto");
 
                     // Obtener el índice de la fila recién agregada
                     int fila = model.getRowCount() - 1;
 
-                    // Asociar el ID del cliente con el índice de fila en el HashMap
-                    idClientePorFila.put(fila, idCliente);
+                    // Asociar el ID del producto con el índice de fila en el HashMap
+                    idProductoPorFila.put(fila, idProducto);
 
                 }
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla clientes: " + e);
+                System.out.println("Error al llenar la tabla productos: " + e);
             }
 
         } catch (SQLException e) {
@@ -555,19 +590,19 @@ public class InterClientes extends javax.swing.JInternalFrame {
     }
 
     /**
-     * ****************************************
-     * MÉTODO PARA BUSCAR CLIENTES EN LA TABLA.
-     * ****************************************
+     * *****************************************
+     * MÉTODO PARA BUSCAR PRODUCTOS EN LA TABLA.
+     * *****************************************
      */
     public void buscar() {
-        List<Cliente> listaFiltrada = new ArrayList<>();
-        for (Cliente c : this.listaClientes) {
-            if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || c.getNif().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
-                listaFiltrada.add(c);
+        List<Producto> listaFiltrada = new ArrayList<>();
+        for (Producto pr : this.listaProductos) {
+            if (pr.getCodigo().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || pr.getDescripcion().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+                listaFiltrada.add(pr);
             }
         }
         Object[] arrayObjetos = new Object[listaFiltrada.size()];
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
         for (int i = 0; i < listaFiltrada.size(); i++) {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
@@ -577,71 +612,57 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
     /**
      * ******************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN CLIENTE REGISTRADO A LA TABLA
-     * CLIENTES.
+     * MÉTODO PARA ASIGNAR LOS DATOS DE UN PRODUCTO REGISTRADO A LA TABLA
+     * PRODUCTOS.
      * ******************************************************************
      */
-    private Cliente asignarDatosCliente(ResultSet rs) throws SQLException {
-        Cliente cliente = new Cliente();
+    private Producto asignarDatosProducto(ResultSet rs) throws SQLException {
+        Producto producto = new Producto();
 
-        cliente.setIdCliente(rs.getInt(1));
-        cliente.setNombre(rs.getString(2));
-        cliente.setNif(rs.getString(3));
-        cliente.setEmail(rs.getString(4));
-        cliente.setDireccion(rs.getString(5));
-        cliente.setTelefono(rs.getString(6));
-        cliente.setMovil(rs.getString(7));
-        cliente.setPoblacion(rs.getString(8));
-        cliente.setC_postal(rs.getString(9));
-        cliente.setWebsite(rs.getString(10));
-        cliente.setProvincia(rs.getString(11));
-        cliente.setPais(rs.getString(12));
-        cliente.setN_comercial(rs.getString(13));
-        cliente.setCondiciones_pago(rs.getString(14));
-        cliente.setTipo_precio(rs.getString(15));
+        producto.setIdProducto(rs.getInt(1));
+        producto.setCodigo(rs.getString(2));
+        producto.setDescripcion(rs.getString(3));
+        producto.setFormato(rs.getString(4));
+        producto.setPesoUnitario(rs.getDouble(5));
+        producto.setPrecioAlto(rs.getDouble(6));
+        producto.setPrecioBajo(rs.getDouble(7));
+        producto.setPrecioServicio(rs.getDouble(8));
 
-        return cliente;
+        return producto;
     }
 
     /**
      * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS CLIENTES REGISTRADOS AL MODELO DE
+     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS PRODUCTOS REGISTRADOS AL MODELO DE
      * TABLA.
      * ***********************************************************************
      */
-    private Object[] asignarDatosModelo(Cliente cliente) {
+    private Object[] asignarDatosModelo(Producto producto) {
 
         Object fila[] = new Object[14];
 
-        fila[0] = cliente.getNombre();
-        fila[1] = cliente.getNif();
-        fila[2] = cliente.getEmail();
-        fila[3] = cliente.getDireccion();
-        fila[4] = cliente.getTelefono();
-        fila[5] = cliente.getMovil();
-        fila[6] = cliente.getPoblacion();
-        fila[7] = cliente.getC_postal();
-        fila[8] = cliente.getWebsite();
-        fila[9] = cliente.getProvincia();
-        fila[10] = cliente.getPais();
-        fila[11] = cliente.getN_comercial();
-        fila[12] = cliente.getCondiciones_pago();
-        fila[13] = cliente.getTipo_precio();
+        fila[0] = producto.getCodigo();
+        fila[1] = producto.getDescripcion();
+        fila[2] = producto.getFormato();
+        fila[3] = producto.getPesoUnitario();
+        fila[4] = producto.getPrecioAlto();
+        fila[5] = producto.getPrecioBajo();
+        fila[6] = producto.getPrecioServicio();
 
         return fila;
     }
 
     /**
      * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN CLIENTE.
+     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS CUANDO
+     * SE AÑADE UNO NUEVO Y SE ELIMINA UN PRODUCTO.
      * ************************************************************************
      */
     public void recargarTabla() {
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
-        CargarTablaClientes();
+        CargarTablaProductos();
     }
 
     /**

@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -92,7 +93,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         model.addColumn("Nombre comercial");
         model.addColumn("Condiciones pago");
         model.addColumn("Website");
-        
+
         // Establecer el modelo de tabla en la tabla
         tblProveedores.setModel(model);
 
@@ -101,7 +102,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
         // Aumentar la altura del encabezado de la tabla
-        int alturaEncabezado = 55; // Puedes ajustar este valor según tus preferencias
+        int alturaEncabezado = 42; // Puedes ajustar este valor según tus preferencias
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
         // Obtener el renderizador predeterminado del encabezado
@@ -111,13 +112,25 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Personalizar el tamaño de las filas
-        tblProveedores.setRowHeight(42); // Cambiar el tamaño de las filas
+        tblProveedores.setRowHeight(60); // Cambiar el tamaño de las filas
 
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblProveedores.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
         //Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
+
+        // Renderizador para alinear al centro las celdas de las columnas de nif y código postal
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tblProveedores.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif
+        tblProveedores.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal
+
+        // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        tblProveedores.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono
+        tblProveedores.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil
 
     }
 
@@ -548,7 +561,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
     public void buscar() {
         List<Proveedor> listaFiltrada = new ArrayList<>();
         for (Proveedor p : this.listaProveedores) {
-            if (p.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+            if (p.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || p.getNif().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
                 listaFiltrada.add(p);
             }
         }
@@ -584,7 +597,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         proveedor.setPais(rs.getString(12));
         proveedor.setN_comercial(rs.getString(13));
         proveedor.setCondiciones_pago(rs.getString(14));
-        
+
         return proveedor;
     }
 
@@ -611,14 +624,14 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         fila[10] = proveedor.getPais();
         fila[11] = proveedor.getN_comercial();
         fila[12] = proveedor.getCondiciones_pago();
-        
+
         return fila;
     }
 
     /**
      * **************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PROVEEDORES REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN PROVEEDOR.
+     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PROVEEDORES REGISTRADOS
+     * CUANDO SE AÑADE UNO NUEVO Y SE ELIMINA UN PROVEEDOR.
      * **************************************************************************
      */
     public void recargarTabla() {
