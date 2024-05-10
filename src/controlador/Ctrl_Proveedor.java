@@ -26,7 +26,7 @@ public class Ctrl_Proveedor {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_proveedores values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_proveedores VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setString(3, objeto.getNif());

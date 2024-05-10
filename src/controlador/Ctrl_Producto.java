@@ -27,7 +27,7 @@ public class Ctrl_Producto {
         Connection cn = Conexion.conectar();
 
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_productos values (?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_productos VALUES (?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getCodigo());
             consulta.setString(3, objeto.getDescripcion());
@@ -50,9 +50,9 @@ public class Ctrl_Producto {
     }
 
     /**
-     * ********************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN PRODUCTO.
-     * ********************************************
+     * *******************************************************
+     * MÉTODO PARA COMPROBAR SI EXISTE UN PRODUCTO O SERVICIO.
+     * *******************************************************
      *
      * @param producto
      * @param codigo_producto
@@ -138,10 +138,10 @@ public class Ctrl_Producto {
     }
 
     /**
-     * *********************************
-     * MÉTODO PARA ELIMINAR UN PRODUCTO.
+     * ********************************************
+     * MÉTODO PARA ELIMINAR UN PRODUCTO O SERVICIO.
      *
-     * *********************************
+     * ********************************************
      *
      * @param idProducto
      * @return

@@ -48,7 +48,6 @@ public class FrmMenu extends javax.swing.JFrame {
         miClientes = new javax.swing.JMenuItem();
         miProveedores = new javax.swing.JMenuItem();
         mnVentas = new javax.swing.JMenu();
-        miPrespuestos = new javax.swing.JMenuItem();
         miFacturasProforma = new javax.swing.JMenuItem();
         miPedidosVenta = new javax.swing.JMenuItem();
         miFacturasEmitidas = new javax.swing.JMenuItem();
@@ -135,20 +134,17 @@ public class FrmMenu extends javax.swing.JFrame {
         mnVentas.setMinimumSize(new java.awt.Dimension(160, 50));
         mnVentas.setPreferredSize(new java.awt.Dimension(147, 50));
 
-        miPrespuestos.setBackground(new java.awt.Color(186, 213, 238));
-        miPrespuestos.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        miPrespuestos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/presupuesto.png"))); // NOI18N
-        miPrespuestos.setText("Presupuestos");
-        miPrespuestos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        miPrespuestos.setPreferredSize(new java.awt.Dimension(200, 33));
-        mnVentas.add(miPrespuestos);
-
         miFacturasProforma.setBackground(new java.awt.Color(186, 213, 238));
         miFacturasProforma.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         miFacturasProforma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/factura_proforma.png"))); // NOI18N
         miFacturasProforma.setText("Facturas proforma");
         miFacturasProforma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miFacturasProforma.setPreferredSize(new java.awt.Dimension(200, 33));
+        miFacturasProforma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miFacturasProformaActionPerformed(evt);
+            }
+        });
         mnVentas.add(miFacturasProforma);
 
         miPedidosVenta.setBackground(new java.awt.Color(186, 213, 238));
@@ -316,6 +312,13 @@ public class FrmMenu extends javax.swing.JFrame {
         interProductos.setVisible(true);
     }//GEN-LAST:event_miProductosServiciosActionPerformed
 
+    private void miFacturasProformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFacturasProformaActionPerformed
+        Escritorio.removeAll();
+        InterProformas interProformas = new InterProformas();
+        Escritorio.add(interProformas);
+        interProformas.setVisible(true);
+    }//GEN-LAST:event_miFacturasProformaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -364,7 +367,6 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem miGestionUsuarios;
     private javax.swing.JMenuItem miOtrasConfiguraciones;
     private javax.swing.JMenuItem miPedidosVenta;
-    private javax.swing.JMenuItem miPrespuestos;
     private javax.swing.JMenuItem miProductosServicios;
     private javax.swing.JMenuItem miProveedores;
     private javax.swing.JMenu mnAyuda;

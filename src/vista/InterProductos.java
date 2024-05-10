@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import modelo.Producto;
+import servicios.ServicioProducto;
 
 /**
  *
@@ -538,7 +539,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
 
             DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-            String sql = "select idProducto, codigo_producto, descripcion, formato, peso_unitario, precio_alto, precio_bajo, precio_servicio from tb_productos";
+            String sql = "SELECT idProducto, codigo_producto, descripcion, formato, peso_unitario, precio_alto, precio_bajo, precio_servicio FROM tb_productos";
 
             try (Statement st = conexion.con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
@@ -546,7 +547,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
 
                 while (rs.next()) {
 
-                    Producto producto = this.asignarDatosProducto(rs);
+                    Producto producto = ServicioProducto.asignarDatosProducto(rs);
                     listaProductos.add(producto);
 
                     Object[] datosFila = this.asignarDatosModelo(producto);
@@ -610,26 +611,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
         }
     }
 
-    /**
-     * ******************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN PRODUCTO REGISTRADO A LA TABLA
-     * PRODUCTOS.
-     * ******************************************************************
-     */
-    private Producto asignarDatosProducto(ResultSet rs) throws SQLException {
-        Producto producto = new Producto();
-
-        producto.setIdProducto(rs.getInt(1));
-        producto.setCodigo(rs.getString(2));
-        producto.setDescripcion(rs.getString(3));
-        producto.setFormato(rs.getString(4));
-        producto.setPesoUnitario(rs.getDouble(5));
-        producto.setPrecioAlto(rs.getDouble(6));
-        producto.setPrecioBajo(rs.getDouble(7));
-        producto.setPrecioServicio(rs.getDouble(8));
-
-        return producto;
-    }
+    
 
     /**
      * ***********************************************************************
@@ -639,7 +621,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
      */
     private Object[] asignarDatosModelo(Producto producto) {
 
-        Object fila[] = new Object[14];
+        Object fila[] = new Object[7];
 
         fila[0] = producto.getCodigo();
         fila[1] = producto.getDescripcion();

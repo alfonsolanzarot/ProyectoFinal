@@ -109,11 +109,12 @@ public class DlgClientes extends javax.swing.JDialog {
 
         lblNif.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblNif.setForeground(new java.awt.Color(102, 102, 102));
-        lblNif.setText("NIF del contacto");
+        lblNif.setText("NIF del cliente");
 
         txtNif.setBackground(new java.awt.Color(255, 255, 255));
         txtNif.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNif.setForeground(new java.awt.Color(0, 0, 0));
+        txtNif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtNif.setPreferredSize(new java.awt.Dimension(64, 27));
 

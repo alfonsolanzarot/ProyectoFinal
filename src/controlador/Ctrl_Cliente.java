@@ -26,7 +26,7 @@ public class Ctrl_Cliente {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try {
-            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_clientes values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement consulta = cn.prepareStatement("INSERT into tb_clientes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             consulta.setInt(1, 0);
             consulta.setString(2, objeto.getNombre());
             consulta.setString(3, objeto.getNif());

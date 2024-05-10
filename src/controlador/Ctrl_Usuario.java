@@ -18,7 +18,7 @@ public class Ctrl_Usuario {
     public boolean loginUser(Usuario objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
-        String sql = "select email, clave from tb_usuarios where email = '" + objeto.getEmail() + "' and clave = '" + objeto.getClave() + "'";
+        String sql = "SELECT email, clave FROM tb_usuarios WHERE email = '" + objeto.getEmail() + "' AND clave = '" + objeto.getClave() + "'";
         Statement st;
         try {
 

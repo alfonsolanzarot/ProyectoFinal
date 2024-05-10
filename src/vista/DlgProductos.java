@@ -58,7 +58,8 @@ public class DlgProductos extends javax.swing.JDialog {
         lblCodigoServicio = new javax.swing.JLabel();
         txtCodigoServicio = new javax.swing.JTextField();
         lblDescripcionServicio = new javax.swing.JLabel();
-        txtDescripcionServicio = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaDescripcionServicio = new javax.swing.JTextArea();
         lblPrecioServicio = new javax.swing.JLabel();
         txtPrecioServicio = new javax.swing.JTextField();
         pnlProducto = new javax.swing.JPanel();
@@ -157,12 +158,16 @@ public class DlgProductos extends javax.swing.JDialog {
         lblDescripcionServicio.setText("Descripción del servicio");
         pnlServicio.add(lblDescripcionServicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
 
-        txtDescripcionServicio.setBackground(new java.awt.Color(255, 255, 255));
-        txtDescripcionServicio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtDescripcionServicio.setForeground(new java.awt.Color(0, 0, 0));
-        txtDescripcionServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
-        txtDescripcionServicio.setPreferredSize(new java.awt.Dimension(64, 27));
-        pnlServicio.add(txtDescripcionServicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 43, 396, 50));
+        txaDescripcionServicio.setBackground(new java.awt.Color(255, 255, 255));
+        txaDescripcionServicio.setColumns(20);
+        txaDescripcionServicio.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txaDescripcionServicio.setLineWrap(true);
+        txaDescripcionServicio.setRows(5);
+        txaDescripcionServicio.setWrapStyleWord(true);
+        txaDescripcionServicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
+        jScrollPane1.setViewportView(txaDescripcionServicio);
+
+        pnlServicio.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 43, 396, 60));
 
         lblPrecioServicio.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblPrecioServicio.setForeground(new java.awt.Color(102, 102, 102));
@@ -448,6 +453,7 @@ public class DlgProductos extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbFormato;
     private javax.swing.JComboBox<String> cbPeso;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigoProducto;
     private javax.swing.JLabel lblCodigoServicio;
     private javax.swing.JLabel lblDescripcionProducto;
@@ -465,10 +471,10 @@ public class DlgProductos extends javax.swing.JDialog {
     private javax.swing.JPanel pnlServicio;
     private javax.swing.JRadioButton rbtnProducto;
     private javax.swing.JRadioButton rbtnServicio;
+    private javax.swing.JTextArea txaDescripcionServicio;
     private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtCodigoServicio;
     private javax.swing.JTextField txtDescripcionProducto;
-    private javax.swing.JTextField txtDescripcionServicio;
     private javax.swing.JTextField txtPrecioAlto;
     private javax.swing.JTextField txtPrecioBajo;
     private javax.swing.JTextField txtPrecioServicio;
@@ -504,7 +510,7 @@ public class DlgProductos extends javax.swing.JDialog {
         txtPrecioAlto.setText("");
         txtPrecioBajo.setText("");
         txtCodigoServicio.setText("");
-        txtDescripcionServicio.setText("");
+        txaDescripcionServicio.setText("");
         txtPrecioServicio.setText("");
     }
 
@@ -535,13 +541,24 @@ public class DlgProductos extends javax.swing.JDialog {
 
                 Producto producto = new Producto();
                 Ctrl_Producto controlProducto = new Ctrl_Producto();
+
                 // Comprobar si el producto ya existe por descripción o por código
                 String descripcionProducto = txtDescripcionProducto.getText().trim();
                 String codigoProducto = txtCodigoProducto.getText().trim();
                 String pesoString = ((String) cbPeso.getSelectedItem()).replace(" kg", "");
                 double pesoDouble = Double.parseDouble(pesoString);
-                String precioAltoString = txtPrecioAlto.getText().replaceAll("[^\\d.]", "");
-                String precioBajoString = txtPrecioBajo.getText().replaceAll("[^\\d.]", "");
+
+                // Obtener los textos de los campos txtPrecioAlto y txtPrecioBajo
+                String precioAltoTexto = txtPrecioAlto.getText().trim();
+                String precioBajoTexto = txtPrecioBajo.getText().trim();
+
+                // Reemplazar las comas con puntos en los textos
+                precioAltoTexto = precioAltoTexto.replace(',', '.');
+                precioBajoTexto = precioBajoTexto.replace(',', '.');
+
+                // Convertir los textos a valores double
+                double precioAlto = Double.parseDouble(precioAltoTexto);
+                double precioBajo = Double.parseDouble(precioBajoTexto);
 
                 if (!controlProducto.existeProducto(descripcionProducto, codigoProducto)) {
 
@@ -549,8 +566,8 @@ public class DlgProductos extends javax.swing.JDialog {
                     producto.setDescripcion(txtDescripcionProducto.getText().trim());
                     producto.setFormato(cbFormato.getSelectedItem().toString());
                     producto.setPesoUnitario(pesoDouble);
-                    producto.setPrecioAlto(Double.valueOf(precioAltoString));
-                    producto.setPrecioBajo(Double.valueOf(precioBajoString));
+                    producto.setPrecioAlto(precioAlto);
+                    producto.setPrecioBajo(precioBajo);
 
                     if (controlProducto.crear(producto)) {
                         this.ifProducto.recargarTabla();
@@ -571,7 +588,7 @@ public class DlgProductos extends javax.swing.JDialog {
 
         } else if (pnlServicio.isShowing()) {
 
-            if (txtCodigoServicio.getText().isEmpty() || txtDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
+            if (txtCodigoServicio.getText().isEmpty() || txaDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
                         "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
@@ -579,16 +596,25 @@ public class DlgProductos extends javax.swing.JDialog {
 
                 Producto servicio = new Producto();
                 Ctrl_Producto controlServicio = new Ctrl_Producto();
+
                 // Comprobar si el servicio ya existe por descripción o por código
-                String descripcionServicio = txtDescripcionServicio.getText().trim();
+                String descripcionServicio = txaDescripcionServicio.getText().trim();
                 String codigoServicio = txtCodigoServicio.getText().trim();
-                String precioServicioString = txtPrecioServicio.getText().replaceAll("[^\\d.]", "");
+
+                // Obtener el texto del campo txtPrecioServicio
+                String precioServicioTexto = txtPrecioServicio.getText().trim();
+
+                // Reemplazar las comas con puntos en el texto
+                precioServicioTexto = precioServicioTexto.replace(',', '.');
+
+                // Convertir el texto a valor double
+                double precioServicio = Double.parseDouble(precioServicioTexto);
 
                 if (!controlServicio.existeProducto(descripcionServicio, codigoServicio)) {
 
                     servicio.setCodigo(txtCodigoServicio.getText().trim());
-                    servicio.setDescripcion(txtDescripcionServicio.getText().trim());
-                    servicio.setPrecioServicio(Double.valueOf(precioServicioString));
+                    servicio.setDescripcion(txaDescripcionServicio.getText().trim());
+                    servicio.setPrecioServicio(precioServicio);
 
                     if (controlServicio.crear(servicio)) {
                         this.ifProducto.recargarTabla();
@@ -629,18 +655,21 @@ public class DlgProductos extends javax.swing.JDialog {
 
                 Producto producto = new Producto();
                 Ctrl_Producto controlProducto = new Ctrl_Producto();
-                rbtnServicio.setEnabled(false);
+
                 String pesoString = ((String) cbPeso.getSelectedItem()).replace(" kg", "").replace(',', '.');
                 double pesoDouble = Double.parseDouble(pesoString);
-                String precioAltoString = txtPrecioAlto.getText().replaceAll("[^\\d.]", "").replace(',', '.');
-                String precioBajoString = txtPrecioBajo.getText().replaceAll("[^\\d.]", "").replace(',', '.');
+
+                // Leer y procesar los precios manteniendo un formato consistente
+                String precioAltoString = txtPrecioAlto.getText().replace(',', '.');
+                String precioBajoString = txtPrecioBajo.getText().replace(',', '.');
 
                 producto.setCodigo(txtCodigoProducto.getText().trim());
                 producto.setDescripcion(txtDescripcionProducto.getText().trim());
                 producto.setFormato(cbFormato.getSelectedItem().toString());
                 producto.setPesoUnitario(pesoDouble);
-                producto.setPrecioAlto(Double.valueOf(precioAltoString));
-                producto.setPrecioBajo(Double.valueOf(precioBajoString));
+                // Convertir los precios nuevamente al formato adecuado para el almacenamiento en la base de datos
+                producto.setPrecioAlto(Double.valueOf(precioAltoString.replace(',', '.')));
+                producto.setPrecioBajo(Double.valueOf(precioBajoString.replace(',', '.')));
 
                 if (controlProducto.actualizar(producto, idProducto)) {
 
@@ -657,18 +686,22 @@ public class DlgProductos extends javax.swing.JDialog {
 
         } else if (pnlServicio.isShowing()) {
 
-            if (txtCodigoServicio.getText().isEmpty() || txtDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
+            if (txtCodigoServicio.getText().isEmpty() || txaDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
                         "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
             } else {
+
                 Producto servicio = new Producto();
                 Ctrl_Producto controlServicio = new Ctrl_Producto();
-                String precioServicioString = txtPrecioServicio.getText().replaceAll("[^\\d.]", "");
-                rbtnProducto.setEnabled(false);
 
+                // Leer y procesar el precio del servicio manteniendo un formato consistente
+                String precioServicioString = txtPrecioServicio.getText().replace(',', '.');
+                
                 servicio.setCodigo(txtCodigoServicio.getText().trim());
-                servicio.setDescripcion(txtDescripcionServicio.getText().trim());
+                servicio.setDescripcion(txaDescripcionServicio.getText().trim());
+
+                // Convertir el precio del servicio al formato adecuado para el almacenamiento en la base de datos
                 servicio.setPrecioServicio(Double.valueOf(precioServicioString));
 
                 if (controlServicio.actualizar(servicio, idProducto)) {
@@ -703,7 +736,7 @@ public class DlgProductos extends javax.swing.JDialog {
             pnlProducto.setVisible(true);
             pnlServicio.setVisible(false);
             rbtnProducto.setSelected(true);
-            rbtnServicio.setSelected(false);
+            rbtnServicio.setEnabled(false); //Inhabilitamos la opción de servicio para que no se pueda seleccionar.
             lblTitulo.setText("Editar producto");
             btnCrear.setText("Actualizar");
             txtCodigoProducto.setText((String) datosFila[0]);
@@ -750,12 +783,12 @@ public class DlgProductos extends javax.swing.JDialog {
         } else {
             pnlServicio.setVisible(true);
             pnlProducto.setVisible(false);
-            rbtnProducto.setSelected(false);
+            rbtnProducto.setEnabled(false); //Inhabilitamos la opción de producto para que no se pueda seleccionar.
             rbtnServicio.setSelected(true);
             lblTitulo.setText("Editar servicio");
             btnCrear.setText("Actualizar");
             txtCodigoServicio.setText((String) datosFila[0]);
-            txtDescripcionServicio.setText((String) datosFila[1]);
+            txaDescripcionServicio.setText((String) datosFila[1]);
             txtPrecioServicio.setText(String.valueOf((Double) datosFila[6]));
         }
 

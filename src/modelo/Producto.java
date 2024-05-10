@@ -22,10 +22,10 @@ public class Producto {
         this.codigo_producto = "";
         this.descripcion = "";
         this.formato = "";
-        this.peso_unitario = 0.0;
-        this.precio_alto = 0.0;
-        this.precio_bajo = 0.0;
-        this.precio_servicio = 0.0;
+        this.peso_unitario = 0.00;
+        this.precio_alto = 0.00;
+        this.precio_bajo = 0.00;
+        this.precio_servicio = 0.00;
 
     }
 

@@ -1,6 +1,5 @@
 package vista;
 
-import controlador.Ctrl_Cliente;
 import java.awt.Color;
 import java.awt.Component;
 import java.sql.DriverManager;
@@ -14,6 +13,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,18 +34,19 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import modelo.Cliente;
-import servicios.ServicioCliente;
+import modelo.Proforma;
+import servicios.ServicioProforma;
 
 /**
  *
  * @author Alfonso Lanzarot
  */
-public class InterClientes extends javax.swing.JInternalFrame {
+public class InterProformas extends javax.swing.JInternalFrame {
 
-    private final Map<Integer, Integer> idClientePorFila = new HashMap<>();
-    private int idCliente;
-    List<Cliente> listaClientes = new ArrayList<>();
+    private final Map<Integer, Integer> idProformaPorFila = new HashMap<>();
+    private int idProforma;
+
+    List<Proforma> listaProformas = new ArrayList<>();
 
     Toolkit tk = Toolkit.getDefaultToolkit();
     Dimension d = tk.getScreenSize();
@@ -53,21 +55,55 @@ public class InterClientes extends javax.swing.JInternalFrame {
     int alto = (int) d.getHeight();
 
     //CONSTRUCTOR
-    public InterClientes() {
+    public InterProformas() {
         initComponents();
         this.setSize(ancho, alto);
-        this.setTitle("CLIENTES");
-        CargarTablaClientes();
-        configurarTablaClientes();
+        this.setTitle("PROFORMAS");
+        CargarTablaProformas();
+        configurarTablaProformas();
 
         // Añadimos WindowListener para detectar cuándo se abre el frame interno
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                CargarTablaClientes(); // Llama al método para cargar la tabla cuando se abre el frame
+                CargarTablaProformas(); // Llama al método para cargar la tabla cuando se abre el frame
             }
         });
 
+    }
+
+    /**
+     * Clase interna que define un renderizador de celdas personalizado para
+     * cambiar el color del texto basado en el estado.
+     */
+    class CustomTableCellRenderer extends DefaultTableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Obtener el valor del estado en la columna "Estado"
+            String estado = (String) table.getValueAt(row, 8);
+
+            // Cambiar el color del texto basado en el estado
+            switch (estado) {
+                case "Pedido en curso":
+                    cellComponent.setForeground(new Color(15,158,213));
+                    break;
+                case "Pedido realizado":
+                    cellComponent.setForeground(new Color(0,176,80));
+                    break;
+                case "Pedido cancelado":
+                    cellComponent.setForeground(Color.RED);
+                    break;
+                default:
+                    // Si no se encuentra el estado, mantener el color por defecto
+                    cellComponent.setForeground(table.getForeground());
+                    break;
+            }
+
+            return cellComponent;
+        }
     }
 
     /**
@@ -76,31 +112,26 @@ public class InterClientes extends javax.swing.JInternalFrame {
      *
      * ******************************
      */
-    private void configurarTablaClientes() {
+    private void configurarTablaProformas() {
         // Crear un modelo de tabla
         DefaultTableModel model = new DefaultTableModel();
 
         // Agregar columnas al modelo de tabla
-        model.addColumn("Nombre");
-        model.addColumn("NIF");
-        model.addColumn("E-mail");
-        model.addColumn("Teléfono");
-        model.addColumn("Móvil");
-        model.addColumn("Dirección");
-        model.addColumn("Población");
-        model.addColumn("C.P.");
-        model.addColumn("Provincia");
-        model.addColumn("País");
-        model.addColumn("Nombre comercial");
-        model.addColumn("Condiciones pago");
-        model.addColumn("Website");
-        model.addColumn("Tipo de precio");
+        model.addColumn("Fecha");
+        model.addColumn("Número");
+        model.addColumn("Vencimiento");
+        model.addColumn("Cliente");
+        model.addColumn("Transporte");
+        model.addColumn("Seguro");
+        model.addColumn("Total kilos/uds.");
+        model.addColumn("Total euros");
+        model.addColumn("Estado");
 
         // Establecer el modelo de tabla en la tabla
-        tblClientes.setModel(model);
+        tblProformas.setModel(model);
 
         // Personalizar el encabezado de la tabla
-        JTableHeader header = tblClientes.getTableHeader();
+        JTableHeader header = tblProformas.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
         // Aumentar la altura del encabezado de la tabla
@@ -108,32 +139,77 @@ public class InterClientes extends javax.swing.JInternalFrame {
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
         // Obtener el renderizador predeterminado del encabezado
-        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblClientes.getTableHeader().getDefaultRenderer();
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblProformas.getTableHeader().getDefaultRenderer();
 
         // Establecer alineación centrada para el renderizador del encabezado
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Personalizar el tamaño de las filas
-        tblClientes.setRowHeight(60); // Cambiar el tamaño de las filas
+        tblProformas.setRowHeight(60); // Cambiar el tamaño de las filas
 
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
-        tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
+        tblProformas.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
         //Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
-        
-        // Renderizador para alinear al centro las celdas de las columnas de nif y código postal
+
+        // Renderizador para alinear al centro las celdas de las columnas de fecha, número, vencimiento y los importes y pesos.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblClientes.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif
-        tblClientes.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal
-                
-        // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblClientes.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono
-        tblClientes.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil
-        
+        tblProformas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // Fecha
+        tblProformas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Número
+        tblProformas.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Vencimiento
+
+        // Crear un renderizador personalizado para las celdas de las columnas con decimales
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        symbols.setGroupingSeparator('.');
+
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", symbols);
+
+        DefaultTableCellRenderer decimalRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof Double) {
+                    value = decimalFormat.format(value) + " €"; // Añadir el símbolo del euro después del valor
+                }
+                super.setValue(value);
+
+            }
+
+            // Asegurar que la alineación se mantenga centrada
+            @Override
+            public void setHorizontalAlignment(int alignment) {
+                super.setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        };
+
+        // Aplicar el renderizador personalizado a las columnas de los importes del transporte, el seguro, y el total euros.
+        tblProformas.getColumnModel().getColumn(4).setCellRenderer(decimalRenderer); // Transporte
+        tblProformas.getColumnModel().getColumn(5).setCellRenderer(decimalRenderer); // Seguro
+        tblProformas.getColumnModel().getColumn(7).setCellRenderer(decimalRenderer); // Total euros
+
+        // Renderizador para las unidades de peso
+        DefaultTableCellRenderer unitRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value instanceof Double) {
+                    value = decimalFormat.format(value) + " kg"; // Añadir la unidad kg después del valor
+                }
+                super.setValue(value);
+            }
+
+            // Asegurar que la alineación se mantenga centrada
+            @Override
+            public void setHorizontalAlignment(int alignment) {
+                super.setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        };
+        tblProformas.getColumnModel().getColumn(6).setCellRenderer(unitRenderer); // Peso unitario
+
+        // Establecer el renderizador personalizado para la columna "Estado"
+        tblProformas.getColumnModel().getColumn(8).setCellRenderer(new CustomTableCellRenderer());
+
     }
 
     /**
@@ -201,12 +277,12 @@ public class InterClientes extends javax.swing.JInternalFrame {
         lblTitulo = new javax.swing.JLabel();
         btnAnadir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         pnlTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblClientes = new javax.swing.JTable();
+        tblProformas = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnProforma = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setBorder(null);
@@ -217,13 +293,13 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
         lblTitulo.setFont(new java.awt.Font("Roboto", 1, 40)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(52, 98, 139));
-        lblTitulo.setText("Clientes");
+        lblTitulo.setText("Facturas proforma");
         getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 35, -1, -1));
 
         btnAnadir.setBackground(new java.awt.Color(106, 141, 162));
-        btnAnadir.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        btnAnadir.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         btnAnadir.setForeground(new java.awt.Color(255, 255, 255));
-        btnAnadir.setText("Nuevo cliente");
+        btnAnadir.setText("Nueva proforma");
         btnAnadir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 98, 137), 3));
         btnAnadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAnadir.setFocusPainted(false);
@@ -267,40 +343,17 @@ public class InterClientes extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 162, 130, 55));
 
-        btnEliminar.setBackground(new java.awt.Color(255, 124, 128));
-        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(250, 0, 102), 3));
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.setFocusPainted(false);
-        btnEliminar.setOpaque(true);
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseExited(evt);
-            }
-        });
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 240, 130, 55));
-
         pnlTabla.setBackground(new java.awt.Color(247, 247, 252));
         pnlTabla.setPreferredSize(new java.awt.Dimension(1000, 300));
         pnlTabla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tblClientes = new javax.swing.JTable(){
+        tblProformas = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
                 return false;
             }
         };
-        tblClientes.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tblProformas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        tblProformas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -311,14 +364,14 @@ public class InterClientes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblClientes.setFocusable(false);
-        tblClientes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblClientes);
-        if (tblClientes.getColumnModel().getColumnCount() > 0) {
-            tblClientes.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            tblClientes.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            tblClientes.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-            tblClientes.getColumnModel().getColumn(3).setHeaderValue("Title 4");
+        tblProformas.setFocusable(false);
+        tblProformas.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tblProformas);
+        if (tblProformas.getColumnModel().getColumnCount() > 0) {
+            tblProformas.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            tblProformas.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            tblProformas.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+            tblProformas.getColumnModel().getColumn(3).setHeaderValue("Title 4");
         }
 
         pnlTabla.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1600, 750));
@@ -359,6 +412,29 @@ public class InterClientes extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 102, 80, 35));
 
+        btnProforma.setBackground(new java.awt.Color(0, 79, 40));
+        btnProforma.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        btnProforma.setForeground(new java.awt.Color(255, 255, 255));
+        btnProforma.setText("Proforma");
+        btnProforma.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 50, 30), 3));
+        btnProforma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProforma.setFocusPainted(false);
+        btnProforma.setOpaque(true);
+        btnProforma.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnProformaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnProformaMouseExited(evt);
+            }
+        });
+        btnProforma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProformaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnProforma, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 240, 130, 55));
+
         lblFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
         lblFondo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -369,63 +445,37 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
-        DlgClientes dlgClientes = new DlgClientes(f, true);
-        dlgClientes.setIfCliente(this);
-        dlgClientes.setVisible(true);
+        DlgProformas dlgProformas = new DlgProformas(f, true);
+        dlgProformas.setIfProforma(this);
+        dlgProformas.setVisible(true);
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
-        if (filaSeleccionada != -1) {
-
-            idCliente = idClientePorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el cliente seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-            if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlCliente.eliminar(idCliente)) {
-
-                    this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para eliminarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
+        int filaSeleccionada = tblProformas.getSelectedRow();
         if (filaSeleccionada != -1) {
-            // Obtener el ID del cliente de la fila seleccionada utilizando el HashMap
-            idCliente = idClientePorFila.get(filaSeleccionada);
+            // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
+            idProforma = idProformaPorFila.get(filaSeleccionada);
 
             // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblProformas.getModel();
             Object[] datosFila = new Object[modelo.getColumnCount()];
             for (int i = 0; i < modelo.getColumnCount(); i++) {
                 datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
             }
 
-            // Pasar el ID del cliente y los datos de la fila al diálogo de edición.
+            // Pasar el ID de la proforma y los datos de la fila al diálogo de edición.
             Frame f = JOptionPane.getFrameForComponent(this);
-            DlgEdicionCliente dlgEdicionCliente = new DlgEdicionCliente(f, true);
-            dlgEdicionCliente.setIdCliente(idCliente);
-            dlgEdicionCliente.mostrarDatos(idCliente, datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
-            dlgEdicionCliente.setIfCliente(this);
-            dlgEdicionCliente.setVisible(true);
+            DlgProformas dlgProformas = new DlgProformas(f, true);
+            dlgProformas.setIdProforma(idProforma);
+            dlgProformas.mostrarDatos(idProforma, datosFila); // Pasa el ID de la proforma y los datos de la fila al diálogo
+            dlgProformas.setIfProforma(this);
+            dlgProformas.setVisible(true);
 
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para editarlo.",
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para editarla.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         }
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -464,74 +514,79 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
 
-    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
-        btnEliminar.setBackground(new Color(255, 91, 95));
-    }//GEN-LAST:event_btnEliminarMouseEntered
+    private void btnProformaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProformaMouseEntered
+        btnProforma.setBackground(new Color(0, 105, 43));
+    }//GEN-LAST:event_btnProformaMouseEntered
 
-    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
-        btnEliminar.setBackground(new Color(255, 124, 128));
-    }//GEN-LAST:event_btnEliminarMouseExited
+    private void btnProformaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProformaMouseExited
+        btnProforma.setBackground(new Color(0, 79, 40));
+    }//GEN-LAST:event_btnProformaMouseExited
+
+    private void btnProformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProformaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProformaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnProforma;
     public static javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlTabla;
-    public static javax.swing.JTable tblClientes;
+    public static javax.swing.JTable tblProformas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS.
-     * ***************************************************************
+     * ****************************************************************
+     * MÉTODO PARA CARGAR LA TABLA CON TODAS LAS PROFORMAS REGISTRADAS.
+     * ****************************************************************
      */
-    private void CargarTablaClientes() {
+    private void CargarTablaProformas() {
         ConexionBD conexion = new ConexionBD();
 
         try {
             try {
                 Class.forName(conexion.driver);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(InterClientes.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InterProformas.class.getName()).log(Level.SEVERE, null, ex);
             }
             conexion.con = DriverManager.getConnection(conexion.url, conexion.usuario, conexion.clave);
 
-            DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+            DefaultTableModel model = (DefaultTableModel) tblProformas.getModel();
 
-            String sql = "SELECT idCliente, nombre, nif, email, telefono, movil, direccion, poblacion, c_postal, provincia, pais, n_comercial, condiciones_pago, website, tipo_precio FROM tb_clientes";
+            String sql = "SELECT idProforma, idCliente, fecha, numero, nombre_cliente, nif, condiciones_pago, validez, direccion, poblacion, "
+                    + "c_postal, provincia, incoterm, pais, transporte, seguro, kilos, suma_subtotal, suma_iva, descuento, total, observaciones, estado FROM tb_proformas";
 
             try (Statement st = conexion.con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
-                listaClientes = new ArrayList<>();
+                listaProformas = new ArrayList<>();
 
                 while (rs.next()) {
 
-                    Cliente cliente = ServicioCliente.asignarDatosCliente(rs);
-                    listaClientes.add(cliente);
+                    Proforma proforma = ServicioProforma.asignarDatosProforma(rs);
+                    listaProformas.add(proforma);
 
-                    Object[] datosFila = this.asignarDatosModelo(cliente);
+                    Object[] datosFila = this.asignarDatosModelo(proforma);
                     model.addRow(datosFila);
 
-                    // Obtener el ID del cliente de la fila actual
-                    idCliente = rs.getInt("idCliente");
+                    // Obtener el ID de la proforma de la fila actual
+                    idProforma = rs.getInt("idProforma");
 
                     // Obtener el índice de la fila recién agregada
                     int fila = model.getRowCount() - 1;
 
-                    // Asociar el ID del cliente con el índice de fila en el HashMap
-                    idClientePorFila.put(fila, idCliente);
+                    // Asociar el ID de la proforma con el índice de fila en el HashMap
+                    idProformaPorFila.put(fila, idProforma);
 
                 }
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla clientes: " + e);
+                System.out.println("Error al llenar la tabla proformas: " + e);
             }
 
         } catch (SQLException e) {
@@ -556,19 +611,20 @@ public class InterClientes extends javax.swing.JInternalFrame {
     }
 
     /**
-     * ****************************************
-     * MÉTODO PARA BUSCAR CLIENTES EN LA TABLA.
-     * ****************************************
+     * *****************************************
+     * MÉTODO PARA BUSCAR PROFORMAS EN LA TABLA.
+     * *****************************************
      */
     public void buscar() {
-        List<Cliente> listaFiltrada = new ArrayList<>();
-        for (Cliente c : this.listaClientes) {
-            if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || c.getNif().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
-                listaFiltrada.add(c);
+        List<Proforma> listaFiltrada = new ArrayList<>();
+        for (Proforma pr : this.listaProformas) {
+            if (pr.getNumero().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || pr.getNombre_cliente().toLowerCase().contains(txtBuscar.getText().toLowerCase())
+                    || pr.getEstado().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
+                listaFiltrada.add(pr);
             }
         }
         Object[] arrayObjetos = new Object[listaFiltrada.size()];
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblProformas.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
         for (int i = 0; i < listaFiltrada.size(); i++) {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
@@ -576,47 +632,40 @@ public class InterClientes extends javax.swing.JInternalFrame {
         }
     }
 
-    
-
     /**
      * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS CLIENTES REGISTRADOS AL MODELO DE
+     * MÉTODO PARA ASIGNAR LOS DATOS DE LAS PROFORMAS REGISTRADAS AL MODELO DE
      * TABLA.
      * ***********************************************************************
      */
-    private Object[] asignarDatosModelo(Cliente cliente) {
+    private Object[] asignarDatosModelo(Proforma proforma) {
 
-        Object fila[] = new Object[14];
+        Object fila[] = new Object[9];
 
-        fila[0] = cliente.getNombre();
-        fila[1] = cliente.getNif();
-        fila[2] = cliente.getEmail();
-        fila[3] = cliente.getDireccion();
-        fila[4] = cliente.getTelefono();
-        fila[5] = cliente.getMovil();
-        fila[6] = cliente.getPoblacion();
-        fila[7] = cliente.getC_postal();
-        fila[8] = cliente.getWebsite();
-        fila[9] = cliente.getProvincia();
-        fila[10] = cliente.getPais();
-        fila[11] = cliente.getN_comercial();
-        fila[12] = cliente.getCondiciones_pago();
-        fila[13] = cliente.getTipo_precio();
+        fila[0] = proforma.getFecha();
+        fila[1] = proforma.getNumero();
+        fila[2] = proforma.getValidez();
+        fila[3] = proforma.getNombre_cliente();
+        fila[4] = proforma.getTransporte();
+        fila[5] = proforma.getSeguro();
+        fila[6] = proforma.getKilos();
+        fila[7] = proforma.getTotal();
+        fila[8] = proforma.getEstado();
 
         return fila;
     }
 
     /**
      * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN CLIENTE.
+     * MÉTODO PARA RECARGAR LA TABLA CON TODAS LAS PROFORMAS REGISTRADAS CUANDO
+     * SE AÑADE UNA NUEVA.
      * ************************************************************************
      */
     public void recargarTabla() {
-        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblProformas.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
-        CargarTablaClientes();
+        CargarTablaProformas();
     }
 
     /**
