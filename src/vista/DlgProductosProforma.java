@@ -21,7 +21,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 import modelo.Producto;
 import modelo.ProductoProforma;
 import servicios.ServicioProducto;
@@ -682,7 +681,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 }
             } catch (NumberFormatException ex) {
                 // Si se produce un error al convertir los valores a números, mostrar un mensaje de error
-                JOptionPane.showMessageDialog(null, "Error al calcular el subtotal: " + ex.getMessage(),
+                JOptionPane.showMessageDialog(null, "Error al calcular el subtotal: por favor introduzca un valor numérico válido en el campo kilos",
                         "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }

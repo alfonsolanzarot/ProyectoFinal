@@ -299,24 +299,6 @@ public final class DlgProformas extends javax.swing.JDialog {
         };
         tblProductos.getColumnModel().getColumn(5).setCellRenderer(percentageRenderer); // Porcentaje iva
 
-        // Crear un renderizador del color personalizado para las filas alternadas
-        DefaultTableCellRenderer rowRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (row % 2 == 0) { // Si el número de fila es par
-                    cell.setBackground(Color.WHITE); // Establecer el color de fondo para las filas pares
-                } else {
-                    cell.setBackground(new Color(242, 242, 242)); // Establecer el color de fondo para las filas impares
-                }
-                return cell;
-            }
-        };
-
-        // Aplicar el renderizador personalizado a todas las columnas de la tabla
-        for (int i = 0; i < tblProductos.getColumnCount(); i++) {
-            tblProductos.getColumnModel().getColumn(i).setCellRenderer(rowRenderer);
-        }
     }
 
     /**
@@ -1154,7 +1136,7 @@ public final class DlgProformas extends javax.swing.JDialog {
         } else {
 
             crearProvisionalEnBD();
-
+           
             String tipo = txtTipo != null ? txtTipo.getText() : "";
 
             Ctrl_Proforma controlProforma = new Ctrl_Proforma();
@@ -1885,25 +1867,30 @@ public final class DlgProformas extends javax.swing.JDialog {
      * **********************************
      */
     private void calcularSubtotal2() {
-        // Calcular subtotal total
-        subtotalTotal = totalSubtotal; // Total de subtotales de los productos
+        try {
+            // Calcular subtotal total
+            subtotalTotal = totalSubtotal; // Total de subtotales de los productos
 
-        // Agregar transporte, si está presente
-        if (!txtTransporte.getText().isBlank()) {
-            subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
+            // Agregar transporte, si está presente
+            if (!txtTransporte.getText().isBlank()) {
+                subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
+            }
+
+            // Agregar seguro, si está presente
+            if (!txtSeguro.getText().isBlank()) {
+                subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText()));
+            }
+
+            // Actualizar txtSubtotal2 con el resultado
+            txtSubtotal2.setText(decimalFormat.format(subtotalTotal) + " €");
+
+            // Llamar a calcularTotalIva2 y calcularTotal para actualizar los valores dependientes
+            calcularTotalIva2();
+            calcularTotal();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido en los campos transporte y seguro.",
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
-
-        // Agregar seguro, si está presente
-        if (!txtSeguro.getText().isBlank()) {
-            subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText()));
-        }
-
-        // Actualizar txtSubtotal2 con el resultado
-        txtSubtotal2.setText(decimalFormat.format(subtotalTotal) + " €");
-
-        // Llamar a calcularTotalIva2 y calcularTotal para actualizar los valores dependientes
-        calcularTotalIva2();
-        calcularTotal();
     }
 
     /**
@@ -1913,29 +1900,35 @@ public final class DlgProformas extends javax.swing.JDialog {
      * **********************************
      */
     private void calcularTotalIva2() {
-        // Inicializar totalIva2 a 0 cada vez que se llama al método
-        totalIva2 = 0.0;
+        try {
+            // Inicializar totalIva2 a 0 cada vez que se llama al método
+            totalIva2 = 0.0;
 
-        // Sumar el IVA de cada línea de producto en la tabla
-        for (int i = 0; i < tblProductos.getRowCount(); i++) {
-            // Obtener el importe de IVA de la columna 6
-            double importeIvaProducto = Double.parseDouble(tblProductos.getValueAt(i, 6).toString());
-            // Sumar el importe de IVA al totalIva2
-            totalIva2 += importeIvaProducto;
+            // Sumar el IVA de cada línea de producto en la tabla
+            for (int i = 0; i < tblProductos.getRowCount(); i++) {
+                // Obtener el importe de IVA de la columna 6
+                double importeIvaProducto = Double.parseDouble(tblProductos.getValueAt(i, 6).toString());
+                // Sumar el importe de IVA al totalIva2
+                totalIva2 += importeIvaProducto;
+            }
+
+            // Calcular IVA del transporte si el país es España y se ha introducido un importe en txtTransporte
+            if (!txtPais.getText().isBlank() && txtPais.getText().equals("España") && !txtTransporte.getText().isBlank()) {
+                double ivaTransporte = 0.21 * Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
+                // Sumar el IVA del transporte al totalIva2
+                totalIva2 += ivaTransporte;
+            }
+
+            // Actualizar txtTotalIva2 con el resultado
+            txtTotalIva2.setText(decimalFormat.format(totalIva2) + " €");
+
+            // Llamar a calcularTotal para actualizar el valor total
+            calcularTotal();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido en el campo transporte.",
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
+
         }
-
-        // Calcular IVA del transporte si el país es España y se ha introducido un importe en txtTransporte
-        if (!txtPais.getText().isBlank() && txtPais.getText().equals("España") && !txtTransporte.getText().isBlank()) {
-            double ivaTransporte = 0.21 * Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
-            // Sumar el IVA del transporte al totalIva2
-            totalIva2 += ivaTransporte;
-        }
-
-        // Actualizar txtTotalIva2 con el resultado
-        txtTotalIva2.setText(decimalFormat.format(totalIva2) + " €");
-
-        // Llamar a calcularTotal para actualizar el valor total
-        calcularTotal();
     }
 
     /**
@@ -1945,35 +1938,39 @@ public final class DlgProformas extends javax.swing.JDialog {
      * ******************************
      */
     private void calcularTotal() {
-        // Calcular subtotal total
-        subtotalTotal = totalSubtotal; // Total de subtotales de los productos
+        try {
+            // Calcular subtotal total
+            subtotalTotal = totalSubtotal; // Total de subtotales de los productos
 
-        // Agregar transporte, si está presente
-        if (!txtTransporte.getText().isBlank()) {
-            subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
+            // Agregar transporte, si está presente
+            if (!txtTransporte.getText().isBlank()) {
+                subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText()));
+            }
+
+            // Agregar seguro, si está presente
+            if (!txtSeguro.getText().isBlank()) {
+                subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText()));
+            }
+
+            // Calcular total
+            double total = subtotalTotal;
+
+            // Agregar total de IVA, si está presente
+            if (!txtTotalIva2.getText().isBlank()) {
+                total += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText()));
+            }
+
+            // Restar el descuento, si está presente
+            if (!txtDescuento.getText().isBlank()) {
+                total -= Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText()));
+            }
+
+            // Actualizar txtTotal con el resultado
+            txtTotal.setText(decimalFormat.format(total) + " €");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido en los campos transporte, seguro y descuento.",
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
-
-        // Agregar seguro, si está presente
-        if (!txtSeguro.getText().isBlank()) {
-            subtotalTotal += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText()));
-        }
-
-        // Calcular total
-        double total = subtotalTotal;
-
-        // Agregar total de IVA, si está presente
-        if (!txtTotalIva2.getText().isBlank()) {
-            total += Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText()));
-        }
-
-        // Restar el descuento, si está presente
-        if (!txtDescuento.getText().isBlank()) {
-            total -= Double.parseDouble(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText()));
-        }
-
-        // Actualizar txtTotal con el resultado
-        txtTotal.setText(decimalFormat.format(total) + " €");
-
     }
 
     /**
