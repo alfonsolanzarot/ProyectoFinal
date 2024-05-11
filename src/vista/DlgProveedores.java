@@ -257,6 +257,11 @@ public class DlgProveedores extends javax.swing.JDialog {
                 btnCrearActionPerformed(evt);
             }
         });
+        btnCrear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -438,59 +443,7 @@ public class DlgProveedores extends javax.swing.JDialog {
     }//GEN-LAST:event_txtMovilKeyTyped
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        Proveedor proveedor = new Proveedor();
-        Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
-
-        /**
-         * ******************************************************
-         * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE PROVEEDORES.
-         *
-         * ******************************************************
-         */
-        if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-
-        } else {
-
-            // Comprobar si el proveedor ya existe por nombre o por NIF 
-            String nombreProveedor = txtNombre.getText().trim();
-            String nifProveedor = txtNif.getText().trim();
-
-            if (!controlProveedor.existeProveedor(nombreProveedor, nifProveedor)) {
-
-                proveedor.setNombre(txtNombre.getText().trim());
-                proveedor.setNif(txtNif.getText().trim());
-                proveedor.setEmail(txtCorreo.getText().trim());
-                proveedor.setDireccion(txtDireccion.getText().trim());
-                proveedor.setTelefono(txtTelefono.getText().trim());
-                proveedor.setMovil(txtMovil.getText().trim());
-                proveedor.setPoblacion(txtPoblacion.getText().trim());
-                proveedor.setC_postal(txtCodigo.getText().trim());
-                proveedor.setWebsite(txtWeb.getText().trim());
-                proveedor.setProvincia(txtProvincia.getText().trim());
-                proveedor.setPais(txtPais.getText().trim());
-                proveedor.setN_comercial(txtNComercial.getText().trim());
-                proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
-
-                if (controlProveedor.crear(proveedor)) {
-                    this.ifProveedor.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Proveedor creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                    this.Limpiar();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al crear el proveedor.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                    this.Limpiar();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado en la base de datos.",
-                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                this.Limpiar();
-            }
-
-        }
-
-
+        crearProveedor();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
@@ -527,6 +480,10 @@ public class DlgProveedores extends javax.swing.JDialog {
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
+
+    private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
+        crearProveedor();
+    }//GEN-LAST:event_btnCrearKeyPressed
 
     /**
      * @param args the command line arguments
@@ -605,6 +562,61 @@ public class DlgProveedores extends javax.swing.JDialog {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * ******************************************************
+     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE PROVEEDORES.
+     *
+     * ******************************************************
+     */
+    private void crearProveedor() {
+        Proveedor proveedor = new Proveedor();
+        Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
+
+        if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+
+        } else {
+
+            // Comprobar si el proveedor ya existe por nombre o por NIF 
+            String nombreProveedor = txtNombre.getText().trim();
+            String nifProveedor = txtNif.getText().trim();
+
+            if (!controlProveedor.existeProveedor(nombreProveedor, nifProveedor)) {
+
+                proveedor.setNombre(txtNombre.getText().trim());
+                proveedor.setNif(txtNif.getText().trim());
+                proveedor.setEmail(txtCorreo.getText().trim());
+                proveedor.setDireccion(txtDireccion.getText().trim());
+                proveedor.setTelefono(txtTelefono.getText().trim());
+                proveedor.setMovil(txtMovil.getText().trim());
+                proveedor.setPoblacion(txtPoblacion.getText().trim());
+                proveedor.setC_postal(txtCodigo.getText().trim());
+                proveedor.setWebsite(txtWeb.getText().trim());
+                proveedor.setProvincia(txtProvincia.getText().trim());
+                proveedor.setPais(txtPais.getText().trim());
+                proveedor.setN_comercial(txtNComercial.getText().trim());
+                proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
+
+                if (controlProveedor.crear(proveedor)) {
+                    this.ifProveedor.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Proveedor creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                    this.Limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al crear el proveedor.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                    this.Limpiar();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El proveedor ya está registrado en la base de datos.",
+                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                this.Limpiar();
+            }
+
+        }
+
+    }
 
     /**
      * *********************************************

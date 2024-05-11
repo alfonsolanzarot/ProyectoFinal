@@ -289,6 +289,11 @@ public class DlgProductos extends javax.swing.JDialog {
                 btnCrearActionPerformed(evt);
             }
         });
+        btnCrear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -404,6 +409,16 @@ public class DlgProductos extends javax.swing.JDialog {
             pnlServicio.setVisible(true);
         }
     }//GEN-LAST:event_rbtnServicioActionPerformed
+
+    private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
+        String textoBoton = btnCrear.getText();
+
+        if (textoBoton.equals("Crear")) {
+            crearProducto();
+        } else if (textoBoton.equals("Actualizar")) {
+            actualizarProducto();
+        }
+    }//GEN-LAST:event_btnCrearKeyPressed
 
     /**
      * @param args the command line arguments
@@ -697,7 +712,7 @@ public class DlgProductos extends javax.swing.JDialog {
 
                 // Leer y procesar el precio del servicio manteniendo un formato consistente
                 String precioServicioString = txtPrecioServicio.getText().replace(',', '.');
-                
+
                 servicio.setCodigo(txtCodigoServicio.getText().trim());
                 servicio.setDescripcion(txaDescripcionServicio.getText().trim());
 

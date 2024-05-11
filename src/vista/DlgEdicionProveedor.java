@@ -257,6 +257,11 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -468,50 +473,22 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
         txtPais.setText((String) datosFila[9]);
         txtNComercial.setText((String) datosFila[10]);
         txtCondicionesPago.setText((String) datosFila[11]);
-        
+
     }
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
-        if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
-                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-
-        } else {
-
-            Proveedor proveedor = new Proveedor();
-            Ctrl_Proveedor controlCliente = new Ctrl_Proveedor();
-
-            proveedor.setNombre(txtNombre.getText().trim());
-            proveedor.setNif(txtNif.getText().trim());
-            proveedor.setEmail(txtCorreo.getText().trim());
-            proveedor.setDireccion(txtDireccion.getText().trim());
-            proveedor.setTelefono(txtTelefono.getText().trim());
-            proveedor.setMovil(txtMovil.getText().trim());
-            proveedor.setPoblacion(txtPoblacion.getText().trim());
-            proveedor.setC_postal(txtCodigo.getText().trim());
-            proveedor.setProvincia(txtProvincia.getText().trim());
-            proveedor.setPais(txtPais.getText().trim());
-            proveedor.setN_comercial(txtNComercial.getText().trim());
-            proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
-            proveedor.setWebsite(txtWeb.getText().trim());
-            
-            if (controlCliente.actualizar(proveedor, idProveedor)) {
-
-                this.ifProveedor.recargarTabla();
-                JOptionPane.showMessageDialog(null, "Datos del proveedor actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                this.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el proveedor.",
-                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-            }
-
-        }
+        actualizarProveedor();
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
-    //MÉTODO PARA MOVER LA VENTANA.
+    /**
+     * *****************************
+     * MÉTODO PARA MOVER LA VENTANA.
+     *
+     * *****************************
+     * @param evt
+     */
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -538,6 +515,10 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        actualizarProveedor();
+    }//GEN-LAST:event_btnActualizarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -620,7 +601,60 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
 
-//MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+    /**
+     * ***********************************
+     * MÉTODO PARA ACTUALIZAR PROVEEDORES.
+     *
+     * ***********************************
+     */
+    private void actualizarProveedor() {
+        if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
+                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+
+        } else {
+
+            Proveedor proveedor = new Proveedor();
+            Ctrl_Proveedor controlCliente = new Ctrl_Proveedor();
+
+            proveedor.setNombre(txtNombre.getText().trim());
+            proveedor.setNif(txtNif.getText().trim());
+            proveedor.setEmail(txtCorreo.getText().trim());
+            proveedor.setDireccion(txtDireccion.getText().trim());
+            proveedor.setTelefono(txtTelefono.getText().trim());
+            proveedor.setMovil(txtMovil.getText().trim());
+            proveedor.setPoblacion(txtPoblacion.getText().trim());
+            proveedor.setC_postal(txtCodigo.getText().trim());
+            proveedor.setProvincia(txtProvincia.getText().trim());
+            proveedor.setPais(txtPais.getText().trim());
+            proveedor.setN_comercial(txtNComercial.getText().trim());
+            proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
+            proveedor.setWebsite(txtWeb.getText().trim());
+
+            if (controlCliente.actualizar(proveedor, idProveedor)) {
+
+                this.ifProveedor.recargarTabla();
+                JOptionPane.showMessageDialog(null, "Datos del proveedor actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el proveedor.",
+                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            }
+
+        }
+    }
+
+    /**
+     * *********************************************
+     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     *
+     * *********************************************
+     * @param path
+     * @param width
+     * @param heigth
+     * @return 
+     */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;

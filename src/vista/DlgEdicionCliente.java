@@ -271,6 +271,11 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -509,46 +514,17 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
-        if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
-                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-
-        } else {
-
-            Cliente cliente = new Cliente();
-            Ctrl_Cliente controlCliente = new Ctrl_Cliente();
-
-            cliente.setNombre(txtNombre.getText().trim());
-            cliente.setNif(txtNif.getText().trim());
-            cliente.setEmail(txtCorreo.getText().trim());
-            cliente.setDireccion(txtDireccion.getText().trim());
-            cliente.setTelefono(txtTelefono.getText().trim());
-            cliente.setMovil(txtMovil.getText().trim());
-            cliente.setPoblacion(txtPoblacion.getText().trim());
-            cliente.setC_postal(txtCodigo.getText().trim());
-            cliente.setProvincia(txtProvincia.getText().trim());
-            cliente.setPais(txtPais.getText().trim());
-            cliente.setN_comercial(txtNComercial.getText().trim());
-            cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
-            cliente.setWebsite(txtWeb.getText().trim());
-            cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
-
-            if (controlCliente.actualizar(cliente, idCliente)) {
-
-                this.ifCliente.recargarTabla();
-                JOptionPane.showMessageDialog(null, "Datos del cliente actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                this.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el cliente.",
-                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-            }
-
-        }
+        actualizarCliente();
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
-    //MÉTODO PARA MOVER LA VENTANA.
+    /**
+     * *****************************
+     * MÉTODO PARA MOVER LA VENTANA.
+     *
+     * *****************************
+     * @param evt
+     */
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -575,6 +551,10 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        actualizarCliente();
+    }//GEN-LAST:event_btnActualizarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -657,7 +637,63 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
 
-//MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+    
+    /**
+     * ********************************
+     * MÉTODO PARA ACTUALIZAR CLIENTES.
+     *
+     * ********************************
+     */
+    private void actualizarCliente() {
+        if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
+                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+
+        } else {
+
+            Cliente cliente = new Cliente();
+            Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+
+            cliente.setNombre(txtNombre.getText().trim());
+            cliente.setNif(txtNif.getText().trim());
+            cliente.setEmail(txtCorreo.getText().trim());
+            cliente.setDireccion(txtDireccion.getText().trim());
+            cliente.setTelefono(txtTelefono.getText().trim());
+            cliente.setMovil(txtMovil.getText().trim());
+            cliente.setPoblacion(txtPoblacion.getText().trim());
+            cliente.setC_postal(txtCodigo.getText().trim());
+            cliente.setProvincia(txtProvincia.getText().trim());
+            cliente.setPais(txtPais.getText().trim());
+            cliente.setN_comercial(txtNComercial.getText().trim());
+            cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
+            cliente.setWebsite(txtWeb.getText().trim());
+            cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
+
+            if (controlCliente.actualizar(cliente, idCliente)) {
+
+                this.ifCliente.recargarTabla();
+                JOptionPane.showMessageDialog(null, "Datos del cliente actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el cliente.",
+                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            }
+
+        }
+    }
+
+    /**
+     * *********************************************
+     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     *
+     * *********************************************
+     *
+     * @param path
+     * @param width
+     * @param heigth
+     * @return
+     */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;

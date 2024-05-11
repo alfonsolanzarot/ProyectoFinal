@@ -8,6 +8,7 @@ public class Usuario {
 
     //ATRIBUTOS
     private int idUsuario;
+    private int idRoles;
     private String nombre;
     private String apellidos;
     private String email;
@@ -17,13 +18,26 @@ public class Usuario {
     //CONSTRUCTOR
     public Usuario() {
         this.idUsuario = 0;
+        this.idRoles = 0;
         this.nombre = "";
         this.apellidos = "";
         this.email = "";
         this.clave = "";
         this.estado = false;
     }
-
+    
+    //CONSTRUCTOR SOBRECARGADO
+    public Usuario(int idUsuario, int idRoles, String nombre, String apellidos, String email, String clave, boolean estado) {
+        this.idUsuario = idUsuario;
+        this.idRoles = idRoles;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.clave = clave;
+        this.estado = estado;
+    }
+    
+    
     //MÉTODOS SETTER AND GETTER
     public int getIdUsuario() {
         return idUsuario;
@@ -33,6 +47,14 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
+    public int getIdRoles() {
+        return idRoles;
+    }
+
+    public void setIdRoles(int idRoles) {
+        this.idRoles = idRoles;
+    }
+    
     public String getNombre() {
         return nombre;
     }

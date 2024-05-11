@@ -18,6 +18,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private int xMouse, yMouse;
 
+    // CONSTRUCTOR
     public FrmLogin() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/bullet_BOMS.png")).getImage());
@@ -343,11 +344,23 @@ public class FrmLogin extends javax.swing.JFrame {
             usuario.setClave(txtClave.getText().trim());
 
             if (controlUsuario.loginUser(usuario)) {
+                String nombre = usuario.getNombre();
+                String apellidos = usuario.getApellidos();
+                int idRol = usuario.getIdRoles();
+
                 FrmMenu menu = new FrmMenu();
+                menu.setNombreUsuario(nombre);
+                menu.setApellidosUsuario(apellidos);
+                menu.setIdRol(idRol);
                 menu.setVisible(true);
                 this.dispose();
+
             } else {
-                JOptionPane.showMessageDialog(null, "El usuario o la contraseña no son correctos.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+
+                txtUsuario.setText("");
+                txtClave.setText("");
+                txtUsuario.requestFocus();
+
             }
 
         } else {

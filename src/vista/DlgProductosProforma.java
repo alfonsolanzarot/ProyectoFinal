@@ -249,6 +249,11 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 btnInsertarActionPerformed(evt);
             }
         });
+        btnInsertar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnInsertarKeyPressed(evt);
+            }
+        });
         pnlProductos.add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(855, 200, 109, 42));
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
@@ -343,34 +348,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
 
-        try {
-            producto = new ProductoProforma();
-
-            producto.setCantidad(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
-            producto.setCodigo_producto(txtCodigo.getText());
-            producto.setDescripcion((String) cbProducto.getSelectedItem());
-            producto.setPrecio_unitario(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtPrecio.getText())));
-            producto.setSubtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal.getText())));
-            producto.setTipo_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje((String) cbTipoIva.getSelectedItem())));
-            producto.setImporte_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtImporteIva.getText())));
-            producto.setIdProducto(this.listaProductos.get(cbProducto.getSelectedIndex() - 1).getIdProducto());
-            producto.setIdProforma(DlgProformas.getIdProforma());
-
-            if (Ctrl_ProductosProforma.insertar(producto)) {
-
-                listaProductosProforma.add(producto);
-
-                this.refrescarTablaProductosProforma();
-
-            }
-            dlgProformas.recargarTabla();
-            dlgProformas.calcularTotales();
-
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Debe rellenar todos los datos" + e, "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
-        }
-        limpiarCampos();
-
+        insertarProductos();
+        
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void ckbxServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbxServicioActionPerformed
@@ -382,6 +361,10 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
             dlgProformas.estadoServicioActualizado(ckbxServicio.isSelected());
         }
     }//GEN-LAST:event_ckbxServicioActionPerformed
+
+    private void btnInsertarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInsertarKeyPressed
+        insertarProductos();
+    }//GEN-LAST:event_btnInsertarKeyPressed
 
     public void refrescarTablaProductosProforma() {
         this.dlgProformas.setListaProductosProforma(listaProductosProforma);
@@ -457,6 +440,45 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
     private javax.swing.JTextField txtSubtotal;
     // End of variables declaration//GEN-END:variables
 
+    
+    
+    private void insertarProductos(){
+        try {
+            producto = new ProductoProforma();
+
+            producto.setCantidad(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
+            producto.setCodigo_producto(txtCodigo.getText());
+            producto.setDescripcion((String) cbProducto.getSelectedItem());
+            producto.setPrecio_unitario(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtPrecio.getText())));
+            producto.setSubtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal.getText())));
+            producto.setTipo_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje((String) cbTipoIva.getSelectedItem())));
+            producto.setImporte_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtImporteIva.getText())));
+            producto.setIdProducto(this.listaProductos.get(cbProducto.getSelectedIndex() - 1).getIdProducto());
+            producto.setIdProforma(DlgProformas.getIdProforma());
+
+            if (Ctrl_ProductosProforma.insertar(producto)) {
+
+                listaProductosProforma.add(producto);
+
+                this.refrescarTablaProductosProforma();
+
+            }
+            dlgProformas.recargarTabla();
+            dlgProformas.calcularTotales();
+
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Debe rellenar todos los datos" + e, "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+        }
+        limpiarCampos();
+        txtKilos.requestFocus();
+    }
+    
+    /**
+     * **********************************
+     * LISTENER DE LA LISTA DE PRODUCTOS.
+     *
+     * **********************************
+     */
     public interface ListaProductosListener {
 
         void onListaProductosActualizada();
@@ -683,6 +705,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 // Si se produce un error al convertir los valores a números, mostrar un mensaje de error
                 JOptionPane.showMessageDialog(null, "Error al calcular el subtotal: por favor introduzca un valor numérico válido en el campo kilos",
                         "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                        txtKilos.setText("");
             }
         }
     }

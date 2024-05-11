@@ -270,6 +270,11 @@ public class DlgClientes extends javax.swing.JDialog {
                 btnCrearActionPerformed(evt);
             }
         });
+        btnCrear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
         btnCancelar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -469,60 +474,7 @@ public class DlgClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_txtMovilKeyTyped
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        Cliente cliente = new Cliente();
-        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
-
-        /**
-         * ***************************************************
-         * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE CLIENTES.
-         *
-         * ***************************************************
-         */
-        if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-
-        } else {
-            
-            // Comprobar si el cliente ya existe por nombre o por NIF
-            String nombreCliente = txtNombre.getText().trim();
-            String nifCliente = txtNif.getText().trim();
-            
-            if (!controlCliente.existeCliente(nombreCliente, nifCliente)) {
-
-                cliente.setNombre(txtNombre.getText().trim());
-                cliente.setNif(txtNif.getText().trim());
-                cliente.setEmail(txtCorreo.getText().trim());
-                cliente.setDireccion(txtDireccion.getText().trim());
-                cliente.setTelefono(txtTelefono.getText().trim());
-                cliente.setMovil(txtMovil.getText().trim());
-                cliente.setPoblacion(txtPoblacion.getText().trim());
-                cliente.setC_postal(txtCodigo.getText().trim());
-                cliente.setWebsite(txtWeb.getText().trim());
-                cliente.setProvincia(txtProvincia.getText().trim());
-                cliente.setPais(txtPais.getText().trim());
-                cliente.setN_comercial(txtNComercial.getText().trim());
-                cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
-                cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
-
-                if (controlCliente.crear(cliente)) {
-                    this.ifCliente.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Cliente creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                    this.Limpiar();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al crear el cliente.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                    this.Limpiar();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "El cliente ya está registrado en la base de datos.",
-                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                this.Limpiar();
-            }
-
-        }
-
-
+        crearClientes();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
@@ -559,6 +511,10 @@ public class DlgClientes extends javax.swing.JDialog {
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
+
+    private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
+        crearClientes();
+    }//GEN-LAST:event_btnCrearKeyPressed
 
     /**
      * @param args the command line arguments
@@ -638,6 +594,61 @@ public class DlgClientes extends javax.swing.JDialog {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtWeb;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * ***************************************************
+     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE CLIENTES.
+     *
+     * ***************************************************
+     */
+    private void crearClientes() {
+        Cliente cliente = new Cliente();
+        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+
+        if (txtNombre.getText().isEmpty() || txtCondicionesPago.getText().isEmpty() || cbTipo.getSelectedItem().equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, las condiciones de pago y el tipo de precio.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+
+        } else {
+
+            // Comprobar si el cliente ya existe por nombre o por NIF
+            String nombreCliente = txtNombre.getText().trim();
+            String nifCliente = txtNif.getText().trim();
+
+            if (!controlCliente.existeCliente(nombreCliente, nifCliente)) {
+
+                cliente.setNombre(txtNombre.getText().trim());
+                cliente.setNif(txtNif.getText().trim());
+                cliente.setEmail(txtCorreo.getText().trim());
+                cliente.setDireccion(txtDireccion.getText().trim());
+                cliente.setTelefono(txtTelefono.getText().trim());
+                cliente.setMovil(txtMovil.getText().trim());
+                cliente.setPoblacion(txtPoblacion.getText().trim());
+                cliente.setC_postal(txtCodigo.getText().trim());
+                cliente.setWebsite(txtWeb.getText().trim());
+                cliente.setProvincia(txtProvincia.getText().trim());
+                cliente.setPais(txtPais.getText().trim());
+                cliente.setN_comercial(txtNComercial.getText().trim());
+                cliente.setCondiciones_pago(txtCondicionesPago.getText().trim());
+                cliente.setTipo_precio(cbTipo.getSelectedItem().toString());
+
+                if (controlCliente.crear(cliente)) {
+                    this.ifCliente.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Cliente creado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                    this.Limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al crear el cliente.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                    this.Limpiar();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El cliente ya está registrado en la base de datos.",
+                        "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                this.Limpiar();
+            }
+
+        }
+    }
 
     /**
      * *********************************************

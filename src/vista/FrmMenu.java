@@ -2,11 +2,15 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+
 
 /**
  *
@@ -14,15 +18,22 @@ import javax.swing.JDesktopPane;
  */
 public class FrmMenu extends javax.swing.JFrame {
 
+    // VARIABLES
     public static EscritorioPersonalizado Escritorio;
+    private String nombreUsuario;
+    private String apellidosUsuario;
+    private int idRol;
 
+    // CONSTRUCTOR            
     public FrmMenu() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/bullet_BOMS.png")).getImage());
         this.setSize(new Dimension(1350, 750));
         this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
-        this.setTitle("Back Office Management System – BOMS");
+        this.permisosConfiguracion();
+        this.setTitle("Back Office Management System – BOMS – " + nombreUsuario + " " + apellidosUsuario);
+        this.actualizarTitulo();
 
         this.setLayout(null);
         Escritorio = new EscritorioPersonalizado();
@@ -241,6 +252,11 @@ public class FrmMenu extends javax.swing.JFrame {
         miGestionUsuarios.setText("Gestión de usuarios");
         miGestionUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miGestionUsuarios.setPreferredSize(new java.awt.Dimension(210, 33));
+        miGestionUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miGestionUsuariosActionPerformed(evt);
+            }
+        });
         mnConfiguracion.add(miGestionUsuarios);
 
         miOtrasConfiguraciones.setBackground(new java.awt.Color(186, 213, 238));
@@ -292,6 +308,11 @@ public class FrmMenu extends javax.swing.JFrame {
         InterClientes interClientes = new InterClientes();
         Escritorio.add(interClientes);
         interClientes.setVisible(true);
+        if (idRol == 3) { // Asistente de compras
+            disableButton(interClientes.getBtnAnadir());
+            disableButton(interClientes.getBtnEditar());
+            disableButton(interClientes.getBtnEliminar());
+        }
     }//GEN-LAST:event_miClientesActionPerformed
 
     private void mnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSalirMouseClicked
@@ -303,6 +324,11 @@ public class FrmMenu extends javax.swing.JFrame {
         InterProveedores interProveedores = new InterProveedores();
         Escritorio.add(interProveedores);
         interProveedores.setVisible(true);
+        if (idRol == 2) { // Asistente de ventas
+            disableButton(interProveedores.getBtnAnadir());
+            disableButton(interProveedores.getBtnEditar());
+            disableButton(interProveedores.getBtnEliminar());
+        }
     }//GEN-LAST:event_miProveedoresActionPerformed
 
     private void miProductosServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductosServiciosActionPerformed
@@ -310,6 +336,11 @@ public class FrmMenu extends javax.swing.JFrame {
         InterProductos interProductos = new InterProductos();
         Escritorio.add(interProductos);
         interProductos.setVisible(true);
+        if (idRol == 3) { // Asistente de compras
+            disableButton(interProductos.getBtnAnadir());
+            disableButton(interProductos.getBtnEditar());
+            disableButton(interProductos.getBtnEliminar());
+        }
     }//GEN-LAST:event_miProductosServiciosActionPerformed
 
     private void miFacturasProformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFacturasProformaActionPerformed
@@ -317,7 +348,19 @@ public class FrmMenu extends javax.swing.JFrame {
         InterProformas interProformas = new InterProformas();
         Escritorio.add(interProformas);
         interProformas.setVisible(true);
+        if (idRol == 3) { // Asistente de compras
+            disableButton(interProformas.getBtnAnadir());
+            disableButton(interProformas.getBtnEditar());
+            disableButton(interProformas.getBtnProforma());
+        }
     }//GEN-LAST:event_miFacturasProformaActionPerformed
+
+    private void miGestionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGestionUsuariosActionPerformed
+        Escritorio.removeAll();
+        InterUsuarios interUsuarios = new InterUsuarios();
+        Escritorio.add(interUsuarios);
+        interUsuarios.setVisible(true);
+    }//GEN-LAST:event_miGestionUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,6 +450,95 @@ public class FrmMenu extends javax.swing.JFrame {
             g.drawImage(img, 800, 350, null);
         }
 
+    }
+
+    /**
+     * **************
+     * MÉTODO SETTER.
+     *
+     * **************
+     * @param nombreUsuario
+     */
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+        actualizarTitulo();
+
+    }
+
+    /**
+     * **************
+     * MÉTODO SETTER.
+     *
+     * **************
+     * @param apellidosUsuario
+     */
+    public void setApellidosUsuario(String apellidosUsuario) {
+        this.apellidosUsuario = apellidosUsuario;
+        actualizarTitulo();
+
+    }
+
+    /**
+     * **************
+     * MÉTODO SETTER.
+     *
+     * **************
+     * @param idRol
+     */
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+        permisosConfiguracion();
+    }
+
+    /**
+     * *****************************************************
+     * MÉTODO PARA PONER EL NOMBRE DEL USUARIO EN EL TÍTULO.
+     *
+     * *****************************************************
+     */
+    private void actualizarTitulo() {
+        this.setTitle("Back Office Management System – BOMS – " + nombreUsuario + " " + apellidosUsuario);
+    }
+
+    /**
+     * *****************************************************
+     * MÉTODO PARA PERMISOS DE ACCESO AL MENÚ CONFIGURACIÓN.
+     *
+     * *****************************************************
+     */
+    private void permisosConfiguracion() {
+
+        if (idRol == 2 || idRol == 3) { // Asistente de ventas
+            // Restringir el acceso al menú "Configuración"
+            mnConfiguracion.setEnabled(false);
+        }
+    }
+
+    /**
+     * *********************************************
+     * DESACTIVACIÓN DE BOTONES SIN DESHABILITARLOS.
+     *
+     * *********************************************
+     */
+    private void disableButton(JButton button) {
+        for (ActionListener al : button.getActionListeners()) {
+            button.removeActionListener(al); // Eliminar todos los ActionListener asociados al botón
+        }
+    }
+
+    /**
+     * *********************************************
+     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     *
+     * *********************************************
+     * @param path
+     * @param width
+     * @param heigth
+     * @return
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
     }
 
 }

@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -617,6 +618,24 @@ public class InterClientes extends javax.swing.JInternalFrame {
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
         CargarTablaClientes();
+    }
+    
+    /**
+     * ***********************
+     * GETTERS DE LOS BOTONES.
+     * ***********************
+     * @return 
+     */
+    public JButton getBtnEditar(){
+        return btnEditar;
+    }
+    
+    public JButton getBtnAnadir(){
+        return btnAnadir;
+    }
+    
+    public JButton getBtnEliminar(){
+        return btnEliminar;
     }
 
     /**

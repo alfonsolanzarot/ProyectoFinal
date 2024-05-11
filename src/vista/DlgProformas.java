@@ -555,6 +555,11 @@ public final class DlgProformas extends javax.swing.JDialog {
                 btnCrearActionPerformed(evt);
             }
         });
+        btnCrear.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearKeyPressed(evt);
+            }
+        });
         pnlProfoma.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(983, 720, 109, 42));
 
         btnCancelar.setBackground(new java.awt.Color(255, 124, 128));
@@ -900,90 +905,9 @@ public final class DlgProformas extends javax.swing.JDialog {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         if (btnCrear.getText().equals("Crear")) {
-            Proforma proforma = new Proforma();
-
-            Ctrl_Proforma controlProforma = new Ctrl_Proforma();
-
-            proforma.setIdProforma(idProforma);
-            if (null != txtTransporte.getText() && !txtTransporte.getText().isBlank()) {
-                proforma.setTransporte(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText())));
-            }
-            if (null != txtSeguro.getText() && !txtSeguro.getText().isBlank()) {
-                proforma.setSeguro(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText())));
-            }
-            if (null != txtDescuento.getText() && !txtDescuento.getText().isBlank()) {
-                proforma.setDescuento(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText())));
-            }
-            proforma.setIncoterm(txtIncoterm.getText());
-            proforma.setObservaciones(txaObservaciones.getText());
-            proforma.setKilos(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
-            proforma.setSuma_subtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal2.getText())));
-            proforma.setSuma_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText())));
-            proforma.setTotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotal.getText())));
-            proforma.setEstado(cbEstado.getSelectedItem().toString());
-
-            // Actualizar la información de la proforma en la base de datos
-            if (controlProforma.actualizarProforma(proforma)) {
-                // Incrementar el contador de número de proforma
-                numeroProforma++;
-
-                // Actualizar la interfaz de usuario con el nuevo número de proforma
-                txtNumero.setText(generarNumeroProforma());
-
-                // Obtener el próximo idProforma disponible
-                idProforma = ctrlProforma.obtenerProximoIdProforma();
-                proforma.setIdProforma(ctrlProforma.obtenerProximoIdProforma());
-
-                JOptionPane.showMessageDialog(null, "Proforma creada correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                Limpiar(); // Limpiar los campos después de actualizar la proforma
-
-                // Limpiar la tabla de productos
-                limpiarTablaProductos();
-
-                btnInsertar.setText("Insertar");
-
-                // Recargar tabla
-                this.ifProforma.recargarTabla();
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al crear la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                Limpiar(); // Limpiar los campos en caso de error
-            }
+            crearProforma();
         } else if (btnCrear.getText().equals("Actualizar")) {
-            Proforma proforma = new Proforma();
-
-            Ctrl_Proforma controlProforma = new Ctrl_Proforma();
-
-            proforma.setIdProforma(idProforma);
-            if (null != txtTransporte.getText() && !txtTransporte.getText().isBlank()) {
-                proforma.setTransporte(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText())));
-            }
-            if (null != txtSeguro.getText() && !txtSeguro.getText().isBlank()) {
-                proforma.setSeguro(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText())));
-            }
-            if (null != txtDescuento.getText() && !txtDescuento.getText().isBlank()) {
-                proforma.setDescuento(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText())));
-            }
-            proforma.setIncoterm(txtIncoterm.getText());
-            proforma.setObservaciones(txaObservaciones.getText());
-            proforma.setKilos(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
-            proforma.setSuma_subtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal2.getText())));
-            proforma.setSuma_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText())));
-            proforma.setTotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotal.getText())));
-            proforma.setEstado(cbEstado.getSelectedItem().toString());
-
-            // Actualizar la información de la proforma en la base de datos
-            if (controlProforma.actualizarProforma(proforma)) {
-
-                JOptionPane.showMessageDialog(null, "Proforma actualizada correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                dispose(); // Cerrar el diálogo después de actualizar.
-
-                // Recargar tabla
-                this.ifProforma.recargarTabla();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                Limpiar(); // Limpiar los campos en caso de error
-            }
+            actualizarProforma();
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -1081,6 +1005,108 @@ public final class DlgProformas extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * **************************************************************
+     * CREACIÓN DEFINITIVA DE PROFORMA DESPUÉS DE INSERTAR PRODUCTOS.
+     *
+     * **************************************************************
+     */
+    private void crearProforma() {
+        Proforma proforma = new Proforma();
+
+        Ctrl_Proforma controlProforma = new Ctrl_Proforma();
+
+        proforma.setIdProforma(idProforma);
+        if (null != txtTransporte.getText() && !txtTransporte.getText().isBlank()) {
+            proforma.setTransporte(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText())));
+        }
+        if (null != txtSeguro.getText() && !txtSeguro.getText().isBlank()) {
+            proforma.setSeguro(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText())));
+        }
+        if (null != txtDescuento.getText() && !txtDescuento.getText().isBlank()) {
+            proforma.setDescuento(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText())));
+        }
+        proforma.setIncoterm(txtIncoterm.getText());
+        proforma.setObservaciones(txaObservaciones.getText());
+        proforma.setKilos(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
+        proforma.setSuma_subtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal2.getText())));
+        proforma.setSuma_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText())));
+        proforma.setTotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotal.getText())));
+        proforma.setEstado(cbEstado.getSelectedItem().toString());
+
+        // Actualizar la información de la proforma en la base de datos
+        if (controlProforma.actualizarProforma(proforma)) {
+            // Incrementar el contador de número de proforma
+            numeroProforma++;
+
+            // Actualizar la interfaz de usuario con el nuevo número de proforma
+            txtNumero.setText(generarNumeroProforma());
+
+            // Obtener el próximo idProforma disponible
+            idProforma = ctrlProforma.obtenerProximoIdProforma();
+            proforma.setIdProforma(ctrlProforma.obtenerProximoIdProforma());
+
+            JOptionPane.showMessageDialog(null, "Proforma creada correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+            Limpiar(); // Limpiar los campos después de actualizar la proforma
+
+            // Limpiar la tabla de productos
+            limpiarTablaProductos();
+
+            btnInsertar.setText("Insertar");
+
+            // Recargar tabla
+            this.ifProforma.recargarTabla();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al crear la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            Limpiar(); // Limpiar los campos en caso de error
+        }
+    }
+    
+    /**
+     * **************************************************************************
+     * ACTUALIZACIÓN DE PROFORMA DESPUÉS DE INSERTAR MÁS PRODUCTOS O MODIFICARLA.
+     *
+     * **************************************************************************
+     */
+    private void actualizarProforma() {
+        Proforma proforma = new Proforma();
+
+        Ctrl_Proforma controlProforma = new Ctrl_Proforma();
+
+        proforma.setIdProforma(idProforma);
+        if (null != txtTransporte.getText() && !txtTransporte.getText().isBlank()) {
+            proforma.setTransporte(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTransporte.getText())));
+        }
+        if (null != txtSeguro.getText() && !txtSeguro.getText().isBlank()) {
+            proforma.setSeguro(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSeguro.getText())));
+        }
+        if (null != txtDescuento.getText() && !txtDescuento.getText().isBlank()) {
+            proforma.setDescuento(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtDescuento.getText())));
+        }
+        proforma.setIncoterm(txtIncoterm.getText());
+        proforma.setObservaciones(txaObservaciones.getText());
+        proforma.setKilos(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtKilos.getText())));
+        proforma.setSuma_subtotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtSubtotal2.getText())));
+        proforma.setSuma_iva(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotalIva2.getText())));
+        proforma.setTotal(Double.valueOf(ServicioProducto.quitarSimboloEuroKiloPorcentaje(txtTotal.getText())));
+        proforma.setEstado(cbEstado.getSelectedItem().toString());
+
+        // Actualizar la información de la proforma en la base de datos
+        if (controlProforma.actualizarProforma(proforma)) {
+
+            JOptionPane.showMessageDialog(null, "Proforma actualizada correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+            dispose(); // Cerrar el diálogo después de actualizar.
+
+            // Recargar tabla
+            this.ifProforma.recargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            Limpiar(); // Limpiar los campos en caso de error
+        }
+    }
+
+
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
@@ -1136,7 +1162,7 @@ public final class DlgProformas extends javax.swing.JDialog {
         } else {
 
             crearProvisionalEnBD();
-           
+
             String tipo = txtTipo != null ? txtTipo.getText() : "";
 
             Ctrl_Proforma controlProforma = new Ctrl_Proforma();
@@ -1226,6 +1252,16 @@ public final class DlgProformas extends javax.swing.JDialog {
             btnCrear.requestFocus();
         }
     }//GEN-LAST:event_txtIncotermKeyPressed
+
+    private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (btnCrear.getText().equals("Crear")) {
+            crearProforma();
+        } else if (btnCrear.getText().equals("Actualizar")) {
+            actualizarProforma();
+        }
+        }
+    }//GEN-LAST:event_btnCrearKeyPressed
 
     /**
      * @param args the command line arguments
@@ -1585,10 +1621,10 @@ public final class DlgProformas extends javax.swing.JDialog {
     }
 
     /**
-     * ************************************************
-     * MÉTODO PARA DAR ESTABLECER EL FOCO A LAS FECHAS.
+     * ********************************************
+     * MÉTODO PARA ESTABLECER EL FOCO A LAS FECHAS.
      *
-     * ************************************************
+     * ********************************************
      */
     private void focoFechas() {
         txtFecha.addFocusListener(new java.awt.event.FocusAdapter() {
