@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 
-
 /**
  *
  * @author Alfonso Lanzarot
@@ -32,7 +31,6 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setExtendedState(FrmMenu.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.permisosConfiguracion();
-        this.setTitle("Back Office Management System – BOMS – " + nombreUsuario + " " + apellidosUsuario);
         this.actualizarTitulo();
 
         this.setLayout(null);
@@ -488,6 +486,7 @@ public class FrmMenu extends javax.swing.JFrame {
     public void setIdRol(int idRol) {
         this.idRol = idRol;
         permisosConfiguracion();
+        actualizarTitulo();
     }
 
     /**
@@ -497,7 +496,23 @@ public class FrmMenu extends javax.swing.JFrame {
      * *****************************************************
      */
     private void actualizarTitulo() {
-        this.setTitle("Back Office Management System – BOMS – " + nombreUsuario + " " + apellidosUsuario);
+        String rol = "";
+        switch (idRol) {
+            case 1:
+                rol = "Administrador";
+                break;
+            case 2:
+                rol = "Asistente de ventas";
+                break;
+            case 3:
+                rol = "Asistente de compras";
+                break;
+            default:
+                rol = "Rol desconocido";
+                break;
+        }
+
+        this.setTitle("Back Office Management System – BOMS – " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
     }
 
     /**
