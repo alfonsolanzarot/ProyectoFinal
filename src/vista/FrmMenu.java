@@ -241,7 +241,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         mnConfiguracion.setBackground(new java.awt.Color(186, 213, 238));
         mnConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/configuraciones.png"))); // NOI18N
-        mnConfiguracion.setText("Configuraci√≥n");
+        mnConfiguracion.setText("ConfiguraciÛn");
         mnConfiguracion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         mnConfiguracion.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         mnConfiguracion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -253,7 +253,7 @@ public class FrmMenu extends javax.swing.JFrame {
         miGestionUsuarios.setBackground(new java.awt.Color(186, 213, 238));
         miGestionUsuarios.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         miGestionUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuarios.png"))); // NOI18N
-        miGestionUsuarios.setText("Gesti√≥n de usuarios");
+        miGestionUsuarios.setText("GestiÛn de usuarios");
         miGestionUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miGestionUsuarios.setPreferredSize(new java.awt.Dimension(210, 33));
         miGestionUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -466,7 +466,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     /**
      * **************
-     * M√âTODO SETTER.
+     * M…TODO SETTER.
      *
      * **************
      * @param nombreUsuario
@@ -479,7 +479,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     /**
      * **************
-     * M√âTODO SETTER.
+     * M…TODO SETTER.
      *
      * **************
      * @param apellidosUsuario
@@ -492,7 +492,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     /**
      * **************
-     * M√âTODO SETTER.
+     * M…TODO SETTER.
      *
      * **************
      * @param idRol
@@ -505,7 +505,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     /**
      * *****************************************************
-     * M√âTODO PARA PONER EL NOMBRE DEL USUARIO EN EL T√çTULO.
+     * M…TODO PARA PONER EL NOMBRE DEL USUARIO EN EL TÕTULO.
      *
      * *****************************************************
      */
@@ -526,32 +526,32 @@ public class FrmMenu extends javax.swing.JFrame {
                 break;
         }
 
-        this.setTitle("Back Office Management System ‚Äì BOMS ‚Äì " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
+        this.setTitle("Back Office Management System ? BOMS ? " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
     }
 
     /**
      * *****************************************************
-     * M√âTODO PARA PERMISOS DE ACCESO AL MEN√ö CONFIGURACI√ìN.
+     * M…TODO PARA PERMISOS DE ACCESO AL MEN⁄ CONFIGURACI”N.
      *
      * *****************************************************
      */
     private void permisosConfiguracion() {
 
         if (idRol == 2 || idRol == 3) { // Asistente de ventas
-            // Restringir el acceso al men√∫ "Configuraci√≥n"
+            // Restringir el acceso al men˙ "ConfiguraciÛn"
             mnConfiguracion.setEnabled(false);
         }
     }
 
     /**
      * *********************************************
-     * DESACTIVACI√ìN DE BOTONES SIN DESHABILITARLOS.
+     * DESACTIVACI”N DE BOTONES SIN DESHABILITARLOS.
      *
      * *********************************************
      */
     private void disableButton(JButton button) {
         for (ActionListener al : button.getActionListeners()) {
-            button.removeActionListener(al); // Eliminar todos los ActionListener asociados al bot√≥n
+            button.removeActionListener(al); // Eliminar todos los ActionListener asociados al botÛn
         }
     }
     
@@ -565,7 +565,7 @@ public class FrmMenu extends javax.swing.JFrame {
             HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
             HelpBroker hb = helpset.createHelpBroker();
 
-            //Pone ayuda a item del men√∫ al pulsarlo y a F1 en ventana reservas
+            //Pone ayuda a item del men˙ al pulsarlo y a F1 en ventana reservas
             hb.enableHelpOnButton(miSistemaAyuda, "ayudaboms", helpset);
             hb.enableHelpKey(getRootPane(), "ayudaboms", helpset);
              
@@ -577,7 +577,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
     /**
      * *********************************************
-     * M√âTODO DE ICONOS DE ATENCI√ìN Y/O ADVERTENCIA.
+     * M…TODO DE ICONOS DE ATENCI”N Y/O ADVERTENCIA.
      *
      * *********************************************
      * @param path
