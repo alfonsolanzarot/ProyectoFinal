@@ -4,7 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -32,6 +36,7 @@ public class FrmMenu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.permisosConfiguracion();
         this.actualizarTitulo();
+        ponLaAyuda();
 
         this.setLayout(null);
         Escritorio = new EscritorioPersonalizado();
@@ -69,6 +74,7 @@ public class FrmMenu extends javax.swing.JFrame {
         miGestionUsuarios = new javax.swing.JMenuItem();
         miOtrasConfiguraciones = new javax.swing.JMenuItem();
         mnAyuda = new javax.swing.JMenu();
+        miSistemaAyuda = new javax.swing.JMenuItem();
         mnSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -277,6 +283,13 @@ public class FrmMenu extends javax.swing.JFrame {
         mnAyuda.setMargin(new java.awt.Insets(5, 10, 3, 10));
         mnAyuda.setMinimumSize(new java.awt.Dimension(160, 50));
         mnAyuda.setPreferredSize(new java.awt.Dimension(142, 50));
+
+        miSistemaAyuda.setBackground(new java.awt.Color(186, 213, 238));
+        miSistemaAyuda.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        miSistemaAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ayuda.png"))); // NOI18N
+        miSistemaAyuda.setText("Sistema de ayuda");
+        mnAyuda.add(miSistemaAyuda);
+
         menuGeneral.add(mnAyuda);
 
         mnSalir.setBackground(new java.awt.Color(186, 213, 238));
@@ -410,6 +423,7 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem miPedidosVenta;
     private javax.swing.JMenuItem miProductosServicios;
     private javax.swing.JMenuItem miProveedores;
+    private javax.swing.JMenuItem miSistemaAyuda;
     private javax.swing.JMenu mnAyuda;
     private javax.swing.JMenu mnConfiguracion;
     private javax.swing.JMenu mnContactos;
@@ -540,6 +554,26 @@ public class FrmMenu extends javax.swing.JFrame {
             button.removeActionListener(al); // Eliminar todos los ActionListener asociados al botón
         }
     }
+    
+    private void ponLaAyuda() {
+        try {
+            //Carga el fichero de ayuda
+            File fichero = new File("help" + File.separator + "helpset.hs");
+            URL hsURL = fichero.toURI().toURL();
+
+            //Crea el HelpSet y el Helpbroker
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            //Pone ayuda a item del menú al pulsarlo y a F1 en ventana reservas
+            hb.enableHelpOnButton(miSistemaAyuda, "ayudaboms", helpset);
+            hb.enableHelpKey(getRootPane(), "ayudaboms", helpset);
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 
     /**
      * *********************************************

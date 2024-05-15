@@ -365,6 +365,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese sus credenciales.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+            txtUsuario.requestFocus();
         }
     }
 

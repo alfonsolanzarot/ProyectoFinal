@@ -442,6 +442,22 @@
               <Dimension value="[142, 50]"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="miSistemaAyuda">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ee" green="d5" red="ba" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Roboto" size="14" style="1"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/ayuda.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Sistema de ayuda"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnSalir">
           <Properties>

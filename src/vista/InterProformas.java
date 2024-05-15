@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -36,9 +37,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import modelo.Proforma;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import servicios.ServicioProforma;
 
 /**
+ * Clase para el JInternalPanel en el que se gestionan las factuas proforma.
  *
  * @author Alfonso Lanzarot
  */
@@ -112,10 +117,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
     }
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
-     *
-     * ******************************
+     * Método para configurar la tabla.
      */
     private void configurarTablaProformas() {
         // Crear un modelo de tabla
@@ -218,9 +220,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
     }
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
@@ -255,10 +255,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
     }
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase para la conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -287,7 +284,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
         tblProformas = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnProforma = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setBorder(null);
@@ -417,28 +414,28 @@ public class InterProformas extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 102, 80, 35));
 
-        btnProforma.setBackground(new java.awt.Color(0, 79, 40));
-        btnProforma.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        btnProforma.setForeground(new java.awt.Color(255, 255, 255));
-        btnProforma.setText("Proforma");
-        btnProforma.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 50, 30), 3));
-        btnProforma.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProforma.setFocusPainted(false);
-        btnProforma.setOpaque(true);
-        btnProforma.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnImprimir.setBackground(new java.awt.Color(0, 79, 40));
+        btnImprimir.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        btnImprimir.setForeground(new java.awt.Color(255, 255, 255));
+        btnImprimir.setText("Imprimir");
+        btnImprimir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 50, 30), 3));
+        btnImprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImprimir.setFocusPainted(false);
+        btnImprimir.setOpaque(true);
+        btnImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnProformaMouseEntered(evt);
+                btnImprimirMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnProformaMouseExited(evt);
+                btnImprimirMouseExited(evt);
             }
         });
-        btnProforma.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProformaActionPerformed(evt);
+                btnImprimirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnProforma, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 240, 130, 55));
+        getContentPane().add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 240, 130, 55));
 
         lblFondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo6.png"))); // NOI18N
@@ -519,24 +516,53 @@ public class InterProformas extends javax.swing.JInternalFrame {
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
 
-    private void btnProformaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProformaMouseEntered
-        btnProforma.setBackground(new Color(0, 105, 43));
-    }//GEN-LAST:event_btnProformaMouseEntered
+    private void btnImprimirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirMouseEntered
+        btnImprimir.setBackground(new Color(0, 105, 43));
+    }//GEN-LAST:event_btnImprimirMouseEntered
 
-    private void btnProformaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProformaMouseExited
-        btnProforma.setBackground(new Color(0, 79, 40));
-    }//GEN-LAST:event_btnProformaMouseExited
+    private void btnImprimirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirMouseExited
+        btnImprimir.setBackground(new Color(0, 79, 40));
+    }//GEN-LAST:event_btnImprimirMouseExited
 
-    private void btnProformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProformaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProformaActionPerformed
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        // Obtener el idProforma de la fila seleccionada en la tabla
+        int filaSeleccionada = tblProformas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para imprimirla.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+            return;
+        }
+        // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
+        idProforma = idProformaPorFila.get(filaSeleccionada);
+
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_boms", "root", "dugu&7Photh&");
+
+            // Crear un mapa de parámetros para pasar al informe
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idProforma", idProforma);
+
+            // Generar el informe con los parámetros y la conexión a la base de datos
+            JasperPrint jasperPrint = JasperFillManager.fillReport("informes/proforma.jasper", parametros, conn);
+
+            // Mostrar el informe en una ventana
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setVisible(true);
+
+            // Cerrar la conexión
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnProforma;
+    private javax.swing.JButton btnImprimir;
     public static javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblTitulo;
@@ -546,9 +572,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ****************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODAS LAS PROFORMAS REGISTRADAS.
-     * ****************************************************************
+     * Método para cargar la tabla con todas las proformas registradas.
      */
     private void CargarTablaProformas() {
         ConexionBD conexion = new ConexionBD();
@@ -672,25 +696,22 @@ public class InterProformas extends javax.swing.JInternalFrame {
 
         CargarTablaProformas();
     }
-    
+
     /**
      * ***********************
-     * GETTERS DE LOS BOTONES.
-     * ***********************
-     * @return 
+     * GETTERS DE LOS BOTONES. *********************** @return
      */
-    public JButton getBtnEditar(){
+    public JButton getBtnEditar() {
         return btnEditar;
     }
-    
-    public JButton getBtnProforma(){
-        return btnProforma;
+
+    public JButton getBtnProforma() {
+        return btnImprimir;
     }
-    
-    public JButton getBtnAnadir(){
+
+    public JButton getBtnAnadir() {
         return btnAnadir;
     }
-    
 
     /**
      * *********************************************

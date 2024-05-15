@@ -715,12 +715,11 @@ public final class DlgProformas extends javax.swing.JDialog {
         lblIncoterm.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblIncoterm.setForeground(new java.awt.Color(102, 102, 102));
         lblIncoterm.setText("Incoterm");
-        pnlProfoma.add(lblIncoterm, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 567, -1, -1));
+        pnlProfoma.add(lblIncoterm, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 567, -1, -1));
 
         txtIncoterm.setBackground(new java.awt.Color(255, 255, 255));
         txtIncoterm.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtIncoterm.setForeground(new java.awt.Color(0, 0, 0));
-        txtIncoterm.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtIncoterm.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtIncoterm.setPreferredSize(new java.awt.Dimension(64, 27));
         txtIncoterm.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -728,7 +727,7 @@ public final class DlgProformas extends javax.swing.JDialog {
                 txtIncotermKeyPressed(evt);
             }
         });
-        pnlProfoma.add(txtIncoterm, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 585, 100, -1));
+        pnlProfoma.add(txtIncoterm, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 585, 220, -1));
 
         lblPais.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblPais.setForeground(new java.awt.Color(102, 102, 102));
@@ -758,12 +757,12 @@ public final class DlgProformas extends javax.swing.JDialog {
                 txtTransporteKeyPressed(evt);
             }
         });
-        pnlProfoma.add(txtTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 585, 150, -1));
+        pnlProfoma.add(txtTransporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 585, 125, -1));
 
         lblSeguro.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         lblSeguro.setForeground(new java.awt.Color(102, 102, 102));
         lblSeguro.setText("Precio del seguro");
-        pnlProfoma.add(lblSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 567, -1, -1));
+        pnlProfoma.add(lblSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 567, -1, -1));
 
         txtSeguro.setBackground(new java.awt.Color(255, 255, 255));
         txtSeguro.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -776,7 +775,7 @@ public final class DlgProformas extends javax.swing.JDialog {
                 txtSeguroKeyPressed(evt);
             }
         });
-        pnlProfoma.add(txtSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 585, 150, -1));
+        pnlProfoma.add(txtSeguro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 585, 125, -1));
 
         lblSubtotal2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         lblSubtotal2.setForeground(new java.awt.Color(102, 102, 102));

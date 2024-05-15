@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<map version="1.0">
+	<mapID target="ayudaboms" url="html/ayudaboms.html" />
+	<mapID target="acceso" url="html/acceso.html" />
+	<mapID target="principal" url="html/principal.html" />
+	<mapID target="clientes" url="html/clientes.html" />
+	<mapID target="proveedores" url="html/proveedores.html" />
+	<mapID target="productos" url="html/productos.html" />
+	<mapID target="proformas" url="html/proformas.html" />
+	<mapID target="usuarios" url="html/usuarios.html" />	
+</map>
