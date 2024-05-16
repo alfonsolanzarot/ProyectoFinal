@@ -241,7 +241,7 @@ public final class DlgProformas extends javax.swing.JDialog {
             @Override
             protected void setValue(Object value) {
                 if (value instanceof Double) {
-                    value = decimalFormat.format(value) + " €"; // Añadir el símbolo del euro después del valor
+                    value = decimalFormat.format(value) + " €"; // A�adir el símbolo del euro después del valor
                 }
                 super.setValue(value);
 
@@ -356,7 +356,7 @@ public final class DlgProformas extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
-        lblNúmero = new javax.swing.JLabel();
+        lblNumero = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
         lblCliente = new javax.swing.JLabel();
         cbCliente = new javax.swing.JComboBox<>();
@@ -448,10 +448,10 @@ public final class DlgProformas extends javax.swing.JDialog {
         txtFecha.setPreferredSize(new java.awt.Dimension(64, 27));
         pnlProfoma.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 120, -1));
 
-        lblNúmero.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        lblNúmero.setForeground(new java.awt.Color(102, 102, 102));
-        lblNúmero.setText("Número");
-        pnlProfoma.add(lblNúmero, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 80, -1, -1));
+        lblNumero.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        lblNumero.setForeground(new java.awt.Color(102, 102, 102));
+        lblNumero.setText("Número");
+        pnlProfoma.add(lblNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 80, -1, -1));
 
         txtNumero.setBackground(new java.awt.Color(255, 255, 255));
         txtNumero.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -1323,7 +1323,7 @@ public final class DlgProformas extends javax.swing.JDialog {
     private javax.swing.JLabel lblIncoterm;
     private javax.swing.JLabel lblKilos;
     private javax.swing.JLabel lblNif;
-    private javax.swing.JLabel lblNúmero;
+    private javax.swing.JLabel lblNumero;
     private javax.swing.JLabel lblObservaciones;
     private javax.swing.JLabel lblPais;
     private javax.swing.JLabel lblPoblacion;
@@ -1466,7 +1466,7 @@ public final class DlgProformas extends javax.swing.JDialog {
         cbCliente.addActionListener((ActionEvent e) -> {
             // Verifica si se ha seleccionado un cliente válido
             if (cbCliente.getSelectedIndex() > 0) {
-                // Obtén el nombre del cliente seleccionado del JComboBox
+                // Obtengo el nombre del cliente seleccionado del JComboBox
                 String nombreCliente = (String) cbCliente.getSelectedItem();
 
                 // Realiza una consulta a la base de datos para obtener la información del cliente

@@ -139,7 +139,7 @@ public class Ctrl_Producto {
 
     /**
      * ********************************************
-     * MÉTODO PARA ELIMINAR UN PRODUCTO O SERVICIO.
+     * MéTODO PARA ELIMINAR UN PRODUCTO O SERVICIO.
      *
      * ********************************************
      *

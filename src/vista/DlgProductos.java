@@ -734,7 +734,7 @@ public class DlgProductos extends javax.swing.JDialog {
 
     /**
      * *******************************************
-     * MÉTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
+     * MÓTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
      *
      * *******************************************
      * @param idProducto

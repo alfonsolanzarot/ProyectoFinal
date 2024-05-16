@@ -553,7 +553,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
             // Cerrar la conexión
             conn.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
 

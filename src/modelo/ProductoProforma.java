@@ -50,7 +50,7 @@ public class ProductoProforma {
         this.subtotal = subtotal;
     }
     
-    // GETTERS Y SETTERS
+    // MÉTODOS GETTERS Y SETTERS
 
     public int getIdProducto() {
         return idProducto;

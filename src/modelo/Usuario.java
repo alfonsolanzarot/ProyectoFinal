@@ -15,7 +15,7 @@ public class Usuario {
     private String clave;
     private boolean estado;
 
-    //CONSTRUCTOR
+    //CONSTRUCTOR VACÍO
     public Usuario() {
         this.idUsuario = 0;
         this.idRoles = 0;

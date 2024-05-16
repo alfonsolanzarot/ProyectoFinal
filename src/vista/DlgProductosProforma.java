@@ -535,7 +535,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    System.out.println("Error al cerrar la conexi�n: " + ex);
 
                 }
             }
@@ -553,7 +553,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
         cbProducto.addActionListener((ActionEvent e) -> {
             // Verifica si se ha seleccionado un producto válido
             if (cbProducto.getSelectedIndex() > 0) {
-                // Obtén el nombre del producto seleccionado del JComboBox
+                // Obtengo el nombre del producto seleccionado del JComboBox
                 String nombreProducto = (String) cbProducto.getSelectedItem();
 
                 // Realiza una consulta a la base de datos para obtener la información del producto
@@ -683,7 +683,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
                 String kilosStr = txtKilos.getText().trim(); // Eliminar espacios en blanco al inicio y al final
 
-                // Verificar que el campo de kilos tampoco esté vacío
+                // Verificar que el campo de kilos tampoco está vacío
                 if (!kilosStr.isEmpty()) {
                     double kilos = Double.parseDouble(kilosStr);
 
@@ -762,7 +762,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
             // Eliminar el símbolo de porcentaje si está presente
             tipoIvaStr = tipoIvaStr.replace("%", "");
 
-            // Convertir a número
+            // Convertir a n�mero
             double tipoIva = Double.parseDouble(tipoIvaStr.replace(",", ".")) / 100.0;
 
             // Analizar el subtotal
@@ -822,7 +822,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } finally {
-                    // Cerrar ResultSet, Statement y conexión
+                    // Cerrar ResultSet, Statement y conexi�n
                     if (rs != null) {
                         try {
                             rs.close();
