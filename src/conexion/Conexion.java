@@ -5,12 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Esta clase maneja la conexión a la base de datos.
  *
  * @author Alfonso Lanzarot
  */
 public class Conexion {
 
-    //Conexión local
+    /**
+     * Constructor por defecto para la clase Conexion.
+     */
     public static Connection conectar() {
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/bd_boms", "root", "dugu&7Photh&");

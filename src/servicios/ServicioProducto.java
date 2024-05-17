@@ -15,6 +15,15 @@ import modelo.Producto;
 public class ServicioProducto {
 
     /**
+     * Constructor por defecto de la clase ServicioProducto.
+     *
+     * Este constructor crea una instancia del ServicioCliente.
+     */
+    public ServicioProducto() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para asignar los datos de un producto o servicio registrado desde
      * un ResultSet.
      *

@@ -6,7 +6,7 @@ package modelo;
  * comercial, condiciones de pago, email, teléfono, móvil, sitio web y tipo de
  * precio.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Cliente {
 

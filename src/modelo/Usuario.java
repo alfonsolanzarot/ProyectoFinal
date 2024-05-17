@@ -4,7 +4,7 @@ package modelo;
  * Representa un usuario del sistema. Contiene detalles del usuario como ID,
  * roles, nombre, apellidos, email, clave y estado.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Usuario {
 

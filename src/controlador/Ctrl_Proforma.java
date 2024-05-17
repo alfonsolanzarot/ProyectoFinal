@@ -18,6 +18,13 @@ import modelo.Proforma;
 public class Ctrl_Proforma {
 
     /**
+     * Constructor por defecto para la clase Ctrl_Proforma.
+     */
+    public Ctrl_Proforma() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para registrar una nueva proforma en la base de datos.
      *
      * @param objeto La proforma a registrar.

@@ -201,6 +201,16 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
+
+        /**
+         * Constructor por defecto de la clase ConexionBD.
+         *
+         * Este constructor inicializa la conexión a la base de datos con los
+         * valores predeterminados.
+         */
+        public ConexionBD() {
+            // Inicialización de la conexión a la base de datos
+        }
     } // Cierre de la clase.
 
     /**
@@ -503,7 +513,10 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
 
-
+    /**
+     * JScrollPane utilizado para mostrar una lista de proveedores. JTable
+     * utilizado para mostrar información sobre los proveedores.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnBuscar;

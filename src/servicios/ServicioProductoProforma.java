@@ -15,6 +15,15 @@ import modelo.ProductoProforma;
 public class ServicioProductoProforma {
 
     /**
+     * Constructor por defecto de la clase ServicioProductoProforma.
+     *
+     * Este constructor crea una instancia del ServicioCliente.
+     */
+    public ServicioProductoProforma() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para asignar los datos de un producto registrado en la factura
      * proforma desde un ResultSet.
      *

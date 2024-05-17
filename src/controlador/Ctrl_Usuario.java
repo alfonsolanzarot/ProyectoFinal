@@ -16,9 +16,16 @@ import modelo.Usuario;
  * la base de datos. Proporciona métodos para crear, comprobar existencia,
  * actualizar, eliminar y autenticar usuarios.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Ctrl_Usuario {
+
+    /**
+     * Constructor por defecto para la clase Ctrl_Usuario.
+     */
+    public Ctrl_Usuario() {
+        // Constructor por defecto
+    }
 
     /**
      * Método para registrar un nuevo usuario en la base de datos.

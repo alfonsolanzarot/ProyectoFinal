@@ -14,6 +14,15 @@ import modelo.Cliente;
 public class ServicioCliente {
 
     /**
+     * Constructor por defecto de la clase ServicioCliente.
+     *
+     * Este constructor crea una instancia del ServicioCliente.
+     */
+    public ServicioCliente() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para asignar los datos de un cliente registrado a partir de un
      * ResultSet.
      *

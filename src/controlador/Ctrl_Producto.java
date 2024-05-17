@@ -17,6 +17,13 @@ import modelo.Producto;
 public class Ctrl_Producto {
 
     /**
+     * Constructor por defecto para la clase Ctrl_Producto.
+     */
+    public Ctrl_Producto() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para registrar un nuevo producto en la base de datos.
      *
      * @param objeto El producto a registrar.

@@ -64,8 +64,8 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
     /**
      * Constructor de la clase InterClintes. Inicializa el JInternalFrame,
-     * configura su tamaño y título, carga y configura la tabla de clientes,
-     * y añade un WindowListener para cargar la tabla cuando se abre el frame
+     * configura su tamaño y título, carga y configura la tabla de clientes, y
+     * añade un WindowListener para cargar la tabla cuando se abre el frame
      * interno.
      */
     public InterClientes() {
@@ -204,6 +204,16 @@ public class InterClientes extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
+
+        /**
+         * Constructor por defecto de la clase ConexionBD.
+         *
+         * Este constructor inicializa la conexión a la base de datos con los
+         * valores predeterminados.
+         */
+        public ConexionBD() {
+            // Inicialización de la conexión a la base de datos
+        }
     } // Cierre de la clase.
 
     /**
@@ -510,7 +520,10 @@ public class InterClientes extends javax.swing.JInternalFrame {
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
 
-
+    /**
+     * JScrollPane utilizado para mostrar una lista de clientes. JTable
+     * utilizado para mostrar información sobre los clientes.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnBuscar;

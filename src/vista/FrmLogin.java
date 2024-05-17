@@ -365,6 +365,8 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntrarKeyPressed
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

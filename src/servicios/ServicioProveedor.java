@@ -15,6 +15,15 @@ import modelo.Proveedor;
 public class ServicioProveedor {
 
     /**
+     * Constructor por defecto de la clase ServicioProveedor.
+     *
+     * Este constructor crea una instancia del ServicioCliente.
+     */
+    public ServicioProveedor() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para asignar los datos de un proveedor registrado en la tabla de
      * proveedores desde un ResultSet.
      *

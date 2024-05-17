@@ -14,6 +14,15 @@ import modelo.Proforma;
 public class ServicioProforma {
 
     /**
+     * Constructor por defecto de la clase ServicioProforma.
+     *
+     * Este constructor crea una instancia del ServicioCliente.
+     */
+    public ServicioProforma() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para asignar los datos de una proforma registrada en la tabla de
      * proformas desde un ResultSet.
      *

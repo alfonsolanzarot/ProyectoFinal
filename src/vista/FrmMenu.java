@@ -517,7 +517,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 break;
         }
 
-        this.setTitle("Back Office Management System ? BOMS ? " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
+        this.setTitle("Back Office Management System - BOMS - " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
     } // Cierre del método.
 
     /**

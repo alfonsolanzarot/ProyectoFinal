@@ -17,6 +17,13 @@ import modelo.ProductoProforma;
 public class Ctrl_ProductosProforma {
 
     /**
+     * Constructor por defecto para la clase Ctrl_ProductosProforma.
+     */
+    public Ctrl_ProductosProforma() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para registrar un nuevo producto asociado a una proforma en la
      * base de datos.
      *

@@ -17,6 +17,13 @@ import java.sql.ResultSet;
 public class Ctrl_Cliente {
 
     /**
+     * Constructor por defecto para la clase Ctrl_Cliente.
+     */
+    public Ctrl_Cliente() {
+        // Constructor por defecto
+    }
+
+    /**
      * Método para registrar un nuevo cliente en la base de datos.
      *
      * @param objeto El cliente a registrar.

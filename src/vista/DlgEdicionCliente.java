@@ -21,6 +21,11 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
      */
     private int xMouse, yMouse;
     private int idCliente;
+
+    /**
+     * Interfaz de clientes para comunicación con el diálogo de edición de
+     * clientes.
+     */
     private InterClientes ifCliente;
 
     /**
@@ -568,6 +573,8 @@ public class DlgEdicionCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizarKeyPressed
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

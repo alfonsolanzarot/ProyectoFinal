@@ -22,6 +22,10 @@ public class DlgClientes extends javax.swing.JDialog {
      * Variables de instancia de la clase.
      */
     private int xMouse, yMouse;
+
+    /**
+     * Referencia a la interfaz de clientes.
+     */
     private InterClientes ifCliente;
 
     /**
@@ -568,6 +572,8 @@ public class DlgClientes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCrearKeyPressed
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -610,6 +616,12 @@ public class DlgClientes extends javax.swing.JDialog {
         });
     }
 
+    /**
+     * Botón utilizado para cancelar la operación actual. Botón utilizado para
+     * crear un nuevo cliente. JComboBox utilizado para seleccionar el tipo de
+     * cliente. Etiqueta utilizada para mostrar el código del cliente. Etiqueta
+     * utilizada para mostrar las condiciones de pago del cliente. Etc.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlClientes;
     private javax.swing.JButton btnCancelar;

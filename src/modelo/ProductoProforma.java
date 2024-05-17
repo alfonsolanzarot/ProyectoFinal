@@ -5,7 +5,7 @@ package modelo;
  * de producto, descripción, cantidad, precio unitario, IVA, subtotal, entre
  * otros.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class ProductoProforma {
 

@@ -175,6 +175,15 @@ public final class DlgProformas extends javax.swing.JDialog {
      */
     public interface ServicioListener {
 
+        /**
+         * Método invocado cuando se actualiza el estado del servicio.
+         *
+         * Este método se llama cuando el estado del servicio ha sido
+         * actualizado, indicando si el servicio está disponible o no.
+         *
+         * @param esServicio true si el servicio está disponible, false si no lo
+         * está
+         */
         void estadoServicioActualizado(boolean esServicio);
     } // Cierre del método.
 
@@ -1396,6 +1405,8 @@ public final class DlgProformas extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescuentoFocusLost
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -2152,6 +2163,16 @@ public final class DlgProformas extends javax.swing.JDialog {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
+
+        /**
+         * Constructor por defecto de la clase ConexionBD.
+         *
+         * Este constructor inicializa la conexión a la base de datos con los
+         * valores predeterminados.
+         */
+        public ConexionBD() {
+            // Inicialización de la conexión a la base de datos
+        }
     } // Cierre de la clase.
 
     /**

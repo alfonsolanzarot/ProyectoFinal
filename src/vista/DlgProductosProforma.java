@@ -444,6 +444,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
     } // Cierre del método.
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -555,6 +557,16 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
      */
     public interface ListaProductosListener {
 
+        /**
+         * Método invocado cuando la lista de productos de la proforma ha sido
+         * actualizada.
+         *
+         * Este método se llama automáticamente cuando la lista de productos de
+         * la proforma ha sido modificada de alguna manera, como cuando se
+         * añade, elimina o actualiza un producto en la proforma. Puedes
+         * implementar este método para realizar acciones adicionales después de
+         * que la lista de productos de la proforma haya sido actualizada.
+         */
         void onListaProductosActualizada();
     } // Cierre del método.
 
@@ -863,6 +875,13 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
      * Método para obtener el ID del producto a partir de su descripción.
      */
     public class ControlProducto {
+
+        /**
+         * Constructor por defecto para la clase ControlProducto.
+         */
+        public ControlProducto() {
+            // Constructor por defecto
+        }
 
         /**
          * Este método estático dentro de la clase ControlProducto permite

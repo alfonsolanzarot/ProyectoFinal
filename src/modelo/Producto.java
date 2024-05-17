@@ -5,7 +5,7 @@ package modelo;
  * código, descripción, formato, peso unitario, y varios precios (alto, bajo, y
  * de servicio).
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Producto {
 

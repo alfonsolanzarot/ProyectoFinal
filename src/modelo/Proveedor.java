@@ -5,7 +5,7 @@ package modelo;
  * nombre, NIF, dirección, población, código postal, provincia, país, nombre
  * comercial, condiciones de pago, email, teléfono, móvil y sitio web.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Proveedor {
 

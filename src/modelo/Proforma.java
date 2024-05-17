@@ -7,7 +7,7 @@ import java.sql.Date;
  * detalla los términos de una futura transacción. Proporciona información sobre
  * el cliente, condiciones de pago, detalles del envío y más.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Proforma {
 

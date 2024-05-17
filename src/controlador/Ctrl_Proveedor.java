@@ -13,9 +13,16 @@ import java.sql.ResultSet;
  * en la base de datos. Proporciona métodos para crear, comprobar existencia,
  * actualizar y eliminar proveedores.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class Ctrl_Proveedor {
+
+    /**
+     * Constructor por defecto para la clase Ctrl_Proveedor.
+     */
+    public Ctrl_Proveedor() {
+        // Constructor por defecto
+    }
 
     /**
      * Método para registrar un nuevo proveedor en la base de datos.
