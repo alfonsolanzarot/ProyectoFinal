@@ -13,6 +13,7 @@ public class Conexion {
 
     /**
      * Constructor por defecto para la clase Conexion.
+     * @return 
      */
     public static Connection conectar() {
         try {
