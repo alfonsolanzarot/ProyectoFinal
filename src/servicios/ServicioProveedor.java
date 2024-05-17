@@ -5,19 +5,23 @@ import java.sql.SQLException;
 import modelo.Proveedor;
 
 /**
- * 
+ * Clase que proporciona servicios relacionados con los proveedores registrados
+ * en la tabla de proveedores. Esta clase incluye un método para asignar los
+ * datos de un proveedor registrado en la tabla de proveedores desde un
+ * ResultSet.
+ *
  * @author Alfonso Lanzarot
  */
 public class ServicioProveedor {
 
     /**
-     * ********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN PROVEEDOR REGISTRADO A LA TABLA
-     * PROVEEDORES.
-     * ********************************************************************
-     * @param rs
-     * @return 
-     * @throws java.sql.SQLException
+     * Método para asignar los datos de un proveedor registrado en la tabla de
+     * proveedores desde un ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos del proveedor.
+     * @return Proveedor con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static Proveedor asignarDatosProveedor(ResultSet rs) throws SQLException {
         Proveedor proveedor = new Proveedor();
@@ -38,5 +42,6 @@ public class ServicioProveedor {
         proveedor.setCondiciones_pago(rs.getString(14));
 
         return proveedor;
-    }
-}
+    } // Cierre del método.
+} // Cierre de la clase.
+

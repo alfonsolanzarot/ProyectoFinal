@@ -12,18 +12,20 @@ import javax.swing.ImageIcon;
 import modelo.Usuario;
 
 /**
+ * Controlador para gestionar las operaciones relacionadas con los usuarios en
+ * la base de datos. Proporciona métodos para crear, comprobar existencia,
+ * actualizar, eliminar y autenticar usuarios.
  *
- * @author Alfonso Lanzarot
+ * @autor Alfonso Lanzarot
  */
 public class Ctrl_Usuario {
 
     /**
-     * *******************************
-     * MÉTODO PARA REGISTRAR USUARIOS.
+     * Método para registrar un nuevo usuario en la base de datos.
      *
-     * *******************************
-     * @param objeto
-     * @return
+     * @param objeto El objeto Usuario que contiene los datos del nuevo usuario.
+     * @return true si el usuario fue creado exitosamente, false en caso
+     * contrario.
      */
     public boolean crear(Usuario objeto) {
         boolean respuesta = false;
@@ -50,12 +52,10 @@ public class Ctrl_Usuario {
     }
 
     /**
-     * *******************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN USUARIO.
-     * *******************************************
+     * Método para comprobar si un usuario existe en la base de datos.
      *
-     * @param usuario
-     * @return
+     * @param usuario El email del usuario a comprobar.
+     * @return true si el usuario existe, false en caso contrario.
      */
     public boolean existeUsuario(String usuario) {
         boolean respuesta = false;
@@ -80,24 +80,19 @@ public class Ctrl_Usuario {
     }
 
     /**
-     * **********************************
-     * MÉTODO PARA ACTUALIZAR UN USUARIO.
+     * Método para actualizar los datos de un usuario en la base de datos.
      *
-     * **********************************
-     *
-     * @param usuario
-     * @return true si la actualización fue exitosa, false si falló.
+     * @param usuario El objeto Usuario con los datos actualizados.
+     * @return true si la actualización fue exitosa, false en caso contrario.
      */
     public boolean actualizar(Usuario usuario) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
 
         try {
-            // Preparar la consulta SQL para actualizar el usuario
             String query = "UPDATE tb_usuarios SET idRoles=?, nombre=?, apellidos=?, email=?, clave=?, estado=? WHERE idUsuario=?";
             PreparedStatement consulta = cn.prepareStatement(query);
 
-            // Establecer los valores en la consulta SQL
             consulta.setInt(1, usuario.getIdRoles());
             consulta.setString(2, usuario.getNombre());
             consulta.setString(3, usuario.getApellidos());
@@ -106,12 +101,11 @@ public class Ctrl_Usuario {
             consulta.setBoolean(6, usuario.isEstado());
             consulta.setInt(7, usuario.getIdUsuario());
 
-            // Ejecutar la consulta y comprobar si se actualizó correctamente
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
             }
 
-            cn.close(); // Cerrar la conexión después de realizar la consulta
+            cn.close();
 
         } catch (SQLException e) {
             System.out.println("Error al actualizar el usuario: " + e);
@@ -121,13 +115,11 @@ public class Ctrl_Usuario {
     }
 
     /**
-     * ********************************
-     * MÉTODO PARA ELIMINAR UN USUARIO.
+     * Método para eliminar un usuario de la base de datos.
      *
-     * ********************************
-     *
-     * @param idUsuario
-     * @return
+     * @param idUsuario El ID del usuario a eliminar.
+     * @return true si el usuario fue eliminado exitosamente, false en caso
+     * contrario.
      */
     public boolean eliminar(int idUsuario) {
         boolean respuesta = false;
@@ -145,7 +137,6 @@ public class Ctrl_Usuario {
         } catch (SQLException e) {
             System.out.println("Error al eliminar el usuario: " + e);
         } finally {
-            // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
                 try {
                     consulta.close();
@@ -165,12 +156,11 @@ public class Ctrl_Usuario {
     }
 
     /**
-     * ***************************
-     * MÉTODO PARA INICIAR SESIÓN
+     * Método para autenticar a un usuario en el sistema.
      *
-     * ***************************
-     * @param objeto
-     * @return
+     * @param objeto El objeto Usuario que contiene los datos de inicio de
+     * sesión.
+     * @return true si el inicio de sesión fue exitoso, false en caso contrario.
      */
     public boolean loginUser(Usuario objeto) {
         boolean respuesta = false;
@@ -186,18 +176,15 @@ public class Ctrl_Usuario {
             if (rs.next()) {
                 int estadoUsuario = rs.getInt("estado");
                 if (estadoUsuario == 1) {
-                    // El usuario está activo, se permite el inicio de sesión
                     respuesta = true;
                     objeto.setIdRoles(rs.getInt("idRoles"));
                     objeto.setNombre(rs.getString("nombre"));
                     objeto.setApellidos(rs.getString("apellidos"));
                 } else {
-                    // El usuario está inactivo, mostrar un mensaje de error
                     JOptionPane.showMessageDialog(null, "El usuario está inactivo. Acceda con un usuario administrador y modifique su estado.",
                             "USUARIO INACTIVO", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
                 }
             } else {
-                // Usuario o contraseña incorrectos
                 JOptionPane.showMessageDialog(null, "El usuario o la contraseña no son correctos.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         } catch (SQLException e) {
@@ -214,15 +201,12 @@ public class Ctrl_Usuario {
     }
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Método para obtener un icono redimensionado de atención o advertencia.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));

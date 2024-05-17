@@ -5,19 +5,22 @@ import java.sql.SQLException;
 import modelo.Usuario;
 
 /**
- * 
+ * Clase que proporciona servicios relacionados con los usuarios registrados en
+ * la tabla de usuarios. Esta clase incluye un método para asignar los datos de
+ * un usuario registrado en la tabla de usuarios desde un ResultSet.
+ *
  * @author Alfonso Lanzarot
  */
 public class ServicioUsuario {
 
     /**
-     * ********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN USUARIO REGISTRADO A LA TABLA
-     * USUARIOS.
-     * ********************************************************************
-     * @param rs
-     * @return 
-     * @throws java.sql.SQLException
+     * Método para asignar los datos de un usuario registrado en la tabla de
+     * usuarios desde un ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos del usuario.
+     * @return Usuario con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static Usuario asignarDatosUsuario(ResultSet rs) throws SQLException {
         Usuario usuario = new Usuario();
@@ -29,7 +32,8 @@ public class ServicioUsuario {
         usuario.setEmail(rs.getString(5));
         usuario.setClave(rs.getString(6));
         usuario.setEstado(rs.getBoolean(7));
-        
+
         return usuario;
-    }
-}
+    } // Cierre del método.
+} // Cierre de la clase.
+

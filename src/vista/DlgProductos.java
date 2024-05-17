@@ -10,26 +10,35 @@ import javax.swing.JOptionPane;
 import modelo.Producto;
 
 /**
+ * Esta clase proporciona una interfaz para crear y editar productos o
+ * servicios. Permite al usuario interactuar con los campos necesarios para
+ * definir las características de un producto o servicio. Además, gestiona la
+ * visualización de los diferentes elementos de la interfaz según la selección
+ * del tipo de elemento a crear o editar.
  *
  * @author Alfonso Lanzarot
  */
 public class DlgProductos extends javax.swing.JDialog {
 
-    private int xMouse, yMouse;
-    private int idProducto;
-    private InterProductos ifProducto;
+    /**
+     * Variables de instancia de la clase.
+     */
+    private int xMouse, yMouse; // Variables para el seguimiento del movimiento del ratón
+    private int idProducto; // Identificador del producto actual
+    private InterProductos ifProducto; // Interfaz para interactuar con la lista de productos
 
     /**
-     * Creates new form DlgProductos
+     * Constructor que crea un nuevo formulario DlgProductos.
      *
-     * @param parent
-     * @param modal
+     * @param parent El Frame padre de la ventana de diálogo.
+     * @param modal Indica si la ventana es modal o no.
      */
     public DlgProductos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setSize(new Dimension(608, 400));
         this.setLocationRelativeTo(null);
+
         // Marcar por defecto rbtnProducto al iniciar el diálogo
         rbtnProducto.setSelected(true);
 
@@ -37,7 +46,7 @@ public class DlgProductos extends javax.swing.JDialog {
         pnlProducto.setVisible(true);
         pnlServicio.setVisible(false);
 
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -342,15 +351,30 @@ public class DlgProductos extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Este método establece el color de fondo del botón al entrar el cursor del
+     * ratón.
+     *
+     * @param evt Evento de entrada del cursor del ratón.
+     */
     private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
         btnCrear.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnCrearMouseEntered
-
+    /**
+     * Este método restablece el color de fondo del botón al salir el cursor del
+     * ratón.
+     *
+     * @param evt Evento de salida del cursor del ratón.
+     */
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
-
+    /**
+     * Este método maneja la acción del botón "Crear" o "Actualizar" dependiendo
+     * del texto del botón.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
 
         String textoBoton = btnCrear.getText();
@@ -362,38 +386,62 @@ public class DlgProductos extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed
-
+    /**
+     * Este método establece el color de fondo del botón "Cancelar" al entrar el
+     * cursor del ratón.
+     *
+     * @param evt Evento de entrada del cursor del ratón.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Este método restablece el color de fondo del botón "Cancelar" al salir el
+     * cursor del ratón.
+     *
+     * @param evt Evento de salida del cursor del ratón.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Este método maneja la acción del botón "Cancelar", cerrando la ventana
+     * actual.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
-
     private void pnlCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlCabeceraMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_pnlCabeceraMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void pnlCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlCabeceraMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_pnlCabeceraMouseDragged
-
+    /**
+     * Este método maneja la acción del radio button "Producto" al ser
+     * seleccionado, mostrando los campos correspondientes para crear o editar
+     * un producto.
+     *
+     * @param evt Evento de selección del radio button "Producto".
+     */
     private void rbtnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnProductoActionPerformed
         if (rbtnProducto.isSelected()) {
             lblTitulo.setText("Nuevo producto");
@@ -401,7 +449,13 @@ public class DlgProductos extends javax.swing.JDialog {
             pnlServicio.setVisible(false);
         }
     }//GEN-LAST:event_rbtnProductoActionPerformed
-
+    /**
+     * Este método maneja la acción del radio button "Servicio" al ser
+     * seleccionado, mostrando los campos correspondientes para crear o editar
+     * un servicio.
+     *
+     * @param evt Evento de selección del radio button "Servicio".
+     */
     private void rbtnServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnServicioActionPerformed
         if (rbtnServicio.isSelected()) {
             lblTitulo.setText("Nuevo servicio");
@@ -409,7 +463,12 @@ public class DlgProductos extends javax.swing.JDialog {
             pnlServicio.setVisible(true);
         }
     }//GEN-LAST:event_rbtnServicioActionPerformed
-
+    /**
+     * Este método maneja la acción del botón "Crear" o "Actualizar" al
+     * presionar la tecla Enter, dependiendo del texto del botón.
+     *
+     * @param evt Evento de presionar la tecla Enter sobre el botón.
+     */
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         String textoBoton = btnCrear.getText();
 
@@ -496,57 +555,14 @@ public class DlgProductos extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
-     */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
-
-    /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
-     *
-     * *******************************
-     */
-    private void Limpiar() {
-        txtCodigoProducto.setText("");
-        txtDescripcionProducto.setText("");
-        cbFormato.setSelectedItem("Seleccionar");
-        cbPeso.setSelectedItem("Seleccionar");
-        txtPrecioAlto.setText("");
-        txtPrecioBajo.setText("");
-        txtCodigoServicio.setText("");
-        txaDescripcionServicio.setText("");
-        txtPrecioServicio.setText("");
-    }
-
-    public InterProductos getIfProducto() {
-        return ifProducto;
-    }
-
-    public void setIfProducto(InterProductos ifProducto) {
-        this.ifProducto = ifProducto;
-    }
-
-    /**
-     * ****************************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE PRODUCTOS O SERVICIOS.
-     *
-     * ****************************************************************
+     * Este método valida los campos y crea nuevos productos o servicios según
+     * los datos ingresados.
      */
     public void crearProducto() {
-
+        // Verificar si se está mostrando el panel de productos
         if (pnlProducto.isShowing()) {
 
+            // Validar que los campos necesarios estén completos
             if (txtCodigoProducto.getText().isEmpty() || txtDescripcionProducto.getText().isEmpty() || cbFormato.getSelectedItem().equals("Seleccionar")
                     || cbPeso.getSelectedItem().equals("Seleccionar") || txtPrecioAlto.getText().isEmpty() || txtPrecioBajo.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
@@ -575,6 +591,7 @@ public class DlgProductos extends javax.swing.JDialog {
                 double precioAlto = Double.parseDouble(precioAltoTexto);
                 double precioBajo = Double.parseDouble(precioBajoTexto);
 
+                // Verificar si el producto ya existe por descripción o por código
                 if (!controlProducto.existeProducto(descripcionProducto, codigoProducto)) {
 
                     producto.setCodigo(txtCodigoProducto.getText().trim());
@@ -601,8 +618,10 @@ public class DlgProductos extends javax.swing.JDialog {
 
             }
 
+            // Verificar si se está mostrando el panel de servicios.
         } else if (pnlServicio.isShowing()) {
 
+            // Validar que los campos necesarios estén completos
             if (txtCodigoServicio.getText().isEmpty() || txaDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
                         "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
@@ -625,6 +644,7 @@ public class DlgProductos extends javax.swing.JDialog {
                 // Convertir el texto a valor double
                 double precioServicio = Double.parseDouble(precioServicioTexto);
 
+                // Verificar si el servicio ya existe por descripción o por código
                 if (!controlServicio.existeProducto(descripcionServicio, codigoServicio)) {
 
                     servicio.setCodigo(txtCodigoServicio.getText().trim());
@@ -649,18 +669,18 @@ public class DlgProductos extends javax.swing.JDialog {
             }
         }
 
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y ACTUALIZACIÓN DE PRODUCTOS O SERVICIOS.
-     *
-     * *********************************************************************
+     * Este método valida los campos y actualiza productos o servicios según los
+     * datos ingresados.
      */
     public void actualizarProducto() {
 
+        // Verificar si se está mostrando el panel de productos
         if (pnlProducto.isShowing()) {
 
+            // Validar que los campos necesarios estén completos
             if (txtCodigoProducto.getText().isEmpty() || txtDescripcionProducto.getText().isEmpty() || cbFormato.getSelectedItem().equals("Seleccionar")
                     || cbPeso.getSelectedItem().equals("Seleccionar") || txtPrecioAlto.getText().isEmpty() || txtPrecioBajo.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
@@ -699,8 +719,10 @@ public class DlgProductos extends javax.swing.JDialog {
 
             }
 
+            // Verificar si se está mostrando el panel de servicios.
         } else if (pnlServicio.isShowing()) {
 
+            // Validar que los campos necesarios estén completos
             if (txtCodigoServicio.getText().isEmpty() || txaDescripcionServicio.getText().isEmpty() || txtPrecioServicio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
                         "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
@@ -730,15 +752,14 @@ public class DlgProductos extends javax.swing.JDialog {
 
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************************
-     * MÓTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
+     * Este método muestra los datos del producto seleccionado para su edición o
+     * actualización.
      *
-     * *******************************************
-     * @param idProducto
-     * @param datosFila
+     * @param idProducto El ID del producto seleccionado a mostrar.
+     * @param datosFila Los datos del producto seleccionado.
      */
     public void mostrarDatos(int idProducto, Object[] datosFila) {
         // Obtener el precio del servicio como un Double desde los datos de la fila
@@ -807,15 +828,62 @@ public class DlgProductos extends javax.swing.JDialog {
             txtPrecioServicio.setText(String.valueOf((Double) datosFila[6]));
         }
 
-    }
+    } // Cierre del método.
 
     /**
-     * Método para establecer el ID del producto.
+     * Este método devuelve el Internal Frame Productos.
+     *
+     * @return Internal Frame Productos.
+     */
+    public InterProductos getIfProducto() {
+        return ifProducto;
+    } // Cierre del método.
+
+    /**
+     * Este método establece el Internal Frame Productos.
+     *
+     * @param ifProducto Internal Frame Productos.
+     */
+    public void setIfProducto(InterProductos ifProducto) {
+        this.ifProducto = ifProducto;
+    } // Cierre del método.
+
+    /**
+     * Este método establece el ID del producto.
      *
      * @param idProducto El ID del producto a establecer.
      */
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
-    }
+    } // Cierre del método.
 
-}
+    /**
+     * Este método limpia los campos del formulario.
+     */
+    private void Limpiar() {
+        txtCodigoProducto.setText("");
+        txtDescripcionProducto.setText("");
+        cbFormato.setSelectedItem("Seleccionar");
+        cbPeso.setSelectedItem("Seleccionar");
+        txtPrecioAlto.setText("");
+        txtPrecioBajo.setText("");
+        txtCodigoServicio.setText("");
+        txaDescripcionServicio.setText("");
+        txtPrecioServicio.setText("");
+    } // Cierre del método.
+
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return El icono escalado.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

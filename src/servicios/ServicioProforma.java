@@ -1,4 +1,3 @@
-
 package servicios;
 
 import java.sql.ResultSet;
@@ -6,19 +5,22 @@ import java.sql.SQLException;
 import modelo.Proforma;
 
 /**
- * 
+ * Clase que proporciona servicios relacionados con las proformas registradas en
+ * la tabla de proformas. Esta clase incluye un método para asignar los datos de
+ * una proforma registrada en la tabla de proformas desde un ResultSet.
+ *
  * @author Alfonso Lanzarot
  */
 public class ServicioProforma {
 
-   /**
-     * ********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UNA PROFORMA REGISTRADA A LA TABLA
-     * PROFORMAS.
-     * ********************************************************************
-     * @param rs
-     * @return 
-     * @throws java.sql.SQLException 
+    /**
+     * Método para asignar los datos de una proforma registrada en la tabla de
+     * proformas desde un ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos de la proforma.
+     * @return Proforma con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static Proforma asignarDatosProforma(ResultSet rs) throws SQLException {
         Proforma proforma = new Proforma();
@@ -34,7 +36,7 @@ public class ServicioProforma {
         proforma.setEstado(rs.getString(23));
 
         return proforma;
-    }
-    
-    
-}
+    } // Cierre del método.
+
+} // Cierre de la clase.
+

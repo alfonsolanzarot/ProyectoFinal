@@ -38,11 +38,18 @@ import modelo.Proveedor;
 import servicios.ServicioProveedor;
 
 /**
+ * Esta clase proporciona funcionalidades para gestionar la información de los
+ * proveedores. Permite crear, editar, eliminar y mostrar datos relacionados con
+ * los proveedores. Además, carga y configura la tabla de proveedores en un
+ * JInternalFrame.
  *
  * @author Alfonso Lanzarot
  */
 public class InterProveedores extends javax.swing.JInternalFrame {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private final Map<Integer, Integer> idProveedorPorFila = new HashMap<>();
     private int idProveedor;
     List<Proveedor> listaProveedores = new ArrayList<>();
@@ -53,7 +60,12 @@ public class InterProveedores extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
-    //CONSTRUCTOR
+    /**
+     * Constructor de la clase InterProveedores. Inicializa el JInternalFrame,
+     * configura su tamaño y título, carga y configura la tabla de proveedores,
+     * y añade un WindowListener para cargar la tabla cuando se abre el frame
+     * interno.
+     */
     public InterProveedores() {
         initComponents();
         this.setSize(ancho, alto);
@@ -61,27 +73,28 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         CargarTablaProveedores();
         configurarTablaProveedores();
 
-        // Añadimos WindowListener para detectar cuándo se abre el frame interno
+        // Añadimos WindowListener para detectar cuándo se abre el frame interno.
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                CargarTablaProveedores(); // Llama al método para cargar la tabla cuando se abre el frame
+                CargarTablaProveedores(); // Llama al método para cargar la tabla cuando se abre el frame.
             }
         });
 
-    }
+    } // Cierre del constructor.
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
-     *
-     * ******************************
+     * Este método configura la tabla de proveedores, estableciendo el modelo de
+     * la tabla, personalizando el encabezado, el tamaño de las filas, el tipo
+     * de letra y tamaño del contenido de la tabla, así como el color de fondo
+     * del JScrollPane. También alinea el contenido de ciertas columnas y
+     * personaliza el renderizado del encabezado de la tabla.
      */
     private void configurarTablaProveedores() {
-        // Crear un modelo de tabla
+        // Crear un modelo de tabla.
         DefaultTableModel model = new DefaultTableModel();
 
-        // Agregar columnas al modelo de tabla
+        // Agregar columnas al modelo de tabla.
         model.addColumn("Nombre");
         model.addColumn("NIF");
         model.addColumn("E-mail");
@@ -96,88 +109,89 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         model.addColumn("Condiciones pago");
         model.addColumn("Website");
 
-        // Establecer el modelo de tabla en la tabla
+        // Establecer el modelo de tabla en la tabla.
         tblProveedores.setModel(model);
 
-        // Personalizar el encabezado de la tabla
+        // Personalizar el encabezado de la tabla.
         JTableHeader header = tblProveedores.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
-        // Aumentar la altura del encabezado de la tabla
-        int alturaEncabezado = 42; // Puedes ajustar este valor según tus preferencias
+        // Aumentar la altura del encabezado de la tabla.
+        int alturaEncabezado = 42;
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
-        // Obtener el renderizador predeterminado del encabezado
+        // Obtener el renderizador predeterminado del encabezado.
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblProveedores.getTableHeader().getDefaultRenderer();
 
-        // Establecer alineación centrada para el renderizador del encabezado
+        // Establecer alineación centrada para el renderizador del encabezado.
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        // Personalizar el tamaño de las filas
-        tblProveedores.setRowHeight(60); // Cambiar el tamaño de las filas
+        // Personalizar el tamaño de las filas.
+        tblProveedores.setRowHeight(60); // Cambiar el tamaño de las filas.
 
-        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
-        tblProveedores.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
+        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla.
+        tblProveedores.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño.
 
-        //Cambiar el color de fondo del jScrollPane.
+        // Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
 
-        // Renderizador para alinear al centro las celdas de las columnas de nif y código postal
+        // Renderizador para alinear al centro las celdas de las columnas de nif y código postal.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblProveedores.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif
-        tblProveedores.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal
+        tblProveedores.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif.
+        tblProveedores.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal.
 
-        // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil
+        // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil.
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        tblProveedores.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono
-        tblProveedores.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil
+        tblProveedores.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono.
+        tblProveedores.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil.
 
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
-            setOpaque(true); // Asegura que el componente es opaco
+            setOpaque(true); // Asegura que el componente es opaco.
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            // Establece el color de fondo y la fuente del encabezado de la tabla
+            // Establece el color de fondo y la fuente del encabezado de la tabla.
             component.setBackground(new Color(106, 141, 162));
             component.setFont(new Font("Roboto", Font.BOLD, 12));
             component.setForeground(Color.WHITE);
-            // Establecer bordes al componente del encabezado
-            Border border = BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE); // Borde blanco en la parte inferior y derecha
+            // Establecer bordes al componente del encabezado.
+            Border border = BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE); // Borde blanco en la parte inferior y derecha.
             ((JLabel) component).setBorder(border);
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase de conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -187,7 +201,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -366,7 +380,11 @@ public class InterProveedores extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Acción del botón Añadir Proveedor.
+     *
+     * @param evt Abre el diálogo para crear un proveedor nuevo.
+     */
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
         DlgProveedores dlgProveedores = new DlgProveedores(f, true);
@@ -375,99 +393,112 @@ public class InterProveedores extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
-
+    /**
+     * Acción del botón Eliminar Proveedor.
+     *
+     * @param evt Elimina el proveedor de la fila seleccionada en la tabla de
+     * usuarios.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblProveedores.getSelectedRow();
-        if (filaSeleccionada != -1) {
-
-            idProveedor = idProveedorPorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el proveedor seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-            if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlProveedor.eliminar(idProveedor)) {
-
-                    this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Proveedor eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para eliminarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        eliminarProveedor();
 
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    /**
+     * Acción del botón Editar Proveedor.
+     *
+     * @param evt Abre el diálogo para editar el proveedor seleccionado en la
+     * tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Obtener la fila seleccionada.
-        int filaSeleccionada = tblProveedores.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            // Obtener el ID del proveedor de la fila seleccionada utilizando el HashMap
-            idProveedor = idProveedorPorFila.get(filaSeleccionada);
-
-            // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblProveedores.getModel();
-            Object[] datosFila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < modelo.getColumnCount(); i++) {
-                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
-            }
-
-            // Pasar el ID del proveedor y los datos de la fila al diálogo de edición.
-            Frame f = JOptionPane.getFrameForComponent(this);
-            DlgEdicionProveedor dlgEdicionProveedor = new DlgEdicionProveedor(f, true);
-            dlgEdicionProveedor.setIdProveedor(idProveedor);
-            dlgEdicionProveedor.mostrarDatos(idProveedor, datosFila); // Pasa el ID del proveedor y los datos de la fila al diálogo
-            dlgEdicionProveedor.setIfProveedor(this);
-            dlgEdicionProveedor.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para editarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        editarProveedor();
     }//GEN-LAST:event_btnEditarActionPerformed
-
+    /**
+     * Acción del botón Buscar.
+     *
+     * @param evt Busca los proveedores de la tabla.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    /**
+     * Acción de buscar presionando Enter.
+     *
+     * @param evt Busca los proveedores de la tabla.
+     */
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
-
+    /**
+     * Método que cambia el color de fondo del botón "Editar" cuando el ratón
+     * entra en él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
         btnEditar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnEditarMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Editar" cuando el ratón
+     * sale de él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
         btnEditar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnEditarMouseExited
-
+    /**
+     * Método que cambia el color de fondo del botón "Buscar" cuando el ratón
+     * entra en él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnBuscarMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Buscar" cuando el ratón
+     * sale de él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnBuscarMouseExited
-
+    /**
+     * Método que cambia el color de fondo del botón "Añadir" cuando el ratón
+     * entra en él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
         btnAnadir.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnAnadirMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Añadir" cuando el ratón
+     * sale de él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
-
+    /**
+     * Método que cambia el color de fondo del botón "Eliminar" cuando el ratón
+     * entra en él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
         btnEliminar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnEliminarMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Eliminar" cuando el
+     * ratón sale de él.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
@@ -487,9 +518,7 @@ public class InterProveedores extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ******************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS PROVEEDORES REGISTRADOS.
-     * ******************************************************************
+     * Método para cargar la tabla con todos los proveedores registrados.
      */
     private void CargarTablaProveedores() {
         ConexionBD conexion = new ConexionBD();
@@ -518,13 +547,13 @@ public class InterProveedores extends javax.swing.JInternalFrame {
                     Object[] datosFila = this.asignarDatosModelo(proveedor);
                     model.addRow(datosFila);
 
-                    // Obtener el ID del proveedor de la fila actual
+                    // Obtener el ID del proveedor de la fila actual.
                     idProveedor = rs.getInt("idProveedor");
 
-                    // Obtener el índice de la fila recién agregada
+                    // Obtener el índice de la fila recién agregada.
                     int fila = model.getRowCount() - 1;
 
-                    // Asociar el ID del proveedor con el índice de fila en el HashMap
+                    // Asociar el ID del proveedor con el índice de fila en el HashMap.
                     idProveedorPorFila.put(fila, idProveedor);
 
                 }
@@ -553,14 +582,71 @@ public class InterProveedores extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************************
-     * MÉTODO PARA BUSCAR PROVEEDORES EN LA TABLA.
-     * *******************************************
+     * Método para eliminar un proveedor de la tabla.
      */
-    public void buscar() {
+    private void eliminarProveedor() {
+        Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
+        //Obtener la fila seleccionada.
+        int filaSeleccionada = tblProveedores.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            idProveedor = idProveedorPorFila.get(filaSeleccionada);
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el proveedor seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (controlProveedor.eliminar(idProveedor)) {
+
+                    this.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Proveedor eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para eliminarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para editar un proveedor de la tabla.
+     */
+    private void editarProveedor() {
+        // Obtener la fila seleccionada.
+        int filaSeleccionada = tblProveedores.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el ID del proveedor de la fila seleccionada utilizando el HashMap.
+            idProveedor = idProveedorPorFila.get(filaSeleccionada);
+
+            // Obtener los datos de la fila seleccionada.
+            DefaultTableModel modelo = (DefaultTableModel) tblProveedores.getModel();
+            Object[] datosFila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
+            }
+
+            // Pasar el ID del proveedor y los datos de la fila al diálogo de edición.
+            Frame f = JOptionPane.getFrameForComponent(this);
+            DlgEdicionProveedor dlgEdicionProveedor = new DlgEdicionProveedor(f, true);
+            dlgEdicionProveedor.setIdProveedor(idProveedor);
+            dlgEdicionProveedor.mostrarDatos(idProveedor, datosFila); // Pasa el ID del proveedor y los datos de la fila al diálogo.
+            dlgEdicionProveedor.setIfProveedor(this);
+            dlgEdicionProveedor.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor para editarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para buscar proveedores en la tabla. Busca por nombre y por nif.
+     */
+    private void buscar() {
         List<Proveedor> listaFiltrada = new ArrayList<>();
         for (Proveedor p : this.listaProveedores) {
             if (p.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || p.getNif().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
@@ -569,20 +655,16 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         }
         Object[] arrayObjetos = new Object[listaFiltrada.size()];
         DefaultTableModel model = (DefaultTableModel) tblProveedores.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
+        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos.
         for (int i = 0; i < listaFiltrada.size(); i++) {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
             model.addRow((Object[]) arrayObjetos[i]);
         }
-    }
-
-    
+    } // Cierre del método.
 
     /**
-     * *************************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS PROVEEDORES REGISTRADOS AL MODELO DE
-     * TABLA.
-     * *************************************************************************
+     * Método para asignar los datos de los proveedores registrados al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(Proveedor proveedor) {
 
@@ -603,54 +685,58 @@ public class InterProveedores extends javax.swing.JInternalFrame {
         fila[12] = proveedor.getCondiciones_pago();
 
         return fila;
-    }
+    } // Cierre del método.
 
     /**
-     * **************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PROVEEDORES REGISTRADOS
-     * CUANDO SE AÑADE UNO NUEVO Y SE ELIMINA UN PROVEEDOR.
-     * **************************************************************************
+     * Método para recargar la tabla con todos los proveedores registrados
+     * cuando se añade o se elimina uno.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblProveedores.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
+        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos.
 
         CargarTablaProveedores();
-    }
-    
-    
+    } // Cierre del método.
+
     /**
-     * ***********************
-     * GETTERS DE LOS BOTONES.
-     * ***********************
-     * @return 
+     * Devuelve el botón utilizado para editar.
+     *
+     * @return El botón de editar.
      */
-    public JButton getBtnEditar(){
+    public JButton getBtnEditar() {
         return btnEditar;
     }
-    
-    public JButton getBtnAnadir(){
+
+    /**
+     * Devuelve el botón utilizado para añadir.
+     *
+     * @return El botón de añadir.
+     */
+    public JButton getBtnAnadir() {
         return btnAnadir;
     }
-    
-    public JButton getBtnEliminar(){
+
+    /**
+     * Devuelve el botón utilizado para eliminar.
+     *
+     * @return El botón de eliminar.
+     */
+    public JButton getBtnEliminar() {
         return btnEliminar;
     }
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

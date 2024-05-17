@@ -9,19 +9,25 @@ import javax.swing.JOptionPane;
 import modelo.Proveedor;
 
 /**
+ * Esta clase representa un diálogo utilizado para crear nuevos proveedores.
+ * Permite la interacción con la interfaz gráfica para agregar información de
+ * proveedores.
  *
  * @author Alfonso Lanzarot
  */
 public class DlgProveedores extends javax.swing.JDialog {
 
+    /**
+     * Variables de la clase.
+     */
     private int xMouse, yMouse;
     private InterProveedores ifProveedor;
 
     /**
-     * Creates new form DlgProveedores
+     * Constructor que crea un nuevo formulario DlgProveedores.
      *
-     * @param parent
-     * @param modal
+     * @param parent El frame padre que contiene el diálogo.
+     * @param modal Indica si el diálogo es modal o no.
      */
     public DlgProveedores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -29,7 +35,7 @@ public class DlgProveedores extends javax.swing.JDialog {
         this.setSize(new Dimension(800, 480));
         this.setLocationRelativeTo(null);
 
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -415,11 +421,21 @@ public class DlgProveedores extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Este método cierra el diálogo cuando se presiona el botón Cancelar.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    /**
+     * Este método restringe la entrada de caracteres en el campo de texto del
+     * teléfono. Solo permite números y limita la longitud del texto a 16
+     * caracteres.
+     *
+     * @param evt El evento del teclado.
+     */
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -430,7 +446,13 @@ public class DlgProveedores extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
+    /**
+     * Este método restringe la entrada de caracteres en el campo de texto del
+     * móvil. Solo permite números y limita la longitud del texto a 16
+     * caracteres.
+     *
+     * @param evt El evento del teclado.
+     */
     private void txtMovilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMovilKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -441,46 +463,78 @@ public class DlgProveedores extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtMovilKeyTyped
-
+    /**
+     * Acción del botón crear que llama al método crearProveedor.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         crearProveedor();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
-
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_lblHeaderMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
-
+    /**
+     * Cambia el color de fondo del botón cancelar cuando el ratón entra en su
+     * área.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Restablece el color de fondo del botón cancelar cuando el ratón sale de
+     * su área.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón crear cuando el ratón entra en su
+     * área.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
         btnCrear.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnCrearMouseEntered
-
+    /**
+     * Restablece el color de fondo del botón crear cuando el ratón sale de su
+     * área.
+     *
+     * @param evt Evento del ratón.
+     */
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
-
+    /**
+     * Acción del botón crear que llama al método crearProveedor pulsando la
+     * tecla Enter.
+     *
+     * @param evt Evento del teclado.
+     */
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         crearProveedor();
     }//GEN-LAST:event_btnCrearKeyPressed
@@ -564,10 +618,7 @@ public class DlgProveedores extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ******************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE PROVEEDORES.
-     *
-     * ******************************************************
+     * Método que valida los campos vacíos y crea un proveedor.
      */
     private void crearProveedor() {
         Proveedor proveedor = new Proveedor();
@@ -616,29 +667,10 @@ public class DlgProveedores extends javax.swing.JDialog {
 
         }
 
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
-     */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
-
-    /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
-     *
-     * *******************************
+     * Método para limpiar los campos.
      */
     private void Limpiar() {
         txtNombre.setText("");
@@ -655,14 +687,38 @@ public class DlgProveedores extends javax.swing.JDialog {
         txtNComercial.setText("");
         txtCondicionesPago.setText("");
 
-    }
+    } // Cierre del método.
 
+    /**
+     * Método getter que llama al internal frame Proveedores.
+     *
+     * @return Internal Frame Proveedores.
+     */
     public InterProveedores getIfProveedor() {
         return ifProveedor;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método que establece el internal frame Proveedores.
+     *
+     * @param ifProveedor Internal Frame Proveedores.
+     */
     public void setIfProveedor(InterProveedores ifProveedor) {
         this.ifProveedor = ifProveedor;
-    }
+    } // Cierre del método.
 
-}
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

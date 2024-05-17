@@ -9,18 +9,18 @@ import modelo.Cliente;
 import java.sql.ResultSet;
 
 /**
+ * Controlador para gestionar las operaciones relacionadas con los clientes.
+ * Permite registrar, actualizar y eliminar clientes en la base de datos.
  *
  * @author Alfonso Lanzarot
  */
 public class Ctrl_Cliente {
 
     /**
-     * *******************************
-     * MÉTODO PARA REGISTRAR CLIENTES.
+     * Método para registrar un nuevo cliente en la base de datos.
      *
-     * *******************************
-     * @param objeto
-     * @return
+     * @param objeto El cliente a registrar.
+     * @return true si se registra correctamente, false si falla.
      */
     public boolean crear(Cliente objeto) {
         boolean respuesta = false;
@@ -56,13 +56,11 @@ public class Ctrl_Cliente {
     }
 
     /**
-     * *******************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN CLIENTE.
-     * *******************************************
+     * Método para comprobar si existe un cliente en la base de datos.
      *
-     * @param cliente
-     * @param nif
-     * @return
+     * @param cliente El nombre del cliente.
+     * @param nif El NIF del cliente.
+     * @return true si el cliente existe, false si no.
      */
     public boolean existeCliente(String cliente, String nif) {
         boolean respuesta = false;
@@ -87,10 +85,7 @@ public class Ctrl_Cliente {
     }
 
     /**
-     * **********************************
-     * MÉTODO PARA ACTUALIZAR UN CLIENTE.
-     *
-     * **********************************
+     * Método para actualizar un cliente en la base de datos.
      *
      * @param objeto El cliente a actualizar.
      * @param idCliente El ID del cliente que se va a actualizar.
@@ -150,13 +145,10 @@ public class Ctrl_Cliente {
     }
 
     /**
-     * ********************************
-     * MÉTODO PARA ELIMINAR UN CLIENTE.
+     * Método para eliminar un cliente de la base de datos.
      *
-     * ********************************
-     *
-     * @param idCliente
-     * @return
+     * @param idCliente El ID del cliente a eliminar.
+     * @return true si se elimina correctamente, false si falla.
      */
     public boolean eliminar(int idCliente) {
         boolean respuesta = false;

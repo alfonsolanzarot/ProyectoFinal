@@ -10,20 +10,26 @@ import javax.swing.JOptionPane;
 import modelo.Usuario;
 
 /**
+ * Esta clase representa un diálogo utilizado para crear y editar usuarios en el
+ * sistema. Permite al usuario ingresar información relacionada con la creación
+ * o edición de un usuario.
  *
  * @author Alfonso Lanzarot
  */
 public class DlgUsuarios extends javax.swing.JDialog {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private int xMouse, yMouse;
     private int idUsuario;
     private InterUsuarios ifUsuario;
 
     /**
-     * Creates new form DlgUsuarios
+     * Constructor que inicializa un nuevo formulario DlgUsuarios.
      *
-     * @param parent
-     * @param modal
+     * @param parent Frame interUsuarios
+     * @param modal Ventana modal que no permite hacer clic en el Frame padre.
      */
     public DlgUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -33,7 +39,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
         this.txtClave.setVisible(true);
         this.txtClaveVisible.setVisible(false);
 
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -230,15 +236,30 @@ public class DlgUsuarios extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Este método establece el color de fondo del botón "Crear" cuando el mouse
+     * entra en él.
+     *
+     * @param evt Evento de mouse que desencadena la acción.
+     */
     private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
         btnCrear.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnCrearMouseEntered
-
+    /**
+     * Este método restablece el color de fondo del botón "Crear" cuando el
+     * mouse sale de él.
+     *
+     * @param evt Evento de mouse que desencadena la acción.
+     */
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
-
+    /**
+     * Acción del botón "Crear" que realiza dos acciones dependiendo del texto
+     * del botón: crear un nuevo usuario o actualizar un usuario existente.
+     *
+     * @param evt Evento de acción que desencadena la acción.
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         String textoBoton = btnCrear.getText();
 
@@ -249,55 +270,69 @@ public class DlgUsuarios extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed
-
+    /**
+     * Este método establece el color de fondo del botón "Cancelar" cuando el
+     * mouse entra en él.
+     *
+     * @param evt Evento de mouse que desencadena la acción.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Este método restablece el color de fondo del botón "Cancelar" cuando el
+     * mouse sale de él.
+     *
+     * @param evt Evento de mouse que desencadena la acción.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Acción del botón "Cancelar" que cierra el diálogo actual.
+     *
+     * @param evt Evento de acción que desencadena la acción.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
     private void PnlUsuariosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PnlUsuariosMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_PnlUsuariosMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void PnlUsuariosMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PnlUsuariosMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_PnlUsuariosMouseDragged
-
+    /**
+     * Acción del botón "Ver Clave" que muestra u oculta la clave del usuario.
+     *
+     * @param evt Evento de mouse que desencadena la acción.
+     */
     private void ckbxVerClaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckbxVerClaveMouseClicked
-        if (ckbxVerClave.isSelected() == true) {
-            String pass = "";
-            char[] passIngresado = txtClave.getPassword();
-            for (int i = 0; i < passIngresado.length; i++) {
-                pass += passIngresado[i];
-            }
-            txtClaveVisible.setText(pass);
-            txtClave.setVisible(false);
-            txtClaveVisible.setVisible(true);
-        } else {
-            String claveIngresada = txtClaveVisible.getText().trim();
-            txtClave.setText(claveIngresada);
-            txtClave.setVisible(true);
-            txtClaveVisible.setVisible(false);
-        }
+        mostrarClave();
     }//GEN-LAST:event_ckbxVerClaveMouseClicked
-
+    /**
+     * Acción del botón "Crear" cuando se presiona la tecla "Enter", que realiza
+     * dos acciones dependiendo del texto del botón: crear un nuevo usuario o
+     * actualizar un usuario existente.
+     *
+     * @param evt Evento de teclado que desencadena la acción.
+     */
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         String textoBoton = btnCrear.getText();
 
@@ -372,14 +407,14 @@ public class DlgUsuarios extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * *******************************************
-     * MÉTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
+     * Método que muestra los datos seleccionados en tabla de usuarios para
+     * editar la información. Recibe dos parámetros.
      *
-     * *******************************************
-     * @param idUsuario
-     * @param datosFila
+     * @param idUsuario ID del usuario seleccionado en la tabla.
+     * @param datosFila los datos del usuario de la fila seleccionada.
      */
     public void mostrarDatos(int idUsuario, Object[] datosFila) {
+        // Cambiamos los textos del botón y del título del diálogo.
         lblTitulo.setText("Editar usuario");
         btnCrear.setText("Actualizar");
 
@@ -430,13 +465,10 @@ public class DlgUsuarios extends javax.swing.JDialog {
         } else {
             cbEstado.setSelectedItem("Inactivo");
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ***************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE USUARIOS.
-     *
-     * ***************************************************
+     * Método que valida los campos vacíos y crea un usuario.
      */
     public void crearUsuario() {
         Usuario usuario = new Usuario();
@@ -513,13 +545,10 @@ public class DlgUsuarios extends javax.swing.JDialog {
                 this.Limpiar();
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ********************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y ACTUALIZACIÓN DE USUARIOS.
-     *
-     * ********************************************************
+     * Método que valida los campos vacíos y actualiza un usuario.
      */
     public void actualizarUsuario() {
         Usuario usuario = new Usuario();
@@ -585,23 +614,28 @@ public class DlgUsuarios extends javax.swing.JDialog {
             }
 
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * Método para mostrar la clave oculta del campo password.
      */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
+    public void mostrarClave() {
+        if (ckbxVerClave.isSelected() == true) {
+            String pass = "";
+            char[] passIngresado = txtClave.getPassword();
+            for (int i = 0; i < passIngresado.length; i++) {
+                pass += passIngresado[i];
+            }
+            txtClaveVisible.setText(pass);
+            txtClave.setVisible(false);
+            txtClaveVisible.setVisible(true);
+        } else {
+            String claveIngresada = txtClaveVisible.getText().trim();
+            txtClave.setText(claveIngresada);
+            txtClave.setVisible(true);
+            txtClaveVisible.setVisible(false);
+        }
+    } // Cierre del método.
 
     /**
      * Método para establecer el ID del usuario.
@@ -612,19 +646,26 @@ public class DlgUsuarios extends javax.swing.JDialog {
         this.idUsuario = idUsuario;
     }
 
+    /**
+     * Método que devuelve el internal frame Usuarios.
+     *
+     * @return Internal Frame Usuarios.
+     */
     public InterUsuarios getIfUsuario() {
         return ifUsuario;
-    }
-
-    public void setIfUsuario(InterUsuarios ifUsuario) {
-        this.ifUsuario = ifUsuario;
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
+     * Método que establece el internal frame Usuarios.
      *
-     * *******************************
+     * @param ifUsuario Internal Frame Usuarios.
+     */
+    public void setIfUsuario(InterUsuarios ifUsuario) {
+        this.ifUsuario = ifUsuario;
+    } // Cierre del método.
+
+    /**
+     * Método para limpiar los campos.
      */
     private void Limpiar() {
 
@@ -636,5 +677,19 @@ public class DlgUsuarios extends javax.swing.JDialog {
         cbPermisos.setSelectedItem("Seleccionar permiso:");
         cbEstado.setSelectedItem("Seleccionar estado:");
 
-    }
-}
+    } // Cierre del método.
+
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+} // Cierre de la clase.

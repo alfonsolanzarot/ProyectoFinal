@@ -9,18 +9,21 @@ import modelo.Proveedor;
 import java.sql.ResultSet;
 
 /**
+ * Controlador para gestionar las operaciones relacionadas con los proveedores
+ * en la base de datos. Proporciona métodos para crear, comprobar existencia,
+ * actualizar y eliminar proveedores.
  *
- * @author Alfonso Lanzarot
+ * @autor Alfonso Lanzarot
  */
 public class Ctrl_Proveedor {
 
     /**
-     * **********************************
-     * MÉTODO PARA REGISTRAR PROVEEDORES.
+     * Método para registrar un nuevo proveedor en la base de datos.
      *
-     * **********************************
-     * @param objeto
-     * @return
+     * @param objeto El objeto Proveedor que contiene los datos del nuevo
+     * proveedor.
+     * @return true si el proveedor fue creado exitosamente, false en caso
+     * contrario.
      */
     public boolean crear(Proveedor objeto) {
         boolean respuesta = false;
@@ -55,13 +58,11 @@ public class Ctrl_Proveedor {
     }
 
     /**
-     * *********************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN PROVEEDOR.
-     * *********************************************
+     * Método para comprobar si un proveedor existe en la base de datos.
      *
-     * @param proveedor
-     * @param nif
-     * @return
+     * @param proveedor El nombre del proveedor a comprobar.
+     * @param nif El NIF del proveedor a comprobar.
+     * @return true si el proveedor existe, false en caso contrario.
      */
     public boolean existeProveedor(String proveedor, String nif) {
         boolean respuesta = false;
@@ -86,14 +87,11 @@ public class Ctrl_Proveedor {
     }
 
     /**
-     * ************************************
-     * MÉTODO PARA ACTUALIZAR UN PROVEEDOR.
+     * Método para actualizar los datos de un proveedor en la base de datos.
      *
-     * ************************************
-     *
-     * @param objeto El proveedor a actualizar.
+     * @param objeto El objeto Proveedor con los datos actualizados.
      * @param idProveedor El ID del proveedor que se va a actualizar.
-     * @return true si la actualización fue exitosa, false si falló.
+     * @return true si la actualización fue exitosa, false en caso contrario.
      */
     public boolean actualizar(Proveedor objeto, int idProveedor) {
         boolean respuesta = false;
@@ -116,7 +114,7 @@ public class Ctrl_Proveedor {
             consulta.setString(11, objeto.getN_comercial());
             consulta.setString(12, objeto.getCondiciones_pago());
             consulta.setString(13, objeto.getWebsite());
-            
+
             int filasActualizadas = consulta.executeUpdate();
             if (filasActualizadas > 0) {
                 respuesta = true;
@@ -127,7 +125,6 @@ public class Ctrl_Proveedor {
         } catch (SQLException e) {
             System.out.println("Error al actualizar el proveedor: " + e);
         } finally {
-            // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
                 try {
                     consulta.close();
@@ -148,13 +145,11 @@ public class Ctrl_Proveedor {
     }
 
     /**
-     * **********************************
-     * MÉTODO PARA ELIMINAR UN PROVEEDOR.
+     * Método para eliminar un proveedor de la base de datos.
      *
-     * **********************************
-     *
-     * @param idProveedor
-     * @return
+     * @param idProveedor El ID del proveedor a eliminar.
+     * @return true si el proveedor fue eliminado exitosamente, false en caso
+     * contrario.
      */
     public boolean eliminar(int idProveedor) {
         boolean respuesta = false;
@@ -172,7 +167,6 @@ public class Ctrl_Proveedor {
         } catch (SQLException e) {
             System.out.println("Error al eliminar el proveedor: " + e);
         } finally {
-            // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
                 try {
                     consulta.close();

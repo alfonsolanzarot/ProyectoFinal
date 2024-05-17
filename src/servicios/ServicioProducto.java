@@ -5,20 +5,23 @@ import java.sql.SQLException;
 import modelo.Producto;
 
 /**
+ * Clase que proporciona servicios relacionados con los productos o servicios
+ * registrados en la tabla 'productos'. Esta clase incluye métodos para asignar
+ * los datos de un producto desde un ResultSet, quitar símbolos de euro, kilo y
+ * porcentaje, y convertir una fecha en un arreglo de enteros.
  *
  * @author Alfonso Lanzarot
  */
 public class ServicioProducto {
 
     /**
-     * ******************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN PRODUCTO REGISTRADO A LA TABLA
-     * PRODUCTOS.
-     * ****************************************************************** @param
-     * rs
-     * @param rs
-     * @return
-     * @throws java.sql.SQLException
+     * Método para asignar los datos de un producto o servicio registrado desde
+     * un ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos del producto.
+     * @return Producto con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static Producto asignarDatosProducto(ResultSet rs) throws SQLException {
         Producto producto = new Producto();
@@ -33,8 +36,15 @@ public class ServicioProducto {
         producto.setPrecioServicio(rs.getDouble(8));
 
         return producto;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método que elimina los símbolos de euro, kilo y porcentaje de una cadena
+     * para que se puedan realizar cálculos correctamente.
+     *
+     * @param cadena La cadena con valores numéricos y símbolos.
+     * @return La cadena con los símbolos de euro, kilo y porcentaje eliminados.
+     */
     public static String quitarSimboloEuroKiloPorcentaje(String cadena) {
         String resultado = cadena;
         try {
@@ -55,17 +65,24 @@ public class ServicioProducto {
             e.printStackTrace();
         }
         return resultado;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método para convertir una fecha en un arreglo de enteros.
+     *
+     * @param fecha La fecha en formato string.
+     * @return Un arreglo de strings con los componentes de la fecha.
+     */
     public static String[] convertirFechaArrayInt(String fecha) {
         String[] resultado = null;
         fecha = fecha.trim();
         if (fecha.contains("/")) {
             resultado = fecha.split("/");
-        } else if (fecha.contains("-")){
+        } else if (fecha.contains("-")) {
             resultado = fecha.split("-");
         }
         return resultado;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.
+

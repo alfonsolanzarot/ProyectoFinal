@@ -40,11 +40,17 @@ import modelo.Producto;
 import servicios.ServicioProducto;
 
 /**
+ * Esta clase proporciona funcionalidades para crear, editar, eliminar y mostrar
+ * información de productos. Permite gestionar la información relacionada con
+ * los productos.
  *
  * @author Alfonso Lanzarot
  */
 public class InterProductos extends javax.swing.JInternalFrame {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private final Map<Integer, Integer> idProductoPorFila = new HashMap<>();
     private int idProducto;
     List<Producto> listaProductos = new ArrayList<>();
@@ -55,7 +61,12 @@ public class InterProductos extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
-    //CONSTRUCTOR
+    /**
+     * Constructor de la clase InterProductos. Inicializa el JInternalFrame,
+     * configura su tamaño y título, carga y configura la tabla de productos,
+     * y añade un WindowListener para cargar la tabla cuando se abre el frame
+     * interno.
+     */
     public InterProductos() {
         initComponents();
         this.setSize(ancho, alto);
@@ -71,13 +82,14 @@ public class InterProductos extends javax.swing.JInternalFrame {
             }
         });
 
-    }
+    } // Cierre del constructor.
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
-     *
-     * ******************************
+     * Este método configura la tabla de productos, estableciendo el modelo de
+     * la tabla, personalizando el encabezado, el tamaño de las filas, el tipo
+     * de letra y tamaño del contenido de la tabla, así como el color de fondo
+     * del JScrollPane. También alinea el contenido de ciertas columnas y
+     * personaliza el renderizado del encabezado de la tabla.
      */
     private void configurarTablaProductos() {
         // Crear un modelo de tabla
@@ -115,7 +127,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblProductos.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
-        //Cambiar el color de fondo del jScrollPane.
+        // Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
 
         // Renderizador para alinear al centro las celdas de las columnas de código, formato, peso y los precios
@@ -170,29 +182,33 @@ public class InterProductos extends javax.swing.JInternalFrame {
             }
         };
         tblProductos.getColumnModel().getColumn(3).setCellRenderer(unitRenderer); // Peso unitario
-    }
+    } //Cierre del método.
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
             setOpaque(true); // Asegura que el componente es opaco
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -207,13 +223,10 @@ public class InterProductos extends javax.swing.JInternalFrame {
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase de conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -223,7 +236,7 @@ public class InterProductos extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -402,7 +415,12 @@ public class InterProductos extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Acción del botón Añadir Producto. Abre el diálogo para crear un producto
+     * o un servicio nuevo.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
         DlgProductos dlgProductos = new DlgProductos(f, true);
@@ -411,99 +429,112 @@ public class InterProductos extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
-
+    /**
+     * Acción del botón Eliminar Producto. Elimina el producto o servicio de la
+     * fila seleccionada en la tabla de productos.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Producto controlProducto = new Ctrl_Producto();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblProductos.getSelectedRow();
-        if (filaSeleccionada != -1) {
-
-            idProducto = idProductoPorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el producto seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-            if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlProducto.eliminar(idProducto)) {
-
-                    this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el producto.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para eliminarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
-
+        eliminarProducto();
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    /**
+     * Acción del botón Editar Producto. Abre el diálogo para editar el producto
+     * o servicio seleccionado en la tabla.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Obtener la fila seleccionada.
-        int filaSeleccionada = tblProductos.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            // Obtener el ID del producto de la fila seleccionada utilizando el HashMap
-            idProducto = idProductoPorFila.get(filaSeleccionada);
-
-            // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
-            Object[] datosFila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < modelo.getColumnCount(); i++) {
-                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
-            }
-
-            // Pasar el ID del producto y los datos de la fila al diálogo de edición.
-            Frame f = JOptionPane.getFrameForComponent(this);
-            DlgProductos dlgEdicionProducto = new DlgProductos(f, true);
-            dlgEdicionProducto.setIdProducto(idProducto);
-            dlgEdicionProducto.mostrarDatos(idProducto, datosFila); // Pasa el ID del producto y los datos de la fila al diálogo
-            dlgEdicionProducto.setIfProducto(this);
-            dlgEdicionProducto.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para editarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        editarProducto();
     }//GEN-LAST:event_btnEditarActionPerformed
-
+    /**
+     * Acción del botón Buscar. Busca los productos o servicios de la tabla.
+     *
+     * @param evt Evento de acción del botón.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    /**
+     * Acción de buscar presionando Enter. Realiza la búsqueda de productos o
+     * servicios en la tabla al presionar la tecla Enter.
+     *
+     * @param evt Evento de teclado.
+     */
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
-
+    /**
+     * Cambia el color de fondo del botón Editar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
         btnEditar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnEditarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Editar cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
         btnEditar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnEditarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Buscar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnBuscarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Buscar cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnBuscarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Añadir cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
         btnAnadir.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnAnadirMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Añadir cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Eliminar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
         btnEliminar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnEliminarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Eliminar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
@@ -523,9 +554,8 @@ public class InterProductos extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ****************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS.
-     * ****************************************************************
+     * Método para cargar la tabla con todos los productos o servicios
+     * registrados.
      */
     private void CargarTablaProductos() {
         ConexionBD conexion = new ConexionBD();
@@ -589,14 +619,72 @@ public class InterProductos extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *****************************************
-     * MÉTODO PARA BUSCAR PRODUCTOS EN LA TABLA.
-     * *****************************************
+     * Método para editar los productos o servicios seleccionados.
      */
-    public void buscar() {
+    private void editarProducto() {
+        // Obtener la fila seleccionada.
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el ID del producto de la fila seleccionada utilizando el HashMap
+            idProducto = idProductoPorFila.get(filaSeleccionada);
+
+            // Obtener los datos de la fila seleccionada.
+            DefaultTableModel modelo = (DefaultTableModel) tblProductos.getModel();
+            Object[] datosFila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
+            }
+
+            // Pasar el ID del producto y los datos de la fila al diálogo de edición.
+            Frame f = JOptionPane.getFrameForComponent(this);
+            DlgProductos dlgEdicionProducto = new DlgProductos(f, true);
+            dlgEdicionProducto.setIdProducto(idProducto);
+            dlgEdicionProducto.mostrarDatos(idProducto, datosFila); // Pasa el ID del producto y los datos de la fila al diálogo
+            dlgEdicionProducto.setIfProducto(this);
+            dlgEdicionProducto.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para editarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para eliminar los productos o servicios seleccionados.
+     */
+    private void eliminarProducto() {
+        Ctrl_Producto controlProducto = new Ctrl_Producto();
+        //Obtener la fila seleccionada.
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            idProducto = idProductoPorFila.get(filaSeleccionada);
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el producto seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (controlProducto.eliminar(idProducto)) {
+
+                    this.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el producto.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para eliminarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para buscar productos o servicios en la tabla. Busca por código y
+     * por descripción.
+     */
+    private void buscar() {
         List<Producto> listaFiltrada = new ArrayList<>();
         for (Producto pr : this.listaProductos) {
             if (pr.getCodigo().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || pr.getDescripcion().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
@@ -610,15 +698,11 @@ public class InterProductos extends javax.swing.JInternalFrame {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
             model.addRow((Object[]) arrayObjetos[i]);
         }
-    }
-
-    
+    } // Cierre del método.
 
     /**
-     * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS PRODUCTOS REGISTRADOS AL MODELO DE
-     * TABLA.
-     * ***********************************************************************
+     * Método para asignar los datos de los productos registrados al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(Producto producto) {
 
@@ -633,53 +717,58 @@ public class InterProductos extends javax.swing.JInternalFrame {
         fila[6] = producto.getPrecioServicio();
 
         return fila;
-    }
+    } // Cierre del método.
 
     /**
-     * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN PRODUCTO.
-     * ************************************************************************
+     * Método para recargar la tabla con todos los productos registrados cuando
+     * se añade o se elimina uno.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
         CargarTablaProductos();
-    }
-    
+    } // Cierre del método.
+
     /**
-     * ***********************
-     * GETTERS DE LOS BOTONES.
-     * ***********************
-     * @return 
+     * Devuelve el botón utilizado para editar productos.
+     *
+     * @return El botón para editar productos.
      */
-    public JButton getBtnEditar(){
+    public JButton getBtnEditar() {
         return btnEditar;
     }
-    
-    public JButton getBtnAnadir(){
+
+    /**
+     * Devuelve el botón utilizado para añadir nuevos productos.
+     *
+     * @return El botón para añadir nuevos productos.
+     */
+    public JButton getBtnAnadir() {
         return btnAnadir;
     }
-    
-    public JButton getBtnEliminar(){
+
+    /**
+     * Devuelve el botón utilizado para eliminar productos.
+     *
+     * @return El botón para eliminar productos.
+     */
+    public JButton getBtnEliminar() {
         return btnEliminar;
     }
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

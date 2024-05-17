@@ -54,11 +54,17 @@ import servicios.ServicioProducto;
 import servicios.ServicioProductoProforma;
 
 /**
+ * Esta clase representa un diálogo para la creación y edición de facturas
+ * proforma. Permite gestionar y visualizar información relacionada con las
+ * proformas.
  *
  * @author Alfonso Lanzarot
  */
 public final class DlgProformas extends javax.swing.JDialog {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private int xMouse, yMouse;
     private InterProformas ifProforma;
     private static int numeroProforma = 1;
@@ -76,12 +82,12 @@ public final class DlgProformas extends javax.swing.JDialog {
     private final Map<Integer, Integer> idProductoPorFila = new HashMap<>();
     private List<ProductoProforma> listaProductosProforma = new ArrayList<>();
 
-    // CONSTRUCTOR
     /**
-     * Creates new form DlgProformas
+     * Constructor que crea un nuevo formulario DlgProformas.
      *
-     * @param parent
-     * @param modal
+     * @param parent Frame interProformas
+     * @param modal Ventana modal que no nos permite hacer clic en el Frame
+     * padre.
      */
     public DlgProformas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -109,18 +115,22 @@ public final class DlgProformas extends javax.swing.JDialog {
         // Obtener y establecer el número de proforma al cargar el formulario
         txtNumero.setText(generarNumeroProforma());
 
-    }
-
-    public void setDlgProductosProforma(DlgProductosProforma dlgProductosProforma) {
-        this.dlgProductosProforma = dlgProductosProforma;
-    }
+    } // Cierre del constructor.
 
     /**
-     * ********************************************************************
-     * MÉTODO PARA ACTUALIZAR EL JTABLE CON LOS DATOS DE LA LISTA TEMPORAL.
+     * Método que establece el diálogo para insertar productos o servicios a la
+     * factura proforma.
      *
-     * ********************************************************************
-     * @param listaProductos
+     * @param dlgProductosProforma Diálogo productos proforma.
+     */
+    public void setDlgProductosProforma(DlgProductosProforma dlgProductosProforma) {
+        this.dlgProductosProforma = dlgProductosProforma;
+    } // Cierre del método.
+
+    /**
+     * Método para actualizar el JTable con los datos de la lista temporal.
+     *
+     * @param listaProductos Lista de los productos.
      */
     public void actualizarTablaProductos(List<ProductoProforma> listaProductos) {
         configurarTablaProductos();
@@ -150,29 +160,40 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         }
 
-    }
+    } // Cierre del método.
 
+    /**
+     * Método que llama a la lista de productos actualizada.
+     */
     public void onListaProductosActualizada() {
         actualizarTablaProductos(this.listaProductosProforma);
 
-    }
+    } // Cierre del método.
 
-    // Define la interfaz ServicioListener
+    /**
+     * Método que define la interfaz ServicioListener
+     */
     public interface ServicioListener {
 
         void estadoServicioActualizado(boolean esServicio);
-    }
-
-    public void estadoServicioActualizado(boolean esServicio) {
-        // Actualiza la variable esServicio con el valor proporcionado
-        this.esServicio = esServicio;
-    }
+    } // Cierre del método.
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
+     * Método que actualiza la variable esServicio con el valor proporcionado.
      *
-     * ******************************
+     * @param esServicio Parámetro que establece si es un servicio.
+     */
+    public void estadoServicioActualizado(boolean esServicio) {
+        this.esServicio = esServicio;
+    } // Cierre del método.
+
+    /**
+     * Este método configura la tabla de productos o servicios a incorporar en
+     * la factura proforma, estableciendo el modelo de la tabla, personalizando
+     * el encabezado, el tamaño de las filas, el tipo de letra y tamaño del
+     * contenido de la tabla, así como el color de fondo del JScrollPane.
+     * También alinea el contenido de ciertas columnas y personaliza el
+     * renderizado del encabezado de la tabla.
      */
     private void configurarTablaProductos() {
         // Crear un modelo de tabla
@@ -299,29 +320,33 @@ public final class DlgProformas extends javax.swing.JDialog {
         };
         tblProductos.getColumnModel().getColumn(5).setCellRenderer(percentageRenderer); // Porcentaje iva
 
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
             setOpaque(true); // Asegura que el componente es opaco
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -337,11 +362,16 @@ public final class DlgProformas extends javax.swing.JDialog {
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
+    /**
+     * Método que establece si el producto es un servicio.
+     *
+     * @param esServicio Parámetro que establece si es servicio.
+     */
     public void setEsServicio(boolean esServicio) {
         this.esServicio = esServicio;
-    }
+    } // Cierre del método.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -748,10 +778,19 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         txtTransporte.setBackground(new java.awt.Color(255, 255, 255));
         txtTransporte.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtTransporte.setForeground(new java.awt.Color(0, 0, 0));
+        txtTransporte.setForeground(new java.awt.Color(204, 204, 204));
         txtTransporte.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTransporte.setText("0,00 €");
         txtTransporte.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtTransporte.setPreferredSize(new java.awt.Dimension(64, 27));
+        txtTransporte.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTransporteFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTransporteFocusLost(evt);
+            }
+        });
         txtTransporte.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTransporteKeyPressed(evt);
@@ -766,10 +805,19 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         txtSeguro.setBackground(new java.awt.Color(255, 255, 255));
         txtSeguro.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtSeguro.setForeground(new java.awt.Color(0, 0, 0));
+        txtSeguro.setForeground(new java.awt.Color(204, 204, 204));
         txtSeguro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSeguro.setText("0,00 €");
         txtSeguro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtSeguro.setPreferredSize(new java.awt.Dimension(64, 27));
+        txtSeguro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSeguroFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSeguroFocusLost(evt);
+            }
+        });
         txtSeguro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSeguroKeyPressed(evt);
@@ -810,10 +858,19 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         txtDescuento.setBackground(new java.awt.Color(255, 255, 255));
         txtDescuento.setFont(new java.awt.Font("Roboto", 1, 20)); // NOI18N
-        txtDescuento.setForeground(new java.awt.Color(0, 0, 0));
+        txtDescuento.setForeground(new java.awt.Color(204, 204, 204));
         txtDescuento.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtDescuento.setText("0,00 €");
         txtDescuento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(208, 206, 206)));
         txtDescuento.setPreferredSize(new java.awt.Dimension(64, 27));
+        txtDescuento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDescuentoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescuentoFocusLost(evt);
+            }
+        });
         txtDescuento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtDescuentoKeyPressed(evt);
@@ -893,15 +950,30 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método que cambia el color de fondo del botón "Crear" cuando el cursor
+     * entra en él.
+     *
+     * @param evt Evento del mouse
+     */
     private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
         btnCrear.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnCrearMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Crear" cuando el cursor
+     * sale de él.
+     *
+     * @param evt Evento del mouse
+     */
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
-
+    /**
+     * Método que se activa al hacer clic en el botón "Crear" o "Actualizar"
+     * dependiendo de su estado.
+     *
+     * @param evt Evento de acción
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         if (btnCrear.getText().equals("Crear")) {
             crearProforma();
@@ -910,18 +982,22 @@ public final class DlgProformas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
-    // Método para limpiar la tabla de productos
+    /**
+     * Método para limpiar la tabla de productos.
+     */
     private void limpiarTablaProductos() {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0); // Eliminar todas las filas de la tabla
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************************************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN PROVISIONAL DE PROFORMA ANTES DE
-     * INSERTAR PRODUCTOS.
+     * Validación de campos vacíos y creación provisional de la proforma antes
+     * de insertar los productos o servicios.
      *
-     * *******************************************************************************************
+     * @throws HeadlessException Excepción lanzada si se realiza una operación
+     * gráfica en un entorno sin pantalla
+     * @throws NumberFormatException Excepción lanzada si se produce un error al
+     * convertir una cadena en un número
      */
     private void crearProvisionalEnBD() throws HeadlessException, NumberFormatException {
         Proforma proforma = new Proforma();
@@ -1002,13 +1078,12 @@ public final class DlgProformas extends javax.swing.JDialog {
 
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * **************************************************************
-     * CREACIÓN DEFINITIVA DE PROFORMA DESPUÉS DE INSERTAR PRODUCTOS.
+     * Método que crea la proforma definitiva después de insertar los productos
+     * o servicios.
      *
-     * **************************************************************
      */
     private void crearProforma() {
         Proforma proforma = new Proforma();
@@ -1060,13 +1135,12 @@ public final class DlgProformas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error al crear la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
             Limpiar(); // Limpiar los campos en caso de error
         }
-    }
-    
+    } // Cierre del método.
+
     /**
-     * **************************************************************************
-     * ACTUALIZACIÓN DE PROFORMA DESPUÉS DE INSERTAR MÁS PRODUCTOS O MODIFICARLA.
      *
-     * **************************************************************************
+     * Método que actualiza la proforma después de insertar más productos o
+     * servicios o de modificarla.
      */
     private void actualizarProforma() {
         Proforma proforma = new Proforma();
@@ -1103,164 +1177,223 @@ public final class DlgProformas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error al actualizar la proforma.", "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
             Limpiar(); // Limpiar los campos en caso de error
         }
-    }
+    } // Cierre del método.
 
-
+    /**
+     * Cambia el color de fondo del botón Cancelar cuando el cursor entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Cancelar cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Cierra la ventana actual y recarga la tabla de proformas.
+     *
+     * @param evt Evento del botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
         this.ifProforma.recargarTabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    /**
+     * Cambia el color de fondo del botón Insertar cuando el cursor entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnInsertarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertarMouseEntered
         btnInsertar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnInsertarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Insertar cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnInsertarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertarMouseExited
         btnInsertar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnInsertarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Eliminar cuando el cursor entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
         btnEliminar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnEliminarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Eliminar cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
-
     private void pnlProfomaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProfomaMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_pnlProfomaMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void pnlProfomaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProfomaMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_pnlProfomaMouseDragged
-
+    /**
+     * Acción al hacer clic en el botón Insertar.
+     *
+     * @param evt Evento del botón.
+     */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        if (txtFecha.getText().isEmpty() || cbCliente.getSelectedItem().equals("Seleccionar cliente:") || cbEstado.getSelectedItem().equals("Seleccionar estado:")) {
-            JOptionPane.showMessageDialog(null, "Antes de insertar valores debe completar la fecha, el nombre \ndel cliente y el estado de la factura proforma.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        } else {
-
-            crearProvisionalEnBD();
-
-            String tipo = txtTipo != null ? txtTipo.getText() : "";
-
-            Ctrl_Proforma controlProforma = new Ctrl_Proforma();
-            Frame f = JOptionPane.getFrameForComponent(this);
-            dlgProductosProforma = new DlgProductosProforma(f, true);
-            dlgProductosProforma.setIdProforma(idProforma);
-            dlgProductosProforma.setTipoPrecio(tipo);
-            dlgProductosProforma.setDlgProformas(this);
-            dlgProductosProforma.setVisible(true);
-            esServicio = dlgProductosProforma.isEsServicioSeleccionado();
-
-            // Agregar el WindowListener después de inicializar dlgProductosProforma
-            dlgProductosProforma.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent e) {
-                    // Cuando se cierra el diálogo DlgProductosProforma, actualiza el texto del botón btnInsertar
-                    btnInsertar.setText("Añadir más");
-                }
-            });
-
-            if (btnInsertar.getText().equals("Añadir más")) {
-
-                calcularTotales();
-
-            }
-        }
+        insertarProductos();
     }//GEN-LAST:event_btnInsertarActionPerformed
-
+    /**
+     * Acción al soltar una tecla mientras el foco está en el campo de texto de
+     * Cliente.
+     *
+     * @param evt Evento del teclado.
+     */
     private void cbClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbClienteKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtSeguro.requestFocus();
         }
     }//GEN-LAST:event_cbClienteKeyReleased
-
+    /**
+     * Acción al hacer clic en el botón Eliminar.
+     *
+     * @param evt Evento del botón.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_ProductosProforma controlProforma = new Ctrl_ProductosProforma();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblProductos.getSelectedRow();
-        try {
-            if (filaSeleccionada != -1) {
-                idProducto = idProductoPorFila.get(filaSeleccionada);
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el producto seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    if (controlProforma.eliminar(idProducto)) {
-
-                        this.recargarTabla();
-
-                        calcularTotales();
-
-                        JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-
-                    } else {
-
-                        JOptionPane.showMessageDialog(null, "Error al eliminar el producto.",
-                                "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para eliminarlo.",
-                        "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Error: " + e);
-        }
+        eliminarProductos();
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    /**
+     * Acción al presionar una tecla mientras el foco está en el campo de texto
+     * de Transporte.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtTransporteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTransporteKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtSeguro.requestFocus();
         }
     }//GEN-LAST:event_txtTransporteKeyPressed
-
+    /**
+     * Acción al presionar una tecla mientras el foco está en el campo de texto
+     * de Seguro.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtSeguroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSeguroKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtDescuento.requestFocus();
         }
     }//GEN-LAST:event_txtSeguroKeyPressed
-
+    /**
+     * Acción al presionar una tecla mientras el foco está en el campo de texto
+     * de Descuento.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtDescuentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescuentoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtIncoterm.requestFocus();
         }
     }//GEN-LAST:event_txtDescuentoKeyPressed
-
+    /**
+     * Acción al presionar una tecla mientras el foco está en el campo de texto
+     * de Incoterm.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtIncotermKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIncotermKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnCrear.requestFocus();
         }
     }//GEN-LAST:event_txtIncotermKeyPressed
-
+    /**
+     * Acción al presionar una tecla mientras el foco está en el botón Crear.
+     *
+     * @param evt Evento del teclado.
+     */
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (btnCrear.getText().equals("Crear")) {
-            crearProforma();
-        } else if (btnCrear.getText().equals("Actualizar")) {
-            actualizarProforma();
-        }
+                crearProforma();
+            } else if (btnCrear.getText().equals("Actualizar")) {
+                actualizarProforma();
+            }
         }
     }//GEN-LAST:event_btnCrearKeyPressed
+    /**
+     * Acción al obtener el foco en el campo de texto de Transporte.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtTransporteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTransporteFocusGained
+        focoTransporte();
+    }//GEN-LAST:event_txtTransporteFocusGained
+    /**
+     * Acción al perder el foco en el campo de texto de Transporte.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtTransporteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTransporteFocusLost
+        focoSeguro();
+    }//GEN-LAST:event_txtTransporteFocusLost
+    /**
+     * Acción al obtener el foco en el campo de texto de Seguro.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtSeguroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSeguroFocusGained
+        focoSeguro();
+    }//GEN-LAST:event_txtSeguroFocusGained
+    /**
+     * Acción al perder el foco en el campo de texto de Seguro.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtSeguroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSeguroFocusLost
+        focoDescuento();
+    }//GEN-LAST:event_txtSeguroFocusLost
+    /**
+     * Acción al obtener el foco en el campo de texto de Descuento.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtDescuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusGained
+        focoDescuento();
+    }//GEN-LAST:event_txtDescuentoFocusGained
+    /**
+     * Acción al perder el foco en el campo de texto de Descuento.
+     *
+     * @param evt Evento del foco.
+     */
+    private void txtDescuentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescuentoFocusLost
+        focoIncoterm();
+    }//GEN-LAST:event_txtDescuentoFocusLost
 
     /**
      * @param args the command line arguments
@@ -1366,59 +1499,81 @@ public final class DlgProformas extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ****************************************
-     * MÉTODOS GETTER Y SETTER PARA IfProforma.
-     *
-     * ****************************************
-     * @return
+     * Método que valida los campos requeridos y abre el diálogo para la
+     * inserción de productos o servicios.
      */
-    public InterProformas getIfProforma() {
-        return ifProforma;
-    }
+    private void insertarProductos() {
+        if (txtFecha.getText().isEmpty() || cbCliente.getSelectedItem().equals("Seleccionar cliente:") || cbEstado.getSelectedItem().equals("Seleccionar estado:")) {
+            JOptionPane.showMessageDialog(null, "Antes de insertar valores debe completar la fecha, el nombre \ndel cliente y el estado de la factura proforma.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        } else {
 
-    public void setIfProforma(InterProformas ifProforma) {
-        this.ifProforma = ifProforma;
-    }
+            crearProvisionalEnBD();
+
+            String tipo = txtTipo != null ? txtTipo.getText() : "";
+
+            Frame f = JOptionPane.getFrameForComponent(this);
+            dlgProductosProforma = new DlgProductosProforma(f, true);
+            dlgProductosProforma.setIdProforma(idProforma);
+            dlgProductosProforma.setTipoPrecio(tipo);
+            dlgProductosProforma.setDlgProformas(this);
+            dlgProductosProforma.setVisible(true);
+            esServicio = dlgProductosProforma.isEsServicioSeleccionado();
+
+            // Agregar el WindowListener después de inicializar dlgProductosProforma
+            dlgProductosProforma.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    // Cuando se cierra el diálogo DlgProductosProforma, actualiza el texto del botón btnInsertar
+                    btnInsertar.setText("Añadir más");
+                }
+            });
+
+            if (btnInsertar.getText().equals("Añadir más")) {
+
+                calcularTotales();
+
+            }
+        }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * Método que elimina los productos o servicios seleccionados de la tabla.
      */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
+    private void eliminarProductos() {
+        Ctrl_ProductosProforma controlProforma = new Ctrl_ProductosProforma();
+        //Obtener la fila seleccionada.
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        try {
+            if (filaSeleccionada != -1) {
+                idProducto = idProductoPorFila.get(filaSeleccionada);
+                int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el producto seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    if (controlProforma.eliminar(idProducto)) {
+
+                        this.recargarTabla();
+
+                        calcularTotales();
+
+                        JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "Error al eliminar el producto.",
+                                "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar un producto para eliminarlo.",
+                        "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e);
+        }
+    } // Cierre del método.
 
     /**
-     * Método para establecer el ID de la proforma.
-     *
-     * @param idProformaAux El ID de la proforma a establecer.
-     */
-    public void setIdProforma(int idProformaAux) {
-        idProforma = idProformaAux;
-    }
-
-    public static int getIdProforma() {
-        return idProforma;
-    }
-
-    // Método para obtener el tipo de precio del cliente seleccionado
-    public String obtenerTipoPrecio() {
-        return txtTipo.getText();
-    }
-
-    /**
-     * ************************************************************
-     * MÉTODO PARA CARGAR LOS CLIENTES EN EL COMBO BOX DE CLIENTES.
-     *
-     * ************************************************************
+     * Método para cargar los clientes en el combo box de clientes.
      */
     private void CargarComboClientes() {
         Connection cn = Conexion.conectar();
@@ -1453,13 +1608,10 @@ public final class DlgProformas extends javax.swing.JDialog {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * **********************************************************************
-     * MÉTODO PARA CARGAR LOS DATOS DEL CLIENTE SELECCIONADO EN EL COMBO BOX.
-     *
-     * **********************************************************************
+     * Método para cargar los datos del cliente seleccioando en el combo box.
      */
     private void datosClienteCombo() {
         // Agrega un ActionListener al JComboBox cbCliente
@@ -1514,14 +1666,12 @@ public final class DlgProformas extends javax.swing.JDialog {
                 }
             }
         });
-    }
+    } // Cierre del método.
 
     /**
-     * ***********************************************************
-     * MÉTODO PARA CREAR EL NÚMERO DE LA PROFORMA AUTOMÁTICAMENTE.
+     * Método para crear automáticamente el número de la proforma.
      *
-     * ***********************************************************
-     * @return
+     * @return El número de la proforma.
      */
     public static String generarNumeroProforma() {
         // Obtener la fecha actual
@@ -1550,13 +1700,10 @@ public final class DlgProformas extends javax.swing.JDialog {
         } while (existeProforma);
 
         return numero;
-    }
+    }  // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO PARA VALIDAR EL FORMATO DE LAS FECHAS.
-     *
-     * *********************************************
+     * Método para validar el formato de las fechas.
      */
     private boolean validarFormatoFecha(String textoFecha) {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -1568,13 +1715,10 @@ public final class DlgProformas extends javax.swing.JDialog {
         } catch (ParseException e) {
             return false; // El formato es inválido
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *************************************
-     * MÉTODO PARA DAR FORMATO A LAS FECHAS.
-     *
-     * *************************************
+     * Método para dar formato a las fechas.
      */
     private void formatearFecha() {
         // Obtén el texto del JTextField
@@ -1617,13 +1761,10 @@ public final class DlgProformas extends javax.swing.JDialog {
             txtValidez.setText("");
         }
 
-    }
+    } // Cierre del método.
 
     /**
-     * ********************************************
-     * MÉTODO PARA ESTABLECER EL FOCO A LAS FECHAS.
-     *
-     * ********************************************
+     * Método para establecer el foco a las fechas.
      */
     private void focoFechas() {
         txtFecha.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -1638,14 +1779,11 @@ public final class DlgProformas extends javax.swing.JDialog {
                 formatearFecha();
             }
         });
-    }
+    } // Cierre del método.
 
     /**
-     * **************************************************************************
-     * MÉTODO PARA ESTABLECER LA FECHA ACTUAL POR DEFECTO EN EL CAMPO FECHA Y 30
-     * DÍAS DE VALIDEZ.
-     *
-     * **************************************************************************
+     * Método para establecer la fecha actual por defecto en el campo fecha y 30
+     * días de validez.
      */
     private void setearFechaPorDefecto() {
         // Obtén la fecha actual
@@ -1669,15 +1807,13 @@ public final class DlgProformas extends javax.swing.JDialog {
         // Establece la fecha formateada como texto en el JTextField
         txtFecha.setText(fechaFormateada);
         txtValidez.setText(fechaValidezFormateada);
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************************
-     * MÉTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
+     * Método que muestra los datos seleccionados.
      *
-     * *******************************************
-     * @param idProforma
-     * @param datosFila
+     * @param idProforma El ID de la proforma seleccionada.
+     * @param datosFila Los datos de la proforma seleccionada.
      */
     public void mostrarDatos(int idProforma, Object[] datosFila) {
 
@@ -1744,13 +1880,10 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         calcularTotales();
 
-    }
+    } // Cierre del método.
 
     /**
-     * ******************************************************************
-     * LISTENERS PARA DETECTAR CAMBIOS EN TRANSPORTE, SEGURO Y DESCUENTO.
-     *
-     * ******************************************************************
+     * Listeners para deterctar cambios en transporte, seguro y descuento.
      */
     private void listenersCalculos() {
         // Listener para txtTransporte para detectar cambios en el texto
@@ -1814,13 +1947,10 @@ public final class DlgProformas extends javax.swing.JDialog {
             }
         });
 
-    }
+    } // Cierre de los listeners.
 
     /**
-     * *****************************
-     * MÉTODO PARA CALCULAR TOTALES.
-     *
-     * ******************************
+     * Método para calcular totales.
      */
     public void calcularTotales() {
 
@@ -1893,13 +2023,11 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         // Actualizar txtTotal con el resultado
         txtTotal.setText(decimalFormat.format(total) + " €");
-    }
+
+    } // Cierre del método. 
 
     /**
-     * **********************************
-     * MÉTODO PARA CALCULAR txtSubtotal2.
-     *
-     * **********************************
+     * Método para calcular txtSubtotal2.
      */
     private void calcularSubtotal2() {
         try {
@@ -1926,13 +2054,10 @@ public final class DlgProformas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido en los campos transporte y seguro.",
                     "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
-    }
+    } // Cierre del método.
 
     /**
-     * **********************************
-     * MÉTODO PARA CALCULAR txtTotalIva2.
-     *
-     * **********************************
+     * Método para calcular txtTotalIva2.
      */
     private void calcularTotalIva2() {
         try {
@@ -1964,13 +2089,10 @@ public final class DlgProformas extends javax.swing.JDialog {
                     "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ******************************
-     * MÉTODO PARA CALCULAR txtTotal.
-     *
-     * ******************************
+     * Método para calcular txtTotal.
      */
     private void calcularTotal() {
         try {
@@ -2006,26 +2128,21 @@ public final class DlgProformas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido en los campos transporte, seguro y descuento.",
                     "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN PRODUCTO.
-     * ************************************************************************
+     * Método para recargar la tabla con todos los productos registrados cuando
+     * se añade uno nuevo y se elimina un producto.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
         CargarTablaProductos();
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase para conectar a la base de datos.
      */
     public class ConexionBD {
 
@@ -2035,12 +2152,10 @@ public final class DlgProformas extends javax.swing.JDialog {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
-     * ****************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS PRODUCTOS REGISTRADOS.
-     * ****************************************************************
+     * Método para cargar la tabla con todos los productos registrados.
      */
     private void CargarTablaProductos() {
         ConexionBD conexion = new ConexionBD();
@@ -2104,12 +2219,10 @@ public final class DlgProformas extends javax.swing.JDialog {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************************************
-     * MÉTODO PARA CARGAR LOS DATOS DE LA PROFORMA QUE NO ESTÁN EN LA TABLA.
-     * *********************************************************************
+     * Método para cargar los datos de la proforma que no están en la tabla.
      */
     private void CargarDatosProforma() {
         ConexionBD conexion = new ConexionBD();
@@ -2153,13 +2266,87 @@ public final class DlgProformas extends javax.swing.JDialog {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS PRODUCTOS REGISTRADOS AL MODELO DE
-     * TABLA.
-     * ***********************************************************************
+     * Método de foco para el campo transporte.
+     */
+    private void focoTransporte() {
+        if (txtTransporte.getText().equals("0,00 €")) {
+            txtTransporte.setText("");
+            txtTransporte.setForeground(Color.black);
+        }
+        if (txtSeguro.getText().isEmpty()) {
+            txtSeguro.setText("0,00 €");
+            txtSeguro.setForeground(new Color(204, 204, 204));
+        }
+        if (txtDescuento.getText().isEmpty()) {
+            txtDescuento.setText("0,00 €");
+            txtDescuento.setForeground(new Color(204, 204, 204));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método de foco para el campo seguro.
+     */
+    private void focoSeguro() {
+        if (txtSeguro.getText().equals("0,00 €")) {
+            txtSeguro.setText("");
+            txtSeguro.setForeground(Color.black);
+        }
+        if (txtTransporte.getText().isEmpty()) {
+            txtTransporte.setText("0,00 €");
+            txtTransporte.setForeground(new Color(204, 204, 204));
+        }
+        if (txtDescuento.getText().isEmpty()) {
+            txtDescuento.setText("0,00 €");
+            txtDescuento.setForeground(new Color(204, 204, 204));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método de foco para el campo descuento.
+     */
+    private void focoDescuento() {
+        if (txtDescuento.getText().equals("0,00 €")) {
+            txtDescuento.setText("");
+            txtDescuento.setForeground(Color.black);
+        }
+        if (txtTransporte.getText().isEmpty()) {
+            txtTransporte.setText("0,00 €");
+            txtTransporte.setForeground(new Color(204, 204, 204));
+        }
+        if (txtSeguro.getText().isEmpty()) {
+            txtSeguro.setText("0,00 €");
+            txtSeguro.setForeground(new Color(204, 204, 204));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método de foco para el campo incoterm.
+     */
+    private void focoIncoterm() {
+        if (txtIncoterm.getText().equals("")) {
+            txtIncoterm.setText("");
+
+        }
+        if (txtTransporte.getText().isEmpty()) {
+            txtTransporte.setText("0,00 €");
+            txtTransporte.setForeground(new Color(204, 204, 204));
+        }
+        if (txtSeguro.getText().isEmpty()) {
+            txtSeguro.setText("0,00 €");
+            txtSeguro.setForeground(new Color(204, 204, 204));
+        }
+        if (txtDescuento.getText().isEmpty()) {
+            txtDescuento.setText("0,00 €");
+            txtDescuento.setForeground(new Color(204, 204, 204));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para asignar los datos de los productos registrados al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(ProductoProforma productoProforma) {
 
@@ -2174,9 +2361,11 @@ public final class DlgProformas extends javax.swing.JDialog {
         fila[6] = productoProforma.getImporte_iva();
 
         return fila;
-    }
+    } // Cierre del método.
 
-    // CAMPOS NO EDITABLES.
+    /**
+     * Método que establece los campos que no son editables.
+     */
     private void camposNoEditables() {
         // Establecemos estos campos como no editables.
         txtNumero.setEditable(false);
@@ -2194,13 +2383,10 @@ public final class DlgProformas extends javax.swing.JDialog {
         txtPais.setEditable(false);
         txtTipo.setEditable(false);
 
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
-     *
-     * *******************************
+     * Método para limpiar los campos.
      */
     private void Limpiar() {
 
@@ -2225,14 +2411,82 @@ public final class DlgProformas extends javax.swing.JDialog {
         txtKilos.setText("0,00 kg");
         txtSubtotal.setText("0,00 €");
         txtTotalIva.setText("0,00 €");
-    }
+    } // Cierre del método.
 
+    /**
+     * Método getter que llama al internal frame Proformas.
+     *
+     * @return Internal Frame Proformas.
+     */
+    public InterProformas getIfProforma() {
+        return ifProforma;
+    } // Cierre del método.
+
+    /**
+     * Método que establece el internal frame Proformas.
+     *
+     * @param ifProforma Internal Frame Proformas.
+     */
+    public void setIfProforma(InterProformas ifProforma) {
+        this.ifProforma = ifProforma;
+    } // Cierre del método.
+
+    /**
+     * Método para establecer el ID de la proforma.
+     *
+     * @param idProformaAux El ID de la proforma a establecer.
+     */
+    public void setIdProforma(int idProformaAux) {
+        idProforma = idProformaAux;
+    } // Cierre del método.
+
+    /**
+     * Método para obtener el ID de la proforma.
+     *
+     * @return El ID de la proforma obtenido.
+     */
+    public static int getIdProforma() {
+        return idProforma;
+    } // Cierre del método.
+
+    /**
+     * Método para obtener el tipo de precio del cliente seleccionado.
+     *
+     * @return El tipo de precio del cliente seleccionado.
+     */
+    public String obtenerTipoPrecio() {
+        return txtTipo.getText();
+    } // Cierre del método.
+
+    /**
+     * Método para obtener la lista de productos de la proforma.
+     *
+     * @return La lista de productos.
+     */
     public List<ProductoProforma> getListaProductosProforma() {
         return listaProductosProforma;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método para establecer la lista de productos de la proforma.
+     *
+     * @param listaProductosProforma La lista de productos de la proforma.
+     */
     public void setListaProductosProforma(List<ProductoProforma> listaProductosProforma) {
         this.listaProductosProforma = listaProductosProforma;
     }
 
-}
+    /**
+     * Método de iconos de atención y/o advertencia.
+     *
+     * @param path Ruta del icono.
+     * @param width Anchura del icono.
+     * @param heigth Altura del icono.
+     * @return Devuelve la imagen.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

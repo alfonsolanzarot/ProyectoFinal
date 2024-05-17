@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -43,12 +42,17 @@ import net.sf.jasperreports.view.JasperViewer;
 import servicios.ServicioProforma;
 
 /**
- * Clase para el JInternalPanel en el que se gestionan las factuas proforma.
+ * Esta clase representa un marco interno utilizado para gestionar la
+ * información relacionada con las facturas proforma, incluyendo la creación,
+ * edición, impresión y visualización de dicha información.
  *
  * @author Alfonso Lanzarot
  */
 public class InterProformas extends javax.swing.JInternalFrame {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private final Map<Integer, Integer> idProformaPorFila = new HashMap<>();
     private int idProforma;
 
@@ -60,7 +64,12 @@ public class InterProformas extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
-    //CONSTRUCTOR
+    /**
+     * Constructor de la clase InterProformas. Inicializa el JInternalFrame,
+     * configura su tamaño y título, carga y configura la tabla de proformas,
+     * y añade un WindowListener para cargar la tabla cuando se abre el frame
+     * interno.
+     */
     public InterProformas() {
         initComponents();
         this.setSize(ancho, alto);
@@ -68,15 +77,15 @@ public class InterProformas extends javax.swing.JInternalFrame {
         CargarTablaProformas();
         configurarTablaProformas();
 
-        // Añadimos WindowListener para detectar cuándo se abre el frame interno
+        // Añadimos WindowListener para detectar cuándo se abre el frame interno.
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                CargarTablaProformas(); // Llama al método para cargar la tabla cuando se abre el frame
+                CargarTablaProformas(); // Llama al método para cargar la tabla cuando se abre el frame.
             }
         });
 
-    }
+    } // Cierre del constructor.
 
     /**
      * Clase interna que define un renderizador de celdas personalizado para
@@ -84,14 +93,26 @@ public class InterProformas extends javax.swing.JInternalFrame {
      */
     class CustomTableCellRenderer extends DefaultTableCellRenderer {
 
+        /**
+         * Renderiza las celdas de la tabla con un color de texto diferente
+         * dependiendo del estado de la proforma.
+         *
+         * @param table La tabla donde se renderizará la celda.
+         * @param value El valor de la celda.
+         * @param isSelected Indica si la celda está seleccionada.
+         * @param hasFocus Indica si la celda tiene el foco.
+         * @param row El índice de la fila de la celda.
+         * @param column El índice de la columna de la celda.
+         * @return La componente de la celda renderizada.
+         */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            // Obtener el valor del estado en la columna "Estado"
+            // Obtener el valor del estado en la columna "Estado".
             String estado = (String) table.getValueAt(row, 8);
 
-            // Cambiar el color del texto basado en el estado
+            // Cambiar el color del texto basado en el estado.
             switch (estado) {
                 case "Pedido en curso":
                     cellComponent.setForeground(new Color(15, 158, 213));
@@ -103,27 +124,31 @@ public class InterProformas extends javax.swing.JInternalFrame {
                     cellComponent.setForeground(Color.RED);
                     break;
                 default:
-                    // Si no se encuentra el estado, mantener el color por defecto
+                    // Si no se encuentra el estado, mantener el color por defecto.
                     cellComponent.setForeground(table.getForeground());
                     break;
             }
 
-            // Establecer la fuente en negrita
+            // Establecer la fuente en negrita.
             Font font = cellComponent.getFont();
             cellComponent.setFont(font.deriveFont(font.getStyle() | Font.BOLD));
 
             return cellComponent;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * Método para configurar la tabla.
+     * Este método configura la tabla de proformas, estableciendo el modelo de
+     * la tabla, personalizando el encabezado, el tamaño de las filas, el tipo
+     * de letra y tamaño del contenido de la tabla, así como el color de fondo
+     * del JScrollPane. También alinea el contenido de ciertas columnas y
+     * personaliza el renderizado del encabezado de la tabla.
      */
     private void configurarTablaProformas() {
-        // Crear un modelo de tabla
+        // Crear un modelo de tabla.
         DefaultTableModel model = new DefaultTableModel();
 
-        // Agregar columnas al modelo de tabla
+        // Agregar columnas al modelo de tabla.
         model.addColumn("Fecha");
         model.addColumn("Número");
         model.addColumn("Vencimiento");
@@ -134,40 +159,40 @@ public class InterProformas extends javax.swing.JInternalFrame {
         model.addColumn("Total euros");
         model.addColumn("Estado");
 
-        // Establecer el modelo de tabla en la tabla
+        // Establecer el modelo de tabla en la tabla.
         tblProformas.setModel(model);
 
-        // Personalizar el encabezado de la tabla
+        // Personalizar el encabezado de la tabla.
         JTableHeader header = tblProformas.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
-        // Aumentar la altura del encabezado de la tabla
-        int alturaEncabezado = 42; // Puedes ajustar este valor según tus preferencias
+        // Aumentar la altura del encabezado de la tabla.
+        int alturaEncabezado = 42;
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
-        // Obtener el renderizador predeterminado del encabezado
+        // Obtener el renderizador predeterminado del encabezado.
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblProformas.getTableHeader().getDefaultRenderer();
 
-        // Establecer alineación centrada para el renderizador del encabezado
+        // Establecer alineación centrada para el renderizador del encabezado.
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Personalizar el tamaño de las filas
-        tblProformas.setRowHeight(60); // Cambiar el tamaño de las filas
+        tblProformas.setRowHeight(60); // Cambiar el tamaño de las filas.
 
-        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
-        tblProformas.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
+        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla.
+        tblProformas.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño.
 
-        //Cambiar el color de fondo del jScrollPane.
+        // Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
 
         // Renderizador para alinear al centro las celdas de las columnas de fecha, número, vencimiento y los importes y pesos.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        tblProformas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // Fecha
-        tblProformas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Número
-        tblProformas.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Vencimiento
+        tblProformas.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // Fecha.
+        tblProformas.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Número.
+        tblProformas.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // Vencimiento.
 
-        // Crear un renderizador personalizado para las celdas de las columnas con decimales
+        // Crear un renderizador personalizado para las celdas de las columnas con decimales.
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setDecimalSeparator(',');
         symbols.setGroupingSeparator('.');
@@ -178,13 +203,13 @@ public class InterProformas extends javax.swing.JInternalFrame {
             @Override
             protected void setValue(Object value) {
                 if (value instanceof Double) {
-                    value = decimalFormat.format(value) + " €"; // Añadir el símbolo del euro después del valor
+                    value = decimalFormat.format(value) + " €"; // Añadir el símbolo del euro después del valor.
                 }
                 super.setValue(value);
 
             }
 
-            // Asegurar que la alineación se mantenga centrada
+            // Asegurar que la alineación se mantenga centrada.
             @Override
             public void setHorizontalAlignment(int alignment) {
                 super.setHorizontalAlignment(SwingConstants.CENTER);
@@ -192,52 +217,58 @@ public class InterProformas extends javax.swing.JInternalFrame {
         };
 
         // Aplicar el renderizador personalizado a las columnas de los importes del transporte, el seguro, y el total euros.
-        tblProformas.getColumnModel().getColumn(4).setCellRenderer(decimalRenderer); // Transporte
-        tblProformas.getColumnModel().getColumn(5).setCellRenderer(decimalRenderer); // Seguro
-        tblProformas.getColumnModel().getColumn(7).setCellRenderer(decimalRenderer); // Total euros
+        tblProformas.getColumnModel().getColumn(4).setCellRenderer(decimalRenderer); // Transporte.
+        tblProformas.getColumnModel().getColumn(5).setCellRenderer(decimalRenderer); // Seguro.
+        tblProformas.getColumnModel().getColumn(7).setCellRenderer(decimalRenderer); // Total euros.
 
-        // Renderizador para las unidades de peso
+        // Renderizador para las unidades de peso.
         DefaultTableCellRenderer unitRenderer = new DefaultTableCellRenderer() {
             @Override
             protected void setValue(Object value) {
                 if (value instanceof Double) {
-                    value = decimalFormat.format(value) + " kg"; // Añadir la unidad kg después del valor
+                    value = decimalFormat.format(value) + " kg"; // Añadir la unidad kg después del valor.
                 }
                 super.setValue(value);
             }
 
-            // Asegurar que la alineación se mantenga centrada
+            // Asegurar que la alineación se mantenga centrada.
             @Override
             public void setHorizontalAlignment(int alignment) {
                 super.setHorizontalAlignment(SwingConstants.CENTER);
             }
         };
-        tblProformas.getColumnModel().getColumn(6).setCellRenderer(unitRenderer); // Peso unitario
+        tblProformas.getColumnModel().getColumn(6).setCellRenderer(unitRenderer); // Peso unitario.
 
-        // Establecer el renderizador personalizado para la columna "Estado"
+        // Establecer el renderizador personalizado para la columna "Estado".
         tblProformas.getColumnModel().getColumn(8).setCellRenderer(new CustomTableCellRenderer());
 
-    }
+    } // Cierre del método
 
     /**
      * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
             setOpaque(true); // Asegura que el componente es opaco
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -252,10 +283,10 @@ public class InterProformas extends javax.swing.JInternalFrame {
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * Clase para la conexión a la base de datos.
+     * Clase de la conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -265,7 +296,7 @@ public class InterProformas extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -444,7 +475,11 @@ public class InterProformas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Acción del botón Añadir Factura Proforma.
+     *
+     * @param evt Abre el diálogo para crear una factura proforma nueva.
+     */
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
         DlgProformas dlgProformas = new DlgProformas(f, true);
@@ -453,108 +488,112 @@ public class InterProformas extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
-
+    /**
+     * Acción del botón Editar Factura Proforma.
+     *
+     * @param evt Abre el diálogo para editar la factura proforma seleccionada
+     * en la tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Obtener la fila seleccionada.
-        int filaSeleccionada = tblProformas.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
-            idProforma = idProformaPorFila.get(filaSeleccionada);
-
-            // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblProformas.getModel();
-            Object[] datosFila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < modelo.getColumnCount(); i++) {
-                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
-            }
-
-            // Pasar el ID de la proforma y los datos de la fila al diálogo de edición.
-            Frame f = JOptionPane.getFrameForComponent(this);
-            DlgProformas dlgProformas = new DlgProformas(f, true);
-            dlgProformas.setIdProforma(idProforma);
-            dlgProformas.mostrarDatos(idProforma, datosFila); // Pasa el ID de la proforma y los datos de la fila al diálogo
-            dlgProformas.setIfProforma(this);
-            dlgProformas.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para editarla.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        editarProforma();
     }//GEN-LAST:event_btnEditarActionPerformed
-
+    /**
+     * Acción del botón Buscar.
+     *
+     * @param evt Busca las facturas proforma de la tabla.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    /**
+     * Acción de buscar presionando Enter.
+     *
+     * @param evt Busca las facturas proforma de la tabla.
+     */
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
-
+    /**
+     * Cambia el color de fondo del botón Editar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
         btnEditar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnEditarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Editar cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
         btnEditar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnEditarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Buscar cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnBuscarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Buscar cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnBuscarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Añadir cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
         btnAnadir.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnAnadirMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Añadir cuando el mouse sale del área
+     * del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Imprimir cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnImprimirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirMouseEntered
         btnImprimir.setBackground(new Color(0, 105, 43));
     }//GEN-LAST:event_btnImprimirMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Imprimir cuando el mouse entra en el
+     * área del botón.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnImprimirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirMouseExited
         btnImprimir.setBackground(new Color(0, 79, 40));
     }//GEN-LAST:event_btnImprimirMouseExited
-
+    /**
+     * Acción de imprimir factura proforma.
+     *
+     * @param evt Imprime la factura proforma seleccionada en la tabla.
+     */
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        // Obtener el idProforma de la fila seleccionada en la tabla
-        int filaSeleccionada = tblProformas.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para imprimirla.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-            return;
-        }
-        // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
-        idProforma = idProformaPorFila.get(filaSeleccionada);
-
-        try {
-            // Establecer la conexión con la base de datos
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_boms", "root", "dugu&7Photh&");
-
-            // Crear un mapa de parámetros para pasar al informe
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("idProforma", idProforma);
-
-            // Generar el informe con los parámetros y la conexión a la base de datos
-            JasperPrint jasperPrint = JasperFillManager.fillReport("informes/proforma.jasper", parametros, conn);
-
-            // Mostrar el informe en una ventana
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setVisible(true);
-
-            // Cerrar la conexión
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        imprimirProforma();
     }//GEN-LAST:event_btnImprimirActionPerformed
 
 
@@ -570,6 +609,15 @@ public class InterProformas extends javax.swing.JInternalFrame {
     public static javax.swing.JTable tblProformas;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Método para establecer el ID de la proforma.
+     *
+     * @param idProformaAux El ID de la proforma a establecer.
+     */
+    public void setIdProforma(int idProformaAux) {
+        idProforma = idProformaAux;
+    }
 
     /**
      * Método para cargar la tabla con todas las proformas registradas.
@@ -637,14 +685,80 @@ public class InterProformas extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *****************************************
-     * MÉTODO PARA BUSCAR PROFORMAS EN LA TABLA.
-     * *****************************************
+     * Método para editar las proformas registradas.
      */
-    public void buscar() {
+    private void editarProforma() {
+        // Obtener la fila seleccionada.
+        int filaSeleccionada = tblProformas.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
+            idProforma = idProformaPorFila.get(filaSeleccionada);
+
+            // Obtener los datos de la fila seleccionada.
+            DefaultTableModel modelo = (DefaultTableModel) tblProformas.getModel();
+            Object[] datosFila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
+            }
+
+            // Pasar el ID de la proforma y los datos de la fila al diálogo de edición.
+            Frame f = JOptionPane.getFrameForComponent(this);
+            DlgProformas dlgProformas = new DlgProformas(f, true);
+            dlgProformas.setIdProforma(idProforma);
+            dlgProformas.mostrarDatos(idProforma, datosFila); // Pasa el ID de la proforma y los datos de la fila al diálogo
+            dlgProformas.setIfProforma(this);
+            dlgProformas.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para editarla.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para imprimir la proforma seleccionada.
+     */
+    private void imprimirProforma() {
+        // Obtener el idProforma de la fila seleccionada en la tabla
+        int filaSeleccionada = tblProformas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una proforma para imprimirla.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+            return;
+        }
+        // Obtener el ID de la proforma de la fila seleccionada utilizando el HashMap
+        idProforma = idProformaPorFila.get(filaSeleccionada);
+
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_boms", "root", "dugu&7Photh&");
+
+            // Crear un mapa de parámetros para pasar al informe
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("idProforma", idProforma);
+
+            // Generar el informe con los parámetros y la conexión a la base de datos
+            JasperPrint jasperPrint = JasperFillManager.fillReport("informes/proforma.jasper", parametros, conn);
+
+            // Mostrar el informe en una ventana
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setVisible(true);
+
+            // Cerrar la conexión
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para buscar proformas en la tabla. Busca por número, nombre y por
+     * estado.
+     */
+    private void buscar() {
         List<Proforma> listaFiltrada = new ArrayList<>();
         for (Proforma pr : this.listaProformas) {
             if (pr.getNumero().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || pr.getNombre_cliente().toLowerCase().contains(txtBuscar.getText().toLowerCase())
@@ -659,13 +773,11 @@ public class InterProformas extends javax.swing.JInternalFrame {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
             model.addRow((Object[]) arrayObjetos[i]);
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LAS PROFORMAS REGISTRADAS AL MODELO DE
-     * TABLA.
-     * ***********************************************************************
+     * Método para asignar los datos de las proformas registradas al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(Proforma proforma) {
 
@@ -682,60 +794,58 @@ public class InterProformas extends javax.swing.JInternalFrame {
         fila[8] = proforma.getEstado();
 
         return fila;
-    }
+    } // Cierre del método.
 
     /**
-     * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODAS LAS PROFORMAS REGISTRADAS CUANDO
-     * SE AÑADE UNA NUEVA.
-     * ************************************************************************
+     * Método para recargar la tabla con todas las proformas registradas cuando
+     * se añade un nueva.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblProformas.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
         CargarTablaProformas();
-    }
+    } // Cierre del método.
 
     /**
-     * ***********************
-     * GETTERS DE LOS BOTONES. *********************** @return
+     * Devuelve el botón utilizado para editar facturas proforma.
+     *
+     * @return El botón utilizado para editar facturas proforma.
      */
     public JButton getBtnEditar() {
         return btnEditar;
     }
 
+    /**
+     * Devuelve el botón utilizado para imprimir facturas proforma.
+     *
+     * @return El botón utilizado para imprimir facturas proforma.
+     */
     public JButton getBtnProforma() {
         return btnImprimir;
     }
 
+    /**
+     * Devuelve el botón utilizado para añadir facturas proforma.
+     *
+     * @return El botón utilizado para añadir facturas proforma.
+     */
     public JButton getBtnAnadir() {
         return btnAnadir;
     }
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-    /**
-     * Método para establecer el ID del proforma.
-     *
-     * @param idProformaAux El ID de la proforma a establecer.
-     */
-    public void setIdProforma(int idProformaAux) {
-        idProforma = idProformaAux;
-    }
-
-}
+} // Cierre de la clase.

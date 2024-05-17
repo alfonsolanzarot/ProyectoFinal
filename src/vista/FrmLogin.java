@@ -11,14 +11,25 @@ import javax.swing.UIManager;
 import modelo.Usuario;
 
 /**
+ * Esta clase representa el formulario de inicio de sesión del sistema BOMS
+ * (Business Operations Management System). Permite a los usuarios acceder al
+ * sistema.
  *
  * @author Alfonso Lanzarot
  */
 public class FrmLogin extends javax.swing.JFrame {
 
+    /**
+     * Variables de instancia para el manejo del movimiento del formulario
+     * mediante el mouse.
+     */
     private int xMouse, yMouse;
 
-    // CONSTRUCTOR
+    /**
+     * Constructor de la clase FrmLogin. Inicializa los componentes del
+     * formulario, establece la imagen del icono, configura el título, el tamaño
+     * y la posición del formulario, y establece el foco en el botón de entrar.
+     */
     public FrmLogin() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/bullet_BOMS.png")).getImage());
@@ -27,7 +38,7 @@ public class FrmLogin extends javax.swing.JFrame {
         this.setTitle("Login – BOMS");
         this.setSize(new Dimension(1000, 668));
         this.btnEntrar.requestFocus();
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,79 +208,156 @@ public class FrmLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_lblHeaderMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
-
+    /**
+     * Este método cierra el diálogo cuando se presiona la X.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void lblCierreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCierreMouseClicked
         System.exit(0);
     }//GEN-LAST:event_lblCierreMouseClicked
-
+    /**
+     * Cambia el color del texto del botón de cierre cuando el mouse entra en
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblCierreMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCierreMouseEntered
         lblCierre.setForeground(Color.yellow);
     }//GEN-LAST:event_lblCierreMouseEntered
-
+    /**
+     * Restaura el color del texto del botón de cierre cuando el mouse sale de
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblCierreMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCierreMouseExited
         lblCierre.setForeground(new Color(137, 115, 65));
     }//GEN-LAST:event_lblCierreMouseExited
-
+    /**
+     * Cambia el color de fondo del botón de entrar cuando el mouse entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseEntered
         btnEntrar.setBackground(new Color(119, 167, 212));
     }//GEN-LAST:event_btnEntrarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón de entrar cuando el mouse sale de
+     * él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseExited
         btnEntrar.setBackground(new Color(180, 209, 236));
     }//GEN-LAST:event_btnEntrarMouseExited
-
+    /**
+     * Establece el foco en el campo de usuario cuando se hace clic en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
         focoUsuario();
     }//GEN-LAST:event_txtUsuarioMousePressed
-
+    /**
+     * Establece el foco en el campo de contraseña cuando se hace clic en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void txtClaveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtClaveMousePressed
         focoClave();
     }//GEN-LAST:event_txtClaveMousePressed
-
+    /**
+     * Realiza el inicio de sesión cuando se hace clic en el botón de entrar.
+     *
+     * @param evt Evento del botón.
+     */
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         this.login();
     }//GEN-LAST:event_btnEntrarActionPerformed
-
+    /**
+     * Pasa al campo de contraseña cuando se presiona la tecla Enter en el campo
+     * de usuario.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtClave.requestFocus();
             txtClave.removeAll();
         }
     }//GEN-LAST:event_txtUsuarioKeyPressed
-
+    /**
+     * Realiza el inicio de sesión cuando se presiona la tecla Enter en el campo
+     * de contraseña.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtClaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.login();
         }
     }//GEN-LAST:event_txtClaveKeyPressed
-
+    /**
+     * Establece el foco en el campo de usuario cuando este gana el foco.
+     *
+     * @param evt Evento del foco.
+     */
     private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
         focoUsuario();
     }//GEN-LAST:event_txtUsuarioFocusGained
-
+    /**
+     * Establece el foco en el campo de usuario cuando este pierde el foco.
+     *
+     * @param evt Evento del foco.
+     */
     private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
         focoClave();
     }//GEN-LAST:event_txtUsuarioFocusLost
-
+    /**
+     * Cambia el foco al campo de contraseña cuando este gana el foco.
+     *
+     * @param evt Evento del foco.
+     */
     private void txtClaveFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClaveFocusGained
         focoClave();
     }//GEN-LAST:event_txtClaveFocusGained
-
+    /**
+     * Cambia el foco al campo de usuario cuando el campo de contraseña pierde
+     * el foco.
+     *
+     * @param evt Evento del foco.
+     */
     private void txtClaveFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtClaveFocusLost
         focoUsuario();
     }//GEN-LAST:event_txtClaveFocusLost
-
+    /**
+     * Método que realiza el inicio de sesión al sistema al presionar la tecla
+     * Enter.
+     *
+     * @param evt Evento del teclado.
+     */
     private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.login();
@@ -331,10 +419,7 @@ public class FrmLogin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ****************
-     * MÉTODO DE LOGIN.
-     *
-     * ****************
+     * Realiza el proceso de inicio de sesión en el sistema.
      */
     private void login() {
         if (!txtUsuario.getText().isEmpty() && !txtClave.getText().isEmpty()) {
@@ -367,13 +452,10 @@ public class FrmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese sus credenciales.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
             txtUsuario.requestFocus();
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ************************************************
-     * MÉTODOS DE FOCO PARA LOS CAMPOS USUARIO Y CLAVE.
-     *
-     * ************************************************
+     * Cambia el foco al campo de usuario cuando este gana el foco.
      */
     private void focoUsuario() {
         if (txtUsuario.getText().equals("Ingrese su correo electrónico")) {
@@ -384,8 +466,11 @@ public class FrmLogin extends javax.swing.JFrame {
             txtClave.setText("Contraseña");
             txtClave.setForeground(new Color(204, 204, 204));
         }
-    }
+    } // Cierre del método.
 
+    /**
+     * Cambia el foco al campo de clave cuando este gana el foco.
+     */
     private void focoClave() {
         if (String.valueOf(txtClave.getPassword()).equals("Contraseña")) {
             txtClave.setText("");
@@ -395,21 +480,20 @@ public class FrmLogin extends javax.swing.JFrame {
             txtUsuario.setText("Ingrese su correo electrónico");
             txtUsuario.setForeground(new Color(204, 204, 204));
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

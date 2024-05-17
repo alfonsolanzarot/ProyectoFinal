@@ -9,19 +9,26 @@ import javax.swing.JOptionPane;
 import modelo.Cliente;
 
 /**
+ * Esta clase representa un diálogo utilizado para crear nuevos clientes en el
+ * sistema. Permite a los usuarios introducir los datos del cliente y guardarlos
+ * en la base de datos. Además, ofrece una interfaz para interactuar con el
+ * controlador de clientes.
  *
  * @author Alfonso Lanzarot
  */
 public class DlgClientes extends javax.swing.JDialog {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private int xMouse, yMouse;
     private InterClientes ifCliente;
 
     /**
-     * Creates new form DlgClientes
+     * Constructor que crea un nuevo formulario DlgClientes.
      *
-     * @param parent
-     * @param modal
+     * @param parent Frame interClientes.
+     * @param modal Indica si el diálogo debe ser modal o no.
      */
     public DlgClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -29,7 +36,7 @@ public class DlgClientes extends javax.swing.JDialog {
         this.setSize(new Dimension(800, 480));
         this.setLocationRelativeTo(null);
 
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -446,11 +453,21 @@ public class DlgClientes extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Este método cierra el diálogo cuando se presiona el botón Cancelar.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    /**
+     * Este método restringe la entrada de caracteres en el campo de texto del
+     * teléfono. Solo permite números y limita la longitud del texto a 16
+     * caracteres.
+     *
+     * @param evt El evento del teclado.
+     */
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -461,7 +478,13 @@ public class DlgClientes extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
+    /**
+     * Este método restringe la entrada de caracteres en el campo de texto del
+     * móvil. Solo permite números y limita la longitud del texto a 16
+     * caracteres.
+     *
+     * @param evt El evento del teclado.
+     */
     private void txtMovilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMovilKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -472,46 +495,74 @@ public class DlgClientes extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtMovilKeyTyped
-
+    /**
+     * Acción del botón Crear que llama al método crearClientes.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         crearClientes();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
-
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_lblHeaderMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
-
+    /**
+     * Cambia el color de fondo del botón Cancelar cuando el ratón entra en él.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Cancelar cuando el ratón sale de él.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Crear cuando el ratón entra en él.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseEntered
         btnCrear.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnCrearMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Crear cuando el ratón sale de él.
+     *
+     * @param evt Evento de ratón.
+     */
     private void btnCrearMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearMouseExited
         btnCrear.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnCrearMouseExited
-
+    /**
+     * Acción del botón Crear que llama al método crearClientes pulsando la
+     * tecla Enter.
+     *
+     * @param evt Evento de teclado.
+     */
     private void btnCrearKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearKeyPressed
         crearClientes();
     }//GEN-LAST:event_btnCrearKeyPressed
@@ -596,10 +647,7 @@ public class DlgClientes extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***************************************************
-     * VALIDACIÓN DE CAMPOS VACÍOS Y CREACIÓN DE CLIENTES.
-     *
-     * ***************************************************
+     * Método que valida los campos vacíos y crea un cliente.
      */
     private void crearClientes() {
         Cliente cliente = new Cliente();
@@ -648,29 +696,10 @@ public class DlgClientes extends javax.swing.JDialog {
             }
 
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
-     */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
-
-    /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
-     *
-     * *******************************
+     * Método para limpiar los campos.
      */
     private void Limpiar() {
         txtNombre.setText("");
@@ -687,14 +716,38 @@ public class DlgClientes extends javax.swing.JDialog {
         txtNComercial.setText("");
         txtCondicionesPago.setText("");
         cbTipo.setSelectedItem("Seleccionar");
-    }
+    } // Cierre del método.
 
+    /**
+     * Método getter que devuelve el Internal Frame Clientes.
+     *
+     * @return El Internal Frame Clientes.
+     */
     public InterClientes getIfCliente() {
         return ifCliente;
     }
 
+    /**
+     * Método setter para establecer el Internal Frame Clientes.
+     *
+     * @param ifCliente El Internal Frame Clientes.
+     */
     public void setIfCliente(InterClientes ifCliente) {
         this.ifCliente = ifCliente;
     }
 
-}
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

@@ -9,20 +9,25 @@ import javax.swing.JOptionPane;
 import modelo.Proveedor;
 
 /**
+ * Clase para la edición de proveedores. Permite editar los datos de un
+ * proveedor existente. Extiende javax.swing.JDialog.
  *
  * @author Alfonso Lanzarot
  */
 public class DlgEdicionProveedor extends javax.swing.JDialog {
 
+    /**
+     * Variables de la clase.
+     */
     private int xMouse, yMouse;
     private int idProveedor;
     private InterProveedores ifProveedor;
 
     /**
-     * Creates new form DlgProveedores
+     * Constructor que inicializa un nuevo formulario DlgEdicionProveedor.
      *
-     * @param parent
-     * @param modal
+     * @param parent Frame interProveedores.
+     * @param modal Indica si la ventana es modal o no.
      */
     public DlgEdicionProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -30,7 +35,7 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
         this.setSize(new Dimension(800, 480));
         this.setLocationRelativeTo(null);
 
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -423,11 +428,20 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Método que cierra la ventana de edición de proveedores.
+     *
+     * @param evt Evento de acción del botón "Cancelar".
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+    /**
+     * Método que restringe la entrada de caracteres en el campo de teléfono a
+     * solo números y limita la longitud del campo a 16 caracteres.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -438,7 +452,12 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
+    /**
+     * Método que restringe la entrada de caracteres en el campo de teléfono
+     * móvil a solo números y limita la longitud del campo a 16 caracteres.
+     *
+     * @param evt Evento del teclado.
+     */
     private void txtMovilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMovilKeyTyped
         int key = evt.getKeyChar();
         boolean numero = key >= 32 && key <= 57;
@@ -449,33 +468,11 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtMovilKeyTyped
-
     /**
-     * *******************************************
-     * MÉTODO QUE MUESTRA LOS DATOS SELECCIONADOS.
+     * Método que actualiza los datos del proveedor.
      *
-     * *******************************************
-     * @param idProveedor
-     * @param datosFila
+     * @param evt Evento de acción del botón "Actualizar".
      */
-    public void mostrarDatos(int idProveedor, Object[] datosFila) {
-
-        txtNombre.setText((String) datosFila[0]);
-        txtNif.setText((String) datosFila[1]);
-        txtCorreo.setText((String) datosFila[2]);
-        txtDireccion.setText((String) datosFila[5]);
-        txtTelefono.setText((String) datosFila[3]);
-        txtMovil.setText((String) datosFila[4]);
-        txtPoblacion.setText((String) datosFila[6]);
-        txtCodigo.setText((String) datosFila[7]);
-        txtWeb.setText((String) datosFila[12]);
-        txtProvincia.setText((String) datosFila[8]);
-        txtPais.setText((String) datosFila[9]);
-        txtNComercial.setText((String) datosFila[10]);
-        txtCondicionesPago.setText((String) datosFila[11]);
-
-    }
-
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
         actualizarProveedor();
@@ -483,39 +480,69 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
     private void lblHeaderMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_lblHeaderMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void lblHeaderMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHeaderMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lblHeaderMouseDragged
-
+    /**
+     * Método que cambia el color de fondo del botón "Actualizar" al pasar el
+     * mouse sobre él.
+     *
+     * @param evt Evento de entrada del mouse al botón "Actualizar".
+     */
     private void btnActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseEntered
         btnActualizar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnActualizarMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Actualizar" al quitar el
+     * mouse del mismo.
+     *
+     * @param evt Evento de salida del mouse del botón "Actualizar".
+     */
     private void btnActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseExited
         btnActualizar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnActualizarMouseExited
-
+    /**
+     * Método que cambia el color de fondo del botón "Cancelar" al pasar el
+     * mouse sobre él.
+     *
+     * @param evt Evento de entrada del mouse al botón "Cancelar".
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Método que restaura el color de fondo del botón "Cancelar" al quitar el
+     * mouse del mismo.
+     *
+     * @param evt Evento de salida del mouse del botón "Cancelar".
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Método que actualiza los datos del proveedor al pulsar la tecla "Enter"
+     * sobre el botón "Actualizar".
+     *
+     * @param evt Evento de teclado al pulsar una tecla mientras el botón
+     * "Actualizar" está seleccionado.
+     */
     private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
         actualizarProveedor();
     }//GEN-LAST:event_btnActualizarKeyPressed
@@ -602,21 +629,39 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***********************************
-     * MÉTODO PARA ACTUALIZAR PROVEEDORES.
+     * Método que muestra los datos seleccionados de un proveedor en los campos
+     * de texto de la ventana de edición.
      *
-     * ***********************************
+     * @param idProveedor El ID del proveedor seleccionado en la tabla.
+     * @param datosFila Los datos del proveedor seleccionado en la tabla.
+     */
+    public void mostrarDatos(int idProveedor, Object[] datosFila) {
+        txtNombre.setText((String) datosFila[0]);
+        txtNif.setText((String) datosFila[1]);
+        txtCorreo.setText((String) datosFila[2]);
+        txtDireccion.setText((String) datosFila[5]);
+        txtTelefono.setText((String) datosFila[3]);
+        txtMovil.setText((String) datosFila[4]);
+        txtPoblacion.setText((String) datosFila[6]);
+        txtCodigo.setText((String) datosFila[7]);
+        txtWeb.setText((String) datosFila[12]);
+        txtProvincia.setText((String) datosFila[8]);
+        txtPais.setText((String) datosFila[9]);
+        txtNComercial.setText((String) datosFila[10]);
+        txtCondicionesPago.setText((String) datosFila[11]);
+    } // Cierre del método.
+
+    /**
+     * Método de validación de datos y actualización de proveedores en la base
+     * de datos.
      */
     private void actualizarProveedor() {
         if (txtNombre.getText().isEmpty() || txtNif.getText().isEmpty() || txtCondicionesPago.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, el NIF y las condiciones de pago.",
-                    "NFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         } else {
-
             Proveedor proveedor = new Proveedor();
-            Ctrl_Proveedor controlCliente = new Ctrl_Proveedor();
-
+            Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
             proveedor.setNombre(txtNombre.getText().trim());
             proveedor.setNif(txtNif.getText().trim());
             proveedor.setEmail(txtCorreo.getText().trim());
@@ -630,35 +675,16 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
             proveedor.setN_comercial(txtNComercial.getText().trim());
             proveedor.setCondiciones_pago(txtCondicionesPago.getText().trim());
             proveedor.setWebsite(txtWeb.getText().trim());
-
-            if (controlCliente.actualizar(proveedor, idProveedor)) {
-
+            if (controlProveedor.actualizar(proveedor, idProveedor)) {
                 this.ifProveedor.recargarTabla();
                 JOptionPane.showMessageDialog(null, "Datos del proveedor actualizados correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
                 this.dispose();
-
             } else {
                 JOptionPane.showMessageDialog(null, "Error al actualizar el proveedor.",
                         "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
-
         }
-    }
-
-    /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     * @param path
-     * @param width
-     * @param heigth
-     * @return 
-     */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
+    } // Cierre del método.
 
     /**
      * Método para establecer el ID del proveedor.
@@ -667,14 +693,38 @@ public class DlgEdicionProveedor extends javax.swing.JDialog {
      */
     public void setIdProveedor(int idProveedor) {
         this.idProveedor = idProveedor;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método getter que obtiene el internal frame Proveedores.
+     *
+     * @return Internal Frame Proveedores.
+     */
     public InterProveedores getIfProveedor() {
         return ifProveedor;
-    }
+    } // Cierre del método.
 
+    /**
+     * Método que establece el internal frame Proveedores.
+     *
+     * @param ifProveedor Internal Frame Proveedores.
+     */
     public void setIfProveedor(InterProveedores ifProveedor) {
         this.ifProveedor = ifProveedor;
-    }
+    } // Cierre del método.
 
-}
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param height Alto del icono.
+     * @return Devuelve el icono.
+     */
+    public Icon icono(String path, int width, int height) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

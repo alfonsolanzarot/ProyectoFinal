@@ -8,18 +8,20 @@ import java.sql.Statement;
 import modelo.ProductoProforma;
 
 /**
+ * Controlador para manejar las operaciones relacionadas con los productos de
+ * las proformas. Permite registrar y eliminar productos asociados a una
+ * proforma en la base de datos.
  *
  * @author Alfonso Lanzarot
  */
 public class Ctrl_ProductosProforma {
 
     /**
-     * ********************************
-     * MÉTODO PARA REGISTRAR PRODUCTOS.
+     * Método para registrar un nuevo producto asociado a una proforma en la
+     * base de datos.
      *
-     * ********************************
-     * @param producto
-     * @return
+     * @param producto El producto a registrar.
+     * @return true si se registra correctamente, false si falla.
      */
     public static boolean insertar(ProductoProforma producto) {
         Connection conn = null;
@@ -59,15 +61,13 @@ public class Ctrl_ProductosProforma {
             }
         }
     }
-    
+
     /**
-     * *********************************
-     * MÉTODO PARA ELIMINAR UN PRODUCTO.
+     * Método para eliminar un producto asociado a una proforma de la base de
+     * datos.
      *
-     * *********************************
-     *
-     * @param idProducto
-     * @return
+     * @param idProducto El ID del producto a eliminar.
+     * @return true si se elimina correctamente, false si falla.
      */
     public boolean eliminar(int idProducto) {
         boolean respuesta = false;

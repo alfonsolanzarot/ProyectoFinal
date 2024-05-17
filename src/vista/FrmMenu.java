@@ -16,18 +16,25 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 
 /**
+ * Esta clase sirve para gestionar todo lo que tiene que ver con el menú
+ * principal y también para gestionar los roles de usuario una vez se ha
+ * accedido al sistema.
  *
  * @author Alfonso Lanzarot
  */
 public class FrmMenu extends javax.swing.JFrame {
 
-    // VARIABLES
+    /**
+     * Variables de instancia de la clase.
+     */
     public static EscritorioPersonalizado Escritorio;
     private String nombreUsuario;
     private String apellidosUsuario;
     private int idRol;
 
-    // CONSTRUCTOR            
+    /**
+     * Constructor del Frame del menú.
+     */
     public FrmMenu() {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/img/bullet_BOMS.png")).getImage());
@@ -45,7 +52,7 @@ public class FrmMenu extends javax.swing.JFrame {
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         FrmMenu.Escritorio.setBounds(0, 0, ancho, (alto - 102));
         this.add(Escritorio);
-    }
+    } // Cierre del constructor.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -313,7 +320,12 @@ public class FrmMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Acción del submenú Clientes.
+     *
+     * @param evt Abre el JInternalFrame interClientes y establece los permisos
+     * del asistente de compras.
+     */
     private void miClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClientesActionPerformed
         Escritorio.removeAll();
         InterClientes interClientes = new InterClientes();
@@ -325,11 +337,20 @@ public class FrmMenu extends javax.swing.JFrame {
             disableButton(interClientes.getBtnEliminar());
         }
     }//GEN-LAST:event_miClientesActionPerformed
-
+    /**
+     * Acción del menú Salir.
+     *
+     * @param evt Cierra el sistema.
+     */
     private void mnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnSalirMouseClicked
         System.exit(0);
     }//GEN-LAST:event_mnSalirMouseClicked
-
+    /**
+     * Acción del submenú Proveedores.
+     *
+     * @param evt Abre el JInternalFrame interProveedores y establece los
+     * permisos del asistente de ventas.
+     */
     private void miProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProveedoresActionPerformed
         Escritorio.removeAll();
         InterProveedores interProveedores = new InterProveedores();
@@ -341,7 +362,12 @@ public class FrmMenu extends javax.swing.JFrame {
             disableButton(interProveedores.getBtnEliminar());
         }
     }//GEN-LAST:event_miProveedoresActionPerformed
-
+    /**
+     * Acción del submenú Productos/Servicios.
+     *
+     * @param evt Abre el JInternalFrame interProductos y establece los permisos
+     * del asistente de compras.
+     */
     private void miProductosServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miProductosServiciosActionPerformed
         Escritorio.removeAll();
         InterProductos interProductos = new InterProductos();
@@ -353,7 +379,12 @@ public class FrmMenu extends javax.swing.JFrame {
             disableButton(interProductos.getBtnEliminar());
         }
     }//GEN-LAST:event_miProductosServiciosActionPerformed
-
+    /**
+     * Acción del submenú Factura proforma.
+     *
+     * @param evt Abre el JInternalFrame interProformas y establece los permisos
+     * del asistente de compras.
+     */
     private void miFacturasProformaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFacturasProformaActionPerformed
         Escritorio.removeAll();
         InterProformas interProformas = new InterProformas();
@@ -365,7 +396,11 @@ public class FrmMenu extends javax.swing.JFrame {
             disableButton(interProformas.getBtnProforma());
         }
     }//GEN-LAST:event_miFacturasProformaActionPerformed
-
+    /**
+     * Acción del submenú gestión de usuarios.
+     *
+     * @param evt Abre el JInternalFrame interUsuarios.
+     */
     private void miGestionUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGestionUsuariosActionPerformed
         Escritorio.removeAll();
         InterUsuarios interUsuarios = new InterUsuarios();
@@ -434,17 +469,16 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu mnVentas;
     // End of variables declaration//GEN-END:variables
 
-    
     /**
-     * **********************************************
-     * CLASE PARA DIBUJAR IMAGEN EN EL JDesktopPane.
-     *
-     * **********************************************
+     * Clase para dibujar una imagen en el JDesktopPane.
      */
     public class EscritorioPersonalizado extends JDesktopPane {
 
         private BufferedImage img;
 
+        /**
+         * Constructor de la clase.
+         */
         public EscritorioPersonalizado() {
             try {
                 img = ImageIO.read(getClass().getResourceAsStream("/img/bullet_BOMS.png"));
@@ -454,61 +488,55 @@ public class FrmMenu extends javax.swing.JFrame {
         }
 
         /**
+         * Método que pinta la imagen en el JDesktopPane.
          *
-         * @param g
+         * @param g Objeto Graphics.
          */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(img, 800, 350, null);
-        }
+        } // Cierre del método.
 
-    }
+    } // Cierre de la clase.
 
     /**
-     * **************
-     * MÉTODO SETTER.
+     * Método setter del nombre del usuario.
      *
-     * **************
-     * @param nombreUsuario
+     * @param nombreUsuario Nombre del usuario.
      */
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
         actualizarTitulo();
 
-    }
+    } // Cierre del método.
 
     /**
-     * **************
-     * MÉTODO SETTER.
+     * Método setter de los apellidos del usuario.
      *
-     * **************
-     * @param apellidosUsuario
+     * @param apellidosUsuario Apellidos del usuario.
      */
     public void setApellidosUsuario(String apellidosUsuario) {
         this.apellidosUsuario = apellidosUsuario;
         actualizarTitulo();
 
-    }
+    } // Cierre del método.
 
     /**
-     * **************
-     * MÉTODO SETTER.
+     * Método setter del rol del usuario.
      *
-     * **************
-     * @param idRol
+     * @param idRol ID del rol del usuario.
      */
     public void setIdRol(int idRol) {
         this.idRol = idRol;
         permisosConfiguracion();
         actualizarTitulo();
-    }
+
+    } // Cierre del método.
 
     /**
-     * *****************************************************
-     * MÉTODO PARA PONER EL NOMBRE DEL USUARIO EN EL TÍTULO.
-     *
-     * *****************************************************
+     * Método para actualizar el título de la ventana con el nombre del usuario
+     * y su rol.
      */
     private void actualizarTitulo() {
         String rol = "";
@@ -528,34 +556,34 @@ public class FrmMenu extends javax.swing.JFrame {
         }
 
         this.setTitle("Back Office Management System ? BOMS ? " + nombreUsuario + " " + apellidosUsuario + " (" + rol + ")");
-    }
+    } // Cierre del método.
 
     /**
-     * *****************************************************
-     * MÉTODO PARA PERMISOS DE ACCESO AL MENÚ CONFIGURACIÓN.
-     *
-     * *****************************************************
+     * Método para configurar los permisos de acceso al menú Configuración. Solo
+     * el usuario administrador puede acceder.
      */
     private void permisosConfiguracion() {
 
-        if (idRol == 2 || idRol == 3) { // Asistente de ventas
+        if (idRol == 2 || idRol == 3) { // Asistente de ventas (2), Asistente de compras (3).
             // Restringir el acceso al menú "Configuración"
             mnConfiguracion.setEnabled(false);
         }
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * DESACTIVACIÓN DE BOTONES SIN DESHABILITARLOS.
+     * Método para desactivar los ActionListener asociados a un botón.
      *
-     * *********************************************
+     * @param button Botón al que se le desactivarán los ActionListener.
      */
     private void disableButton(JButton button) {
         for (ActionListener al : button.getActionListeners()) {
             button.removeActionListener(al); // Eliminar todos los ActionListener asociados al botón
         }
-    }
-    
+    } // Cierre del método.
+
+    /**
+     * Método para cargar la ayuda.
+     */
     private void ponLaAyuda() {
         try {
             //Carga el fichero de ayuda
@@ -569,26 +597,24 @@ public class FrmMenu extends javax.swing.JFrame {
             //Pone ayuda a item del menú al pulsarlo y a F1 en ventana reservas
             hb.enableHelpOnButton(miSistemaAyuda, "ayudaboms", helpset);
             hb.enableHelpKey(getRootPane(), "ayudaboms", helpset);
-             
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

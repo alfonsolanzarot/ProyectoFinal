@@ -5,19 +5,22 @@ import java.sql.SQLException;
 import modelo.Cliente;
 
 /**
- * 
+ * Clase que proporciona servicios relacionados con los clientes registrados en
+ * la tabla 'clientes'. Esta clase incluye métodos para asignar los datos de un
+ * cliente desde un ResultSet.
+ *
  * @author Alfonso Lanzarot
  */
 public class ServicioCliente {
-    
+
     /**
-     * ******************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN CLIENTE REGISTRADO A LA TABLA
-     * CLIENTES.
-     * ******************************************************************
-     * @param rs
-     * @return 
-     * @throws java.sql.SQLException 
+     * Método para asignar los datos de un cliente registrado a partir de un
+     * ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos del cliente.
+     * @return Cliente con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static Cliente asignarDatosCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
@@ -39,6 +42,7 @@ public class ServicioCliente {
         cliente.setTipo_precio(rs.getString(15));
 
         return cliente;
-    }
-    
-}
+    } // Cierre del método.
+
+} // Cierre de la clase.
+

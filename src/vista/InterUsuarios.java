@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -37,11 +38,17 @@ import modelo.Usuario;
 import servicios.ServicioUsuario;
 
 /**
+ * Esta clase representa un JInternalFrame para administrar usuarios.
+ * Proporciona funcionalidades para crear, editar, eliminar y mostrar
+ * información sobre los usuarios.
  *
  * @author Alfonso Lanzarot
  */
 public class InterUsuarios extends javax.swing.JInternalFrame {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private final Map<Integer, Integer> idUsuarioPorFila = new HashMap<>();
     private int idUsuario;
     List<Usuario> listaUsuarios = new ArrayList<>();
@@ -52,7 +59,12 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
-    //CONSTRUCTOR
+    /**
+     * Constructor de la clase InterUsuarios. Inicializa el JInternalFrame,
+     * configura su tamaño y título, carga y configura la tabla de usuarios, y
+     * añade un WindowListener para cargar la tabla cuando se abre el frame
+     * interno.
+     */
     public InterUsuarios() {
         initComponents();
         this.setSize(ancho, alto);
@@ -60,27 +72,28 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         CargarTablaUsuarios();
         configurarTablaUsuarios();
 
-        // Añadimos WindowListener para detectar cuándo se abre el frame interno
+        // Añadimos WindowListener para detectar cuándo se abre el frame interno.
         addInternalFrameListener(new InternalFrameAdapter() {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
-                CargarTablaUsuarios(); // Llama al método para cargar la tabla cuando se abre el frame
+                CargarTablaUsuarios(); // Llama al método para cargar la tabla cuando se abre el frame.
             }
         });
 
-    }
+    } // Cierre del constructor.
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
-     *
-     * ******************************
+     * Este método configura la tabla de usuarios, estableciendo el modelo de la
+     * tabla, personalizando el encabezado, el tamaño de las filas, el tipo de
+     * letra y tamaño del contenido de la tabla, así como el color de fondo del
+     * JScrollPane. También alinea el contenido de ciertas columnas y
+     * personaliza el renderizado del encabezado de la tabla.
      */
     private void configurarTablaUsuarios() {
-        // Crear un modelo de tabla
+        // Crear un modelo de tabla.
         DefaultTableModel model = new DefaultTableModel();
 
-        // Agregar columnas al modelo de tabla
+        // Agregar columnas al modelo de tabla.
         model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Apellidos");
@@ -89,30 +102,30 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         model.addColumn("Permisos");
         model.addColumn("Estado");
 
-        // Establecer el modelo de tabla en la tabla
+        // Establecer el modelo de tabla en la tabla.
         tblUsuarios.setModel(model);
 
-        // Personalizar el encabezado de la tabla
+        // Personalizar el encabezado de la tabla.
         JTableHeader header = tblUsuarios.getTableHeader();
         header.setDefaultRenderer(new CustomHeaderRenderer());
 
-        // Aumentar la altura del encabezado de la tabla
-        int alturaEncabezado = 42; // Puedes ajustar este valor según tus preferencias
+        // Aumentar la altura del encabezado de la tabla.
+        int alturaEncabezado = 42;
         header.setPreferredSize(new Dimension(header.getWidth(), alturaEncabezado));
 
-        // Obtener el renderizador predeterminado del encabezado
+        // Obtener el renderizador predeterminado del encabezado.
         DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tblUsuarios.getTableHeader().getDefaultRenderer();
 
-        // Establecer alineación centrada para el renderizador del encabezado
+        // Establecer alineación centrada para el renderizador del encabezado.
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        // Personalizar el tamaño de las filas
-        tblUsuarios.setRowHeight(60); // Cambiar el tamaño de las filas
+        // Personalizar el tamaño de las filas.
+        tblUsuarios.setRowHeight(60); // Cambiar el tamaño de las filas.
 
-        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
-        tblUsuarios.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
+        // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla.
+        tblUsuarios.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño.
 
-        //Cambiar el color de fondo del jScrollPane.
+        //mCambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
 
         // Renderizador para alinear al centro las celdas de las columnas de ID, nombre y apellidos, email y clave.
@@ -124,7 +137,7 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         tblUsuarios.getColumnModel().getColumn(3).setCellRenderer(centerRenderer); // Email
         tblUsuarios.getColumnModel().getColumn(4).setCellRenderer(centerRenderer); // Clave
 
-        // Personalizar el renderizado de las celdas de la columna "Permisos"
+        // Personalizar el renderizado de las celdas de la columna "Permisos".
         tblUsuarios.getColumnModel().getColumn(5).setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             public void setValue(Object value) {
@@ -156,7 +169,7 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
                     boolean estado = (boolean) value;
                     if (estado) {
                         setText("<html><b>ACTIVO</b></html>");
-                        setForeground(new Color(0,176,80));
+                        setForeground(new Color(0, 176, 80));
                     } else {
                         setText("<html><b>INACTIVO</b></html>");
                         setForeground(Color.RED);
@@ -165,50 +178,51 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
-            setOpaque(true); // Asegura que el componente es opaco
+            setOpaque(true); // Asegura que el componente es opaco.
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            // Establece el color de fondo y la fuente del encabezado de la tabla
+            // Establece el color de fondo y la fuente del encabezado de la tabla.
             component.setBackground(new Color(106, 141, 162));
             component.setFont(new Font("Roboto", Font.BOLD, 12));
             component.setForeground(Color.WHITE);
-            // Establecer bordes al componente del encabezado
-            Border border = BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE); // Borde blanco en la parte inferior y derecha
+            // Establecer bordes al componente del encabezado.
+            Border border = BorderFactory.createMatteBorder(0, 0, 1, 1, Color.WHITE); // Borde blanco en la parte inferior y derecha.
             ((JLabel) component).setBorder(border);
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase de conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -218,7 +232,7 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -398,6 +412,12 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción del botón Añadir Usuario.
+     *
+     * @param evt Evento que se produce al hacer clic en el botón Añadir
+     * Usuario.
+     */
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
         DlgUsuarios dlgUsuarios = new DlgUsuarios(f, true);
@@ -406,99 +426,120 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btnAnadirActionPerformed
-
+    /**
+     * Acción del botón Eliminar Usuario.
+     *
+     * @param evt Evento que se produce al hacer clic en el botón Eliminar
+     * Usuario.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblUsuarios.getSelectedRow();
-        if (filaSeleccionada != -1) {
-
-            idUsuario = idUsuarioPorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el usuario seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-            if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlUsuario.eliminar(idUsuario)) {
-
-                    this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el usuario.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario para eliminarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
-
+        eliminarUsuario();
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    /**
+     * Acción del botón Editar Usuario.
+     *
+     * @param evt Evento que se produce al hacer clic en el botón Editar
+     * Usuario.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Obtener la fila seleccionada.
-        int filaSeleccionada = tblUsuarios.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            // Obtener el ID del usuario de la fila seleccionada utilizando el HashMap
-            idUsuario = idUsuarioPorFila.get(filaSeleccionada);
-
-            // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
-            Object[] datosFila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < modelo.getColumnCount(); i++) {
-                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
-            }
-
-            // Pasar el ID del usuario y los datos de la fila al diálogo de edición.
-            Frame f = JOptionPane.getFrameForComponent(this);
-            DlgUsuarios dlgUsuarios = new DlgUsuarios(f, true);
-            dlgUsuarios.setIdUsuario(idUsuario);
-            dlgUsuarios.mostrarDatos(idUsuario, datosFila); // Pasa el ID del usuario y los datos de la fila al diálogo
-            dlgUsuarios.setIfUsuario(this);
-            dlgUsuarios.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario para editarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        editarUsuario();
     }//GEN-LAST:event_btnEditarActionPerformed
-
+    /**
+     * Acción del botón Buscar.
+     *
+     * @param evt Evento que se produce al hacer clic en el botón Buscar.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    /**
+     * Acción de buscar presionando Enter.
+     *
+     * @param evt Evento que se produce al presionar Enter en el campo de
+     * búsqueda.
+     */
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
-
+    /**
+     * Método para cambiar el color de fondo del botón "Editar" cuando se pasa
+     * el ratón por encima.
+     *
+     * @param evt Evento que se produce cuando el ratón entra en el área del
+     * botón "Editar".
+     */
     private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
         btnEditar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnEditarMouseEntered
-
+    /**
+     * Método para restaurar el color de fondo del botón "Editar" cuando el
+     * ratón sale del área del botón.
+     *
+     * @param evt Evento que se produce cuando el ratón sale del área del botón
+     * "Editar".
+     */
     private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
         btnEditar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnEditarMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón "Buscar" cuando se pasa
+     * el ratón por encima.
+     *
+     * @param evt Evento que se produce cuando el ratón entra en el área del
+     * botón "Buscar".
+     */
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnBuscarMouseEntered
-
+    /**
+     * Método para restaurar el color de fondo del botón "Buscar" cuando el
+     * ratón sale del área del botón.
+     *
+     * @param evt Evento que se produce cuando el ratón sale del área del botón
+     * "Buscar".
+     */
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnBuscarMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón "Añadir" cuando se pasa
+     * el ratón por encima.
+     *
+     * @param evt Evento que se produce cuando el ratón entra en el área del
+     * botón "Añadir".
+     */
     private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
         btnAnadir.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnAnadirMouseEntered
-
+    /**
+     * Método para restaurar el color de fondo del botón "Añadir" cuando el
+     * ratón sale del área del botón.
+     *
+     * @param evt Evento que se produce cuando el ratón sale del área del botón
+     * "Añadir".
+     */
     private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón "Eliminar" cuando se pasa
+     * el ratón por encima.
+     *
+     * @param evt Evento que se produce cuando el ratón entra en el área del
+     * botón "Eliminar".
+     */
     private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
         btnEliminar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnEliminarMouseEntered
-
+    /**
+     * Método para restaurar el color de fondo del botón "Eliminar" cuando el
+     * ratón sale del área del botón.
+     *
+     * @param evt Evento que se produce cuando el ratón sale del área del botón
+     * "Eliminar".
+     */
     private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
@@ -518,9 +559,7 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS USUARIOS REGISTRADOS.
-     * ***************************************************************
+     * Método para cargar la tabla con todos los usuarios registrados.
      */
     private void CargarTablaUsuarios() {
         ConexionBD conexion = new ConexionBD();
@@ -549,13 +588,13 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
                     Object[] datosFila = this.asignarDatosModelo(usuario);
                     model.addRow(datosFila);
 
-                    // Obtener el ID del usuario de la fila actual
+                    // Obtener el ID del usuario de la fila actual.
                     idUsuario = rs.getInt("idUsuario");
 
-                    // Obtener el índice de la fila recién agregada
+                    // Obtener el índice de la fila recién agregada.
                     int fila = model.getRowCount() - 1;
 
-                    // Asociar el ID del usuario con el índice de fila en el HashMap
+                    // Asociar el ID del usuario con el índice de fila en el HashMap.
                     idUsuarioPorFila.put(fila, idUsuario);
 
                 }
@@ -584,14 +623,72 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************
-     * MÉTODO PARA BUSCAR USUARIOS EN LA TABLA.
-     * ****************************************
+     * Método para eliminar usuarios.
      */
-    public void buscar() {
+    private void eliminarUsuario() {
+        Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
+        //Obtener la fila seleccionada.
+        int filaSeleccionada = tblUsuarios.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            idUsuario = idUsuarioPorFila.get(filaSeleccionada);
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el usuario seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (controlUsuario.eliminar(idUsuario)) {
+
+                    this.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el usuario.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario para eliminarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para editar usuarios.
+     */
+    private void editarUsuario() {
+        // Obtener la fila seleccionada.
+        int filaSeleccionada = tblUsuarios.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el ID del usuario de la fila seleccionada utilizando el HashMap.
+            idUsuario = idUsuarioPorFila.get(filaSeleccionada);
+
+            // Obtener los datos de la fila seleccionada.
+            DefaultTableModel modelo = (DefaultTableModel) tblUsuarios.getModel();
+            Object[] datosFila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
+            }
+
+            // Pasar el ID del usuario y los datos de la fila al diálogo de edición.
+            Frame f = JOptionPane.getFrameForComponent(this);
+            DlgUsuarios dlgUsuarios = new DlgUsuarios(f, true);
+            dlgUsuarios.setIdUsuario(idUsuario);
+            dlgUsuarios.mostrarDatos(idUsuario, datosFila); // Pasa el ID del usuario y los datos de la fila al diálogo.
+            dlgUsuarios.setIfUsuario(this);
+            dlgUsuarios.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un usuario para editarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para buscar usuarios en la tabla. Busca por nombre y por
+     * apellidos.
+     */
+    private void buscar() {
         List<Usuario> listaFiltrada = new ArrayList<>();
         for (Usuario u : this.listaUsuarios) {
             if (u.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || u.getApellidos().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
@@ -605,13 +702,11 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
             model.addRow((Object[]) arrayObjetos[i]);
         }
-    }
+    } // Cierre del método.
 
     /**
-     * **********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS USUARIOS REGISTRADOS AL MODELO DE
-     * TABLA.
-     * **********************************************************************
+     * Método para asignar los datos de los usuarios registrados al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(Usuario usuario) {
 
@@ -626,36 +721,18 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
         fila[6] = usuario.isEstado();
 
         return fila;
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS USUARIOS REGISTRADOS CUANDO
-     * SE AÑADE O SE ELIMINA UNO.
-     * ****************************************************************
+     * Método para recargar la tabla con todos los usuarios registrados cuando
+     * se añade o se elimina uno.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
+        model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos.
 
         CargarTablaUsuarios();
-    }
-
-    /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
-     *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
-     */
-    public Icon icono(String path, int width, int heigth) {
-        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
-        return img;
-    }
+    } // Cierre del método.
 
     /**
      * Método para establecer el ID del usuario.
@@ -664,6 +741,47 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
      */
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    } // Cierre del método.
+
+    /**
+     * Devuelve el botón utilizado para editar.
+     *
+     * @return El botón de editar.
+     */
+    public JButton getBtnEditar() {
+        return btnEditar;
     }
 
-}
+    /**
+     * Devuelve el botón utilizado para añadir.
+     *
+     * @return El botón de añadir.
+     */
+    public JButton getBtnAnadir() {
+        return btnAnadir;
+    }
+
+    /**
+     * Devuelve el botón utilizado para eliminar.
+     *
+     * @return El botón de eliminar.
+     */
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    /**
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
+     *
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
+
+} // Cierre de la clase.

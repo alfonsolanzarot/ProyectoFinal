@@ -38,11 +38,20 @@ import modelo.Cliente;
 import servicios.ServicioCliente;
 
 /**
+ * Esta clase proporciona funcionalidades para la creación, edición, eliminación
+ * y visualización de la información de los clientes.
+ *
+ * Permite gestionar toda la información relacionada con los clientes, como la
+ * creación, edición y eliminación de registros, así como la visualización de
+ * los datos existentes.
  *
  * @author Alfonso Lanzarot
  */
 public class InterClientes extends javax.swing.JInternalFrame {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private final Map<Integer, Integer> idClientePorFila = new HashMap<>();
     private int idCliente;
     List<Cliente> listaClientes = new ArrayList<>();
@@ -53,7 +62,12 @@ public class InterClientes extends javax.swing.JInternalFrame {
     int ancho = (int) d.getWidth();
     int alto = (int) d.getHeight();
 
-    //CONSTRUCTOR
+    /**
+     * Constructor de la clase InterClintes. Inicializa el JInternalFrame,
+     * configura su tamaño y título, carga y configura la tabla de clientes,
+     * y añade un WindowListener para cargar la tabla cuando se abre el frame
+     * interno.
+     */
     public InterClientes() {
         initComponents();
         this.setSize(ancho, alto);
@@ -69,13 +83,14 @@ public class InterClientes extends javax.swing.JInternalFrame {
             }
         });
 
-    }
+    } // Cierre del constructor.
 
     /**
-     * ******************************
-     * MÉTODO QUE CONFIGURA LA TABLA.
-     *
-     * ******************************
+     * Este método configura la tabla de clientes, estableciendo el modelo de la
+     * tabla, personalizando el encabezado, el tamaño de las filas, el tipo de
+     * letra y tamaño del contenido de la tabla, así como el color de fondo del
+     * JScrollPane. También alinea el contenido de ciertas columnas y
+     * personaliza el renderizado del encabezado de la tabla.
      */
     private void configurarTablaClientes() {
         // Crear un modelo de tabla
@@ -120,44 +135,48 @@ public class InterClientes extends javax.swing.JInternalFrame {
         // Personalizar el tipo de letra y tamaño de la letra del contenido de la tabla
         tblClientes.setFont(new Font("Roboto", Font.PLAIN, 12)); // Cambiar el tipo de letra y tamaño
 
-        //Cambiar el color de fondo del jScrollPane.
+        // Cambiar el color de fondo del jScrollPane.
         jScrollPane1.getViewport().setBackground(new Color(247, 247, 252));
-        
+
         // Renderizador para alinear al centro las celdas de las columnas de nif y código postal
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         tblClientes.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Nif
         tblClientes.getColumnModel().getColumn(7).setCellRenderer(centerRenderer); // Código postal
-                
+
         // Renderizador para alinear a la derecha las celdas de las columnas de teléfono y móvil
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
         tblClientes.getColumnModel().getColumn(3).setCellRenderer(rightRenderer); // Teléfono
         tblClientes.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Móvil
-        
-    }
+
+    } // Cierre del método.
 
     /**
-     * ****************************************************************
-     * CLASE QUE PERSONALIZA EL RENDERIZADO DEL ENCABEZADO DE LA TABLA.
-     * ****************************************************************
+     * Clase que personaliza el renderizado del encabezado de la tabla.
      */
     public class CustomHeaderRenderer extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        /**
+         * Construye un renderizador de encabezado personalizado.
+         */
         public CustomHeaderRenderer() {
             setOpaque(true); // Asegura que el componente es opaco
 
         }
 
         /**
+         * Obtiene el componente del encabezado de la tabla y aplica un estilo
+         * personalizado.
          *
-         * @param table
-         * @param value
-         * @param isSelected
-         * @param hasFocus
-         * @param row
-         * @param column
-         * @return
+         * @param table Tabla.
+         * @param value Valor en la tabla.
+         * @param isSelected Si se selecciona una fila de la tabla.
+         * @param hasFocus Foco.
+         * @param row Fila.
+         * @param column Columna.
+         * @return El componente del encabezado de la tabla con el estilo
+         * personalizado aplicado.
          */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -172,13 +191,10 @@ public class InterClientes extends javax.swing.JInternalFrame {
 
             return component;
         }
-    }
+    } // Cierre de la clase.
 
     /**
-     * ****************************
-     * CONEXIÓN A LA BASE DE DATOS.
-     *
-     * ****************************
+     * Clase de conexión a la base de datos.
      */
     public class ConexionBD {
 
@@ -188,7 +204,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
         String url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=UTC";
         String usuario = "root";
         String clave = "dugu&7Photh&";
-    }
+    } // Cierre de la clase.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -368,107 +384,128 @@ public class InterClientes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción del botón Añadir Clientes que abre el diálogo para crear un
+     * cliente nuevo.
+     *
+     * @param evt Evento que desencadena la acción de añadir un cliente.
+     */
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         Frame f = JOptionPane.getFrameForComponent(this);
         DlgClientes dlgClientes = new DlgClientes(f, true);
         dlgClientes.setIfCliente(this);
         dlgClientes.setVisible(true);
-
-
     }//GEN-LAST:event_btnAnadirActionPerformed
-
+    /**
+     * Acción del botón Eliminar cliente que elimina el cliente de la fila
+     * seleccionada en la tabla de clientes.
+     *
+     * @param evt Evento que desencadena la acción de eliminar un cliente.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
-        //Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
-        if (filaSeleccionada != -1) {
-
-            idCliente = idClientePorFila.get(filaSeleccionada);
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el cliente seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
-            if (respuesta == JOptionPane.YES_OPTION) {
-                if (controlCliente.eliminar(idCliente)) {
-
-                    this.recargarTabla();
-                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
-                } else {
-
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.",
-                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para eliminarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
-
+        eliminarCliente();
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    /**
+     * Acción del botón Editar Cliente que abre el diálogo para editar el
+     * cliente seleccionado en la tabla.
+     *
+     * @param evt Evento que desencadena la acción de editar un cliente.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // Obtener la fila seleccionada.
-        int filaSeleccionada = tblClientes.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            // Obtener el ID del cliente de la fila seleccionada utilizando el HashMap
-            idCliente = idClientePorFila.get(filaSeleccionada);
-
-            // Obtener los datos de la fila seleccionada.
-            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
-            Object[] datosFila = new Object[modelo.getColumnCount()];
-            for (int i = 0; i < modelo.getColumnCount(); i++) {
-                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
-            }
-
-            // Pasar el ID del cliente y los datos de la fila al diálogo de edición.
-            Frame f = JOptionPane.getFrameForComponent(this);
-            DlgEdicionCliente dlgEdicionCliente = new DlgEdicionCliente(f, true);
-            dlgEdicionCliente.setIdCliente(idCliente);
-            dlgEdicionCliente.mostrarDatos(idCliente, datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
-            dlgEdicionCliente.setIfCliente(this);
-            dlgEdicionCliente.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para editarlo.",
-                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
-        }
+        editarCliente();
     }//GEN-LAST:event_btnEditarActionPerformed
-
+    /**
+     * Acción del botón Buscar que busca los clientes de la tabla.
+     *
+     * @param evt Evento que desencadena la acción de buscar clientes.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+    /**
+     * Acción de buscar presionando Enter que busca los clientes de la tabla.
+     *
+     * @param evt Evento de teclado que desencadena la acción de buscar
+     * clientes.
+     */
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.buscar();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor está
+     * sobre él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha entrado en el
+     * botón.
+     */
     private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
         btnEditar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnEditarMouseEntered
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha salido del botón.
+     */
     private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
         btnEditar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnEditarMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor está
+     * sobre él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha entrado en el
+     * botón.
+     */
     private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
         btnBuscar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnBuscarMouseEntered
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha salido del botón.
+     */
     private void btnBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseExited
         btnBuscar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnBuscarMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor está
+     * sobre él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha entrado en el
+     * botón.
+     */
     private void btnAnadirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseEntered
         btnAnadir.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnAnadirMouseEntered
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha salido del botón.
+     */
     private void btnAnadirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnadirMouseExited
         btnAnadir.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnAnadirMouseExited
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor está
+     * sobre él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha entrado en el
+     * botón.
+     */
     private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
         btnEliminar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnEliminarMouseEntered
-
+    /**
+     * Método para cambiar el color de fondo del botón cuando el cursor sale de
+     * él.
+     *
+     * @param evt Evento del mouse que indica que el cursor ha salido del botón.
+     */
     private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
         btnEliminar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnEliminarMouseExited
@@ -488,9 +525,7 @@ public class InterClientes extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * ***************************************************************
-     * MÉTODO PARA CARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS.
-     * ***************************************************************
+     * Método para cargar la tabla con todos los clientes registrados.
      */
     private void CargarTablaClientes() {
         ConexionBD conexion = new ConexionBD();
@@ -554,14 +589,71 @@ public class InterClientes extends javax.swing.JInternalFrame {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************
-     * MÉTODO PARA BUSCAR CLIENTES EN LA TABLA.
-     * ****************************************
+     * Método para editar los clientes seleccionados.
      */
-    public void buscar() {
+    private void editarCliente() {
+        // Obtener la fila seleccionada.
+        int filaSeleccionada = tblClientes.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el ID del cliente de la fila seleccionada utilizando el HashMap
+            idCliente = idClientePorFila.get(filaSeleccionada);
+
+            // Obtener los datos de la fila seleccionada.
+            DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
+            Object[] datosFila = new Object[modelo.getColumnCount()];
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                datosFila[i] = modelo.getValueAt(filaSeleccionada, i);
+            }
+
+            // Pasar el ID del cliente y los datos de la fila al diálogo de edición.
+            Frame f = JOptionPane.getFrameForComponent(this);
+            DlgEdicionCliente dlgEdicionCliente = new DlgEdicionCliente(f, true);
+            dlgEdicionCliente.setIdCliente(idCliente);
+            dlgEdicionCliente.mostrarDatos(idCliente, datosFila); // Pasa el ID del cliente y los datos de la fila al diálogo
+            dlgEdicionCliente.setIfCliente(this);
+            dlgEdicionCliente.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para editarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para eliminar los clientes seleccionados.
+     */
+    private void eliminarCliente() {
+        Ctrl_Cliente controlCliente = new Ctrl_Cliente();
+        //Obtener la fila seleccionada.
+        int filaSeleccionada = tblClientes.getSelectedRow();
+        if (filaSeleccionada != -1) {
+
+            idCliente = idClientePorFila.get(filaSeleccionada);
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de querer eliminar el cliente seleccionado?", "ATENCIÓN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, icono("/img/pregunta.png", 40, 40));
+            if (respuesta == JOptionPane.YES_OPTION) {
+                if (controlCliente.eliminar(idCliente)) {
+
+                    this.recargarTabla();
+                    JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/correcto.png", 40, 40));
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Error al eliminar el cliente.",
+                            "ATENCIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/cancelar.png", 40, 40));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente para eliminarlo.",
+                    "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
+        }
+    } // Cierre del método.
+
+    /**
+     * Método para buscar usuarios en la tabla. Busca por nombre y por nif.
+     */
+    private void buscar() {
         List<Cliente> listaFiltrada = new ArrayList<>();
         for (Cliente c : this.listaClientes) {
             if (c.getNombre().toLowerCase().contains(txtBuscar.getText().toLowerCase()) || c.getNif().toLowerCase().contains(txtBuscar.getText().toLowerCase())) {
@@ -575,15 +667,11 @@ public class InterClientes extends javax.swing.JInternalFrame {
             arrayObjetos[i] = this.asignarDatosModelo(listaFiltrada.get(i));
             model.addRow((Object[]) arrayObjetos[i]);
         }
-    }
-
-    
+    } // Cierre del método.
 
     /**
-     * ***********************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE LOS CLIENTES REGISTRADOS AL MODELO DE
-     * TABLA.
-     * ***********************************************************************
+     * Método para asignar los datos de los clientes registrados al modelo de
+     * tabla.
      */
     private Object[] asignarDatosModelo(Cliente cliente) {
 
@@ -605,53 +693,58 @@ public class InterClientes extends javax.swing.JInternalFrame {
         fila[13] = cliente.getTipo_precio();
 
         return fila;
-    }
+    } // Cierre del método.
 
     /**
-     * ************************************************************************
-     * MÉTODO PARA RECARGAR LA TABLA CON TODOS LOS CLIENTES REGISTRADOS CUANDO
-     * SE AÑADE UNO NUEVO Y SE ELIMINA UN CLIENTE.
-     * ************************************************************************
+     * Método para recargar la tabla con todos los clientes registrados cuando
+     * se añade o se elimina uno.
      */
     public void recargarTabla() {
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de volver a cargar los datos
 
         CargarTablaClientes();
-    }
-    
+    } // Cierre del método.
+
     /**
-     * ***********************
-     * GETTERS DE LOS BOTONES.
-     * ***********************
-     * @return 
+     * Métodos getter de los botones.
+     *
+     * @return El botón utilizado para editar clientes.
      */
-    public JButton getBtnEditar(){
+    public JButton getBtnEditar() {
         return btnEditar;
     }
-    
-    public JButton getBtnAnadir(){
+
+    /**
+     * Métodos getter de los botones.
+     *
+     * @return El botón utilizado para añadir clientes.
+     */
+    public JButton getBtnAnadir() {
         return btnAnadir;
     }
-    
-    public JButton getBtnEliminar(){
+
+    /**
+     * Métodos getter de los botones.
+     *
+     * @return El botón utilizado para eliminar clientes.
+     */
+    public JButton getBtnEliminar() {
         return btnEliminar;
     }
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
+     * especificadas.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path La ruta del icono.
+     * @param width La anchura del icono.
+     * @param heigth La altura del icono.
+     * @return La imagen del icono.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

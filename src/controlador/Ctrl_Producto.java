@@ -1,26 +1,26 @@
 package controlador;
 
-import java.sql.Statement;
 import conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import modelo.Producto;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import modelo.Producto;
 
 /**
+ * Controlador para gestionar las operaciones relacionadas con los productos.
+ * Permite registrar, actualizar y eliminar productos en la base de datos.
  *
  * @author Alfonso Lanzarot
  */
 public class Ctrl_Producto {
 
     /**
-     * ********************************
-     * MÉTODO PARA REGISTRAR PRODUCTOS.
+     * Método para registrar un nuevo producto en la base de datos.
      *
-     * ********************************
-     * @param objeto
-     * @return
+     * @param objeto El producto a registrar.
+     * @return true si se registra correctamente, false si falla.
      */
     public boolean crear(Producto objeto) {
         boolean respuesta = false;
@@ -50,14 +50,12 @@ public class Ctrl_Producto {
     }
 
     /**
-     * *******************************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UN PRODUCTO O SERVICIO.
-     * *******************************************************
+     * Método para comprobar si existe un producto o servicio en la base de
+     * datos.
      *
-     * @param producto
-     * @param codigo_producto
-     *
-     * @return
+     * @param producto La descripción del producto o servicio.
+     * @param codigo_producto El código del producto o servicio.
+     * @return true si el producto o servicio existe, false si no.
      */
     public boolean existeProducto(String producto, String codigo_producto) {
         boolean respuesta = false;
@@ -82,13 +80,10 @@ public class Ctrl_Producto {
     }
 
     /**
-     * ***********************************
-     * MÉTODO PARA ACTUALIZAR UN PRODUCTO.
+     * Método para actualizar un producto o servicio en la base de datos.
      *
-     * ***********************************
-     *
-     * @param objeto El cliente a actualizar.
-     * @param idProducto El ID del producto que se va a actualizar.
+     * @param objeto El producto o servicio a actualizar.
+     * @param idProducto El ID del producto o servicio que se va a actualizar.
      * @return true si la actualización fue exitosa, false si falló.
      */
     public boolean actualizar(Producto objeto, int idProducto) {
@@ -138,13 +133,10 @@ public class Ctrl_Producto {
     }
 
     /**
-     * ********************************************
-     * MéTODO PARA ELIMINAR UN PRODUCTO O SERVICIO.
+     * Método para eliminar un producto o servicio de la base de datos.
      *
-     * ********************************************
-     *
-     * @param idProducto
-     * @return
+     * @param idProducto El ID del producto o servicio a eliminar.
+     * @return true si se elimina correctamente, false si falla.
      */
     public boolean eliminar(int idProducto) {
         boolean respuesta = false;

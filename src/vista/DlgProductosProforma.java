@@ -27,11 +27,17 @@ import servicios.ServicioProducto;
 import vista.DlgProformas.ServicioListener;
 
 /**
+ * Esta clase proporciona funcionalidad para insertar productos o servicios en
+ * la tabla del diálogo de proformas. También permite detectar si el checkbox de
+ * servicio está seleccionado.
  *
  * @author Alfonso Lanzarot
  */
 public final class DlgProductosProforma extends javax.swing.JDialog {
 
+    /**
+     * Variables de instancia de la clase.
+     */
     private int xMouse, yMouse;
     private String tipoPrecio;
     private int idProforma;
@@ -43,10 +49,10 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
     private boolean esServicio;
 
     /**
-     * Creates new form DlgProductosProforma
+     * Construye un nuevo diálogo DlgProductosProforma.
      *
-     * @param parent
-     * @param modal
+     * @param parent El diálogo DlgProformas.
+     * @param modal Indica si el diálogo es modal.
      */
     public DlgProductosProforma(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -66,11 +72,17 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
         this.producto = new ProductoProforma();
         listaProductosProforma = new ArrayList<>();
 
-    }
+    } // Cierre del constructor.
 
+    /**
+     * Verifica si el checkbox de servicio está seleccionado.
+     *
+     * @return true si el checkbox de servicio está seleccionado, false en caso
+     * contrario.
+     */
     public boolean isEsServicioSeleccionado() {
         return ckbxServicio.isSelected();
-    }
+    } // Cierre del método.
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -290,68 +302,118 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+     * Cambia el color de fondo del botón Insertar cuando el mouse entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnInsertarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertarMouseEntered
         btnInsertar.setBackground(new Color(81, 111, 129));
     }//GEN-LAST:event_btnInsertarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Insertar cuando el mouse sale de él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnInsertarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsertarMouseExited
         btnInsertar.setBackground(new Color(106, 141, 162));
     }//GEN-LAST:event_btnInsertarMouseExited
-
+    /**
+     * Cambia el color de fondo del botón Cancelar cuando el mouse entra en él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setBackground(new Color(255, 91, 95));
     }//GEN-LAST:event_btnCancelarMouseEntered
-
+    /**
+     * Restaura el color de fondo del botón Cancelar cuando el mouse sale de él.
+     *
+     * @param evt Evento del mouse.
+     */
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
         btnCancelar.setBackground(new Color(255, 124, 128));
     }//GEN-LAST:event_btnCancelarMouseExited
-
+    /**
+     * Cierra el diálogo actual.
+     *
+     * @param evt Evento de acción.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
     /**
-     * *****************************
-     * MÉTODO PARA MOVER LA VENTANA.
+     * Método que registra la posición del cursor del mouse en el panel de
+     * encabezado.
      *
-     * *****************************
-     * @param evt
+     * @param evt Evento del mouse.
      */
     private void pnlProductosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProductosMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_pnlProductosMousePressed
-
+    /**
+     * Método que arrastra la ventana a la nueva posición según el movimiento
+     * del mouse.
+     *
+     * @param evt Evento del mouse.
+     */
     private void pnlProductosMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlProductosMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_pnlProductosMouseDragged
-
+    /**
+     * Maneja el evento de tecla presionada en el campo de texto para los kilos.
+     * Cambia el foco al campo de selección del tipo de IVA al presionar Enter.
+     *
+     * @param evt El evento de tecla presionada.
+     */
     private void txtKilosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKilosKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cbTipoIva.requestFocus();
         }
     }//GEN-LAST:event_txtKilosKeyPressed
-
+    /**
+     * Maneja el evento de tecla presionada en el campo de texto para el precio.
+     * Cambia el foco al campo de texto para los kilos al presionar Enter.
+     *
+     * @param evt El evento de tecla presionada.
+     */
     private void txtPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtKilos.requestFocus();
         }
     }//GEN-LAST:event_txtPrecioKeyPressed
-
+    /**
+     * Maneja el evento de tecla presionada en el campo de selección del tipo de
+     * IVA. Cambia el foco al botón de insertar al presionar Enter.
+     *
+     * @param evt El evento de tecla presionada.
+     */
     private void cbTipoIvaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbTipoIvaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btnInsertar.requestFocus();
         }
     }//GEN-LAST:event_cbTipoIvaKeyPressed
-
+    /**
+     * Maneja el evento de clic en el botón de insertar. Invoca el método para
+     * insertar productos.
+     *
+     * @param evt El evento de acción del botón.
+     */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
 
         insertarProductos();
-        
-    }//GEN-LAST:event_btnInsertarActionPerformed
 
+    }//GEN-LAST:event_btnInsertarActionPerformed
+    /**
+     * Maneja el evento de clic en el checkbox de servicio. Actualiza el estado
+     * del servicio en el producto actual y notifica a través del
+     * servicioListener.
+     *
+     * @param evt El evento de acción del checkbox.
+     */
     private void ckbxServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbxServicioActionPerformed
         // Actualiza el estado del servicio en el producto actual
         producto.setEsServicio(ckbxServicio.isSelected());
@@ -361,20 +423,25 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
             dlgProformas.estadoServicioActualizado(ckbxServicio.isSelected());
         }
     }//GEN-LAST:event_ckbxServicioActionPerformed
-
+    /**
+     * Maneja el evento de tecla presionada en el botón de insertar. Invoca el
+     * método para insertar productos.
+     *
+     * @param evt El evento de tecla presionada.
+     */
     private void btnInsertarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInsertarKeyPressed
         insertarProductos();
     }//GEN-LAST:event_btnInsertarKeyPressed
 
+    /**
+     * Método que refresca la tabla de productos de la proforma una vez
+     * insertado un nuevo producto o servicio.
+     */
     public void refrescarTablaProductosProforma() {
         this.dlgProformas.setListaProductosProforma(listaProductosProforma);
         this.dlgProformas.onListaProductosActualizada();
 
-    }
-
-    public void setServicioListener(ServicioListener listener) {
-        this.servicioListener = listener;
-    }
+    } // Cierre del método.
 
     /**
      * @param args the command line arguments
@@ -440,9 +507,17 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
     private javax.swing.JTextField txtSubtotal;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    private void insertarProductos(){
+    /**
+     * Este método inserta un producto en la tabla del diálogo de proformas.
+     * Recoge los datos del producto ingresados por el usuario en los campos
+     * correspondientes del diálogo, los procesa y los guarda en un nuevo objeto
+     * ProductoProforma. Luego, intenta insertar el producto en la base de datos
+     * a través del controlador Ctrl_ProductosProforma. Si la inserción es
+     * exitosa, añade el producto a la lista de productos de la proforma y
+     * actualiza la tabla de productos y los totales. Si falta algún dato
+     * requerido, muestra un mensaje de advertencia.
+     */
+    private void insertarProductos() {
         try {
             producto = new ProductoProforma();
 
@@ -471,25 +546,24 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
         }
         limpiarCampos();
         txtKilos.requestFocus();
-    }
-    
+
+    } // Cierre del método.
+
     /**
-     * **********************************
-     * LISTENER DE LA LISTA DE PRODUCTOS.
-     *
-     * **********************************
+     * Interfaz que define el método para notificar cuando la lista de productos
+     * ha sido actualizada.
      */
     public interface ListaProductosListener {
 
         void onListaProductosActualizada();
-    }
+    } // Cierre del método.
 
     /**
-     * *****************************************************************************
-     * MÉTODO PARA CARGAR LOS PRODUCTOS EN EL COMBO BOX DE PRODUCTOS DE LA
-     * PROFORMA.
-     *
-     * *****************************************************************************
+     * Este método carga los productos desde la base de datos y los añade al
+     * combo box de productos en la proforma. Se conecta a la base de datos,
+     * ejecuta una consulta SQL para obtener los productos disponibles, los
+     * procesa y los añade al combo box. Si ocurre algún error durante el
+     * proceso, muestra un mensaje en la consola.
      */
     private void CargarComboProductos() {
         this.listaProductos = new ArrayList<>();
@@ -540,13 +614,17 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 }
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ***********************************************************************
-     * MÉTODO PARA CARGAR LOS DATOS DEL PRODUCTO SELECCIONADO EN EL COMBO BOX.
-     *
-     * ***********************************************************************
+     * Este método carga los datos del producto seleccionado en el combo box.
+     * Cuando se selecciona un producto en el JComboBox, este método recoge el
+     * nombre del producto y realiza una consulta a la base de datos para
+     * obtener su información detallada. Luego, actualiza los campos de texto en
+     * el diálogo con los datos del producto seleccionado, incluyendo el código
+     * del producto, el precio según el tipo de cliente (alto, bajo o servicio),
+     * y establece el foco en el campo de kilos para que el usuario pueda
+     * ingresar la cantidad deseada.
      */
     private void datosProductoCombo() {
         // Agrega un ActionListener al JComboBox cbCliente
@@ -618,55 +696,17 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 }
             }
         });
-    }
+    } // Cierre del método.
 
     /**
-     * *************************************
-     * MÉTODO SETTER PARA EL TIPO DE PRECIO.
-     *
-     * *************************************
-     * @param tipoPrecio
-     */
-    public void setTipoPrecio(String tipoPrecio) {
-
-        this.tipoPrecio = tipoPrecio;
-    }
-
-    public void setIdProforma(int idProforma) {
-        this.idProforma = idProforma;
-    }
-
-    /**
-     * **************************************************************************
-     * MÉTODO LISTENER PARA ACTUALIZAR EL SUBTOTAL Y EL IVA AL CAMBIAR LOS
-     * KILOS.
-     *
-     * **************************************************************************
-     */
-    public void kilosListener() {
-        txtKilos.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarSubtotalYIva();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarSubtotalYIva();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarSubtotalYIva();
-            }
-        });
-    }
-
-    /**
-     * ********************************************
-     * MÉTODO PARA ACTUALIZAR EL SUBTOTAL Y EL IVA.
-     *
-     * ********************************************
+     * Este método actualiza el subtotal y el IVA basado en el precio y la
+     * cantidad de kilos ingresados. Primero, extrae el precio del producto del
+     * campo de texto txtPrecio y la cantidad de kilos del campo txtKilos.
+     * Luego, calcula el subtotal multiplicando el precio por los kilos e
+     * actualiza el campo txtSubtotal con el valor calculado. Después, llama al
+     * método calcularImporteIVA() para calcular el importe del IVA basado en el
+     * subtotal. Si se produce algún error al convertir los valores a números,
+     * muestra un mensaje de error al usuario.
      */
     private void actualizarSubtotalYIva() {
         String precioStr = txtPrecio.getText().trim(); // Eliminar espacios en blanco al inicio y al final
@@ -705,30 +745,59 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 // Si se produce un error al convertir los valores a números, mostrar un mensaje de error
                 JOptionPane.showMessageDialog(null, "Error al calcular el subtotal: por favor introduzca un valor numérico válido en el campo kilos",
                         "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
-                        txtKilos.setText("");
+                txtKilos.setText("");
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * **********************************************
-     * MÉTODO LISTENER PARA CALCULAR EL TOTAL DE IVA.
-     *
-     * **********************************************
+     * Este método establece un listener para actualizar el subtotal y el IVA
+     * cuando cambian los kilos ingresados. Se agrega un DocumentListener al
+     * campo de texto txtKilos para detectar los cambios en su contenido. Cuando
+     * se producen cambios (ya sea insertando, eliminando o modificando el
+     * texto), se llama al método actualizarSubtotalYIva() para recalcular el
+     * subtotal y el IVA en función de la nueva cantidad de kilos.
+     */
+    public void kilosListener() {
+        txtKilos.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                actualizarSubtotalYIva();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                actualizarSubtotalYIva();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                actualizarSubtotalYIva();
+            }
+        });
+    } // Cierre del método.
+
+    /**
+     * Este método establece un listener para calcular el importe del IVA cuando
+     * se selecciona un tipo de IVA. Se agrega un ActionListener al JComboBox
+     * cbTipoIva para detectar cuando se selecciona un nuevo tipo de IVA. Cuando
+     * se produce un cambio en la selección, se llama al método
+     * calcularImporteIVA() para recalcular el importe del IVA.
      */
     public void ivaListener() {
         cbTipoIva.addActionListener((ActionEvent e) -> {
             calcularImporteIVA();
         });
 
-    }
+    } // Cierre del método.
 
     /**
-     * **************************************************************************
-     * MÉTODO LISTENER PARA ACTUALIZAR EL SUBTOTAL Y EL IVA AL CAMBIAR EL
-     * PRECIO.
-     *
-     * **************************************************************************
+     * Este método establece un listener para actualizar el subtotal y el IVA al
+     * cambiar el precio manualmente. Se agrega un DocumentListener al campo de
+     * texto txtPrecio para detectar los cambios en su contenido. Cuando se
+     * producen cambios (ya sea insertando, eliminando o modificando el texto),
+     * se llama al método actualizarSubtotalYIva() para recalcular el subtotal y
+     * el IVA en función del nuevo precio ingresado.
      */
     public void precioListener() {
         txtPrecio.getDocument().addDocumentListener(new DocumentListener() {
@@ -747,13 +816,15 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 actualizarSubtotalYIva();
             }
         });
-    }
+    } // Cierre del método.
 
     /**
-     * ****************************************
-     * MÉTODO PARA CALCULAR EL IMPORTE DEL IVA.
-     *
-     * ****************************************
+     * Este método calcula el importe del IVA basado en el tipo de IVA
+     * seleccionado y el subtotal. Primero, extrae el tipo de IVA seleccionado
+     * del JComboBox cbTipoIva y el subtotal del campo de texto txtSubtotal.
+     * Luego, calcula el importe del IVA multiplicando el subtotal por el
+     * porcentaje del tipo de IVA. Finalmente, actualiza el campo de texto
+     * txtImporteIva con el importe del IVA calculado y formateado.
      */
     private void calcularImporteIVA() {
         String tipoIvaStr = (String) cbTipoIva.getSelectedItem();
@@ -786,16 +857,24 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 System.out.println("Error al obtener el importe de IVA: " + ex);
             }
         }
-    }
+    } // Cierre del método.
 
     /**
-     * ******************************************************************
-     * MÉTODO PARA OBTENER EL ID DEL PRODUCTO A PARTIR DE SU DESCRIPCIÓN.
-     *
-     * ******************************************************************
+     * Método para obtener el ID del producto a partir de su descripción.
      */
     public class ControlProducto {
 
+        /**
+         * Este método estático dentro de la clase ControlProducto permite
+         * obtener el ID de un producto a partir de su descripción. Realiza una
+         * consulta a la base de datos para buscar el producto con la
+         * descripción especificada. Si se encuentra el producto, devuelve su
+         * ID; de lo contrario, devuelve -1.
+         *
+         * @param descripcion La descripción del producto del cual se desea
+         * obtener el ID.
+         * @return El ID del producto si se encuentra; de lo contrario, -1.
+         */
         public static int obtenerIdProducto(String descripcion) {
             int idProducto = -1; // Valor por defecto si no se encuentra el producto
             Connection cn = Conexion.conectar(); // Obtener conexión a la base de datos
@@ -849,21 +928,63 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
             return idProducto;
         }
-    }
-
-    public DlgProformas getDlgProformas() {
-        return dlgProformas;
-    }
-
-    public void setDlgProformas(DlgProformas dlgProformas) {
-        this.dlgProformas = dlgProformas;
-    }
+    } // Cierre del método.
 
     /**
-     * *******************************
-     * MÉTODO PARA LIMPIAR LOS CAMPOS.
+     * Este método establece un escuchador para el check box del servicio.
+     * Permite establecer un ServicioListener para escuchar los cambios en el
+     * estado del servicio.
      *
-     * *******************************
+     * @param listener El ServicioListener que se desea establecer.
+     */
+    public void setServicioListener(ServicioListener listener) {
+        this.servicioListener = listener;
+    } // Cierre del método.
+
+    /**
+     * Este método establece el tipo de precio que se utilizará para calcular el
+     * costo de los productos.
+     *
+     * @param tipoPrecio El tipo de precio: "Alto", "Bajo".
+     */
+    public void setTipoPrecio(String tipoPrecio) {
+
+        this.tipoPrecio = tipoPrecio;
+    } // Cierre del método.
+
+    /**
+     * Este método establece el ID de la proforma asociada a este diálogo.
+     *
+     * @param idProforma El ID de la proforma.
+     */
+    public void setIdProforma(int idProforma) {
+        this.idProforma = idProforma;
+    } // Cierre del método.
+
+    /**
+     * Este método devuelve el diálogo Proformas asociado a este diálogo de
+     * productos.
+     *
+     * @return El diálogo Proformas asociado.
+     */
+    public DlgProformas getDlgProformas() {
+        return dlgProformas;
+    } // Cierre del método.
+
+    /**
+     * Este método establece el diálogo Proformas asociado a este diálogo de
+     * productos.
+     *
+     * @param dlgProformas El diálogo Proformas asociado.
+     */
+    public void setDlgProformas(DlgProformas dlgProformas) {
+        this.dlgProformas = dlgProformas;
+    } // Cierre del método.
+
+    /**
+     * Este método limpia todos los campos del diálogo de productos. Restablece
+     * los campos de texto y los valores de los componentes a su estado inicial
+     * o vacío.
      */
     private void limpiarCampos() {
         txtCodigo.setText("");
@@ -874,22 +995,21 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
         cbTipoIva.setSelectedIndex(0);
         txtImporteIva.setText("");
         ckbxServicio.setSelected(false);
-    }
+    } // Cierre del método.
 
     /**
-     * *********************************************
-     * MÉTODO DE ICONOS DE ATENCIÓN Y/O ADVERTENCIA.
+     * Este método proporciona una imagen escalada con las dimensiones
+     * especificadas. Lee una imagen desde la ruta especificada y la escala
+     * según el ancho y alto dados.
      *
-     * *********************************************
-     *
-     * @param path
-     * @param width
-     * @param heigth
-     * @return
+     * @param path Ruta del icono.
+     * @param width Anchura del icono.
+     * @param heigth Altura del icono.
+     * @return Una instancia de Icon que representa la imagen escalada.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
         return img;
-    }
+    } // Cierre del método.
 
-}
+} // Cierre de la clase.

@@ -1,4 +1,3 @@
-
 package servicios;
 
 import java.sql.ResultSet;
@@ -6,19 +5,23 @@ import java.sql.SQLException;
 import modelo.ProductoProforma;
 
 /**
- * 
+ * Clase que proporciona servicios relacionados con los productos que se
+ * integran en la tabla de la factura proforma. Esta clase incluye un método
+ * para asignar los datos de un producto registrado en la factura proforma desde
+ * un ResultSet.
+ *
  * @author Alfonso Lanzarot
  */
 public class ServicioProductoProforma {
 
     /**
-     * ******************************************************************
-     * MÉTODO PARA ASIGNAR LOS DATOS DE UN PRODUCTO REGISTRADO A LA TABLA
-     * PRODUCTOS.
-     * ******************************************************************
-     * @param rs
-     * @return 
-     * @throws java.sql.SQLException 
+     * Método para asignar los datos de un producto registrado en la factura
+     * proforma desde un ResultSet.
+     *
+     * @param rs ResultSet que contiene los datos del producto.
+     * @return ProductoProforma con los datos asignados.
+     * @throws SQLException si hay un error al acceder a los datos del
+     * ResultSet.
      */
     public static ProductoProforma asignarDatosProducto(ResultSet rs) throws SQLException {
         ProductoProforma productoProforma = new ProductoProforma();
@@ -34,7 +37,7 @@ public class ServicioProductoProforma {
         productoProforma.setSubtotal(rs.getDouble(9));
 
         return productoProforma;
-    }
-    
-   
-}
+    } // Cierre del método.
+
+} // Cierre de la clase.
+

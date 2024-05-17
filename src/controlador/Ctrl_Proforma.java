@@ -9,18 +9,19 @@ import java.sql.Statement;
 import modelo.Proforma;
 
 /**
+ * Controlador para manejar las operaciones relacionadas con las proformas.
+ * Permite registrar, verificar la existencia, obtener el próximo ID disponible
+ * y actualizar proformas en la base de datos.
  *
  * @author Alfonso Lanzarot
  */
 public class Ctrl_Proforma {
 
     /**
-     * ********************************
-     * MÉTODO PARA REGISTRAR PROFORMAS.
+     * Método para registrar una nueva proforma en la base de datos.
      *
-     * ********************************
-     * @param objeto
-     * @return
+     * @param objeto La proforma a registrar.
+     * @return true si se registra correctamente, false si falla.
      */
     public boolean crear(Proforma objeto) {
         boolean respuesta = false;
@@ -65,13 +66,11 @@ public class Ctrl_Proforma {
     }
 
     /**
-     * *********************************************
-     * MÉTODO PARA COMPROBAR SI EXISTE UNA PROFORMA.
-     * *********************************************
+     * Método para verificar si una proforma con el número dado ya existe en la
+     * base de datos.
      *
-     * @param numero
-     *
-     * @return
+     * @param numero El número de proforma a verificar.
+     * @return true si la proforma ya existe, false si no.
      */
     public boolean existeProforma(String numero) {
         boolean existe = false;
@@ -86,13 +85,11 @@ public class Ctrl_Proforma {
             rs = st.executeQuery(sql);
 
             if (rs.next()) {
-                // Si hay al menos un resultado, significa que el número de proforma ya existe en la base de datos
                 existe = true;
             }
         } catch (SQLException e) {
             System.out.println("Error al consultar la base de datos: " + e);
         } finally {
-            // Cerrar conexiones y recursos
             try {
                 if (rs != null) {
                     rs.close();
@@ -110,8 +107,11 @@ public class Ctrl_Proforma {
         return existe;
     }
 
-    
-    // Método para obtener el próximo ID disponible para una factura proforma
+    /**
+     * Método para obtener el próximo ID disponible para una factura proforma.
+     *
+     * @return El próximo ID disponible.
+     */
     public int obtenerProximoIdProforma() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -120,30 +120,19 @@ public class Ctrl_Proforma {
 
         try {
             conn = Conexion.conectar();
-
-            // Consulta SQL para obtener el próximo ID disponible
             String sql = "SELECT MAX(idProforma) + 1 AS proximoId FROM tb_proformas";
-
-            // Preparar la declaración SQL
             stmt = conn.prepareStatement(sql);
-
-            // Ejecutar la consulta
             rs = stmt.executeQuery();
 
-            // Verificar si se encontraron resultados
             if (rs.next()) {
-                // Obtener el próximo ID disponible
                 proximoId = rs.getInt("proximoId");
                 if (rs.wasNull()) {
-                    proximoId = 1; // Establecer el valor predeterminado si el resultado es NULL
+                    proximoId = 1;
                 }
-
             }
         } catch (SQLException e) {
-            // Manejar cualquier error de SQL
             e.printStackTrace();
         } finally {
-            // Cerrar la conexión, el statement y el resultSet
             try {
                 if (rs != null) {
                     rs.close();
@@ -161,27 +150,21 @@ public class Ctrl_Proforma {
 
         return proximoId;
     }
-    
+
     /**
-     * ******************************************
-     * MÉTODO PARA CREAR/ACTUALIZAR UNA PROFORMA.
+     * Método para crear/actualizar una proforma en la base de datos.
      *
-     * ******************************************
-     *
-     * @param proforma
+     * @param proforma La proforma a actualizar.
      * @return true si la actualización fue exitosa, false si falló.
      */
-
     public boolean actualizarProforma(Proforma proforma) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
 
         try {
-            // Preparar la consulta SQL para actualizar la proforma
             String query = "UPDATE tb_proformas SET transporte=?, seguro=?, descuento=?, incoterm=?, observaciones=?, kilos=?, suma_subtotal=?, suma_iva=?, total=?, estado=? WHERE idProforma=?";
             PreparedStatement consulta = cn.prepareStatement(query);
 
-            // Establecer los valores en la consulta SQL
             consulta.setDouble(1, proforma.getTransporte());
             consulta.setDouble(2, proforma.getSeguro());
             consulta.setDouble(3, proforma.getDescuento());
@@ -193,14 +176,12 @@ public class Ctrl_Proforma {
             consulta.setDouble(9, proforma.getTotal());
             consulta.setString(10, proforma.getEstado());
             consulta.setInt(11, proforma.getIdProforma());
-            
 
-            // Ejecutar la consulta y comprobar si se actualizó correctamente
             if (consulta.executeUpdate() > 0) {
                 respuesta = true;
             }
 
-            cn.close(); // Cerrar la conexión después de realizar la consulta
+            cn.close();
 
         } catch (SQLException e) {
             System.out.println("Error al actualizar la proforma: " + e);
@@ -209,5 +190,4 @@ public class Ctrl_Proforma {
         return respuesta;
     }
 
-    
 }
