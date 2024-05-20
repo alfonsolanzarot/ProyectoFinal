@@ -204,6 +204,11 @@ public class FrmMenu extends javax.swing.JFrame {
         miFacturasRecibidas.setText("Facturas recibidas");
         miFacturasRecibidas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         miFacturasRecibidas.setPreferredSize(new java.awt.Dimension(200, 33));
+        miFacturasRecibidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miFacturasRecibidasActionPerformed(evt);
+            }
+        });
         mnGastos.add(miFacturasRecibidas);
 
         menuGeneral.add(mnGastos);
@@ -407,6 +412,23 @@ public class FrmMenu extends javax.swing.JFrame {
         Escritorio.add(interUsuarios);
         interUsuarios.setVisible(true);
     }//GEN-LAST:event_miGestionUsuariosActionPerformed
+    /**
+     * Acción del submenú Facturas Recibidas.
+     *
+     * @param evt Abre el JInternalFrame interFacturasCompra y establece los permisos
+     * del asistente de ventas.
+     */
+    private void miFacturasRecibidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miFacturasRecibidasActionPerformed
+        Escritorio.removeAll();
+        InterFacturasCompra interFacturasCompra = new InterFacturasCompra();
+        Escritorio.add(interFacturasCompra);
+        interFacturasCompra.setVisible(true);
+        if (idRol == 2) { // Asistente de ventas
+            disableButton(interFacturasCompra.getBtnAnadir());
+            disableButton(interFacturasCompra.getBtnEditar());
+            disableButton(interFacturasCompra.getBtnEliminar());
+        }
+    }//GEN-LAST:event_miFacturasRecibidasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar menuGeneral;

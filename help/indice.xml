@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <index version="1.0">
 	<indexitem text="Sistema de ayuda" target="ayudaboms">
 		<indexitem text="Ventana de acceso" target="acceso"/>
@@ -7,6 +6,7 @@
 		<indexitem text="Ventana de proveedores" target="proveedores"/>
 		<indexitem text="Ventana de productos" target="productos"/>
 		<indexitem text="Ventana de facturas proforma" target="proformas"/>
+		<indexitem text="Ventana de facturas recibidas" target="recibidas"/>
 		<indexitem text="Ventana de usuarios" target="usuarios"/>
 	</indexitem>
 </index>

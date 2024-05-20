@@ -17,7 +17,7 @@ public class ServicioProductoProforma {
     /**
      * Constructor por defecto de la clase ServicioProductoProforma.
      *
-     * Este constructor crea una instancia del ServicioCliente.
+     * Este constructor crea una instancia del ServicioProductoProforma.
      */
     public ServicioProductoProforma() {
         // Constructor por defecto

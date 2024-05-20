@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <toc version="1.0">
-	<tocitem text="Sistema de ayuda" target="ayudaboms">
+	<tocitem text="Sistema de ayuda" target="boms">
 		<tocitem text="Ventana de acceso" target="acceso"/>
 		<tocitem text="Ventana principal" target="principal"/>
 		<tocitem text="Ventana de clientes" target="clientes"/>
 		<tocitem text="Ventana de proveedores" target="proveedores"/>
 		<tocitem text="Ventana de productos" target="productos"/>
 		<tocitem text="Ventana de facturas proforma" target="proformas"/>
+		<tocitem text="Ventana de facturas recibidas" target="recibidas"/>
 		<tocitem text="Ventana de usuarios" target="usuarios"/>
 	</tocitem>
 </toc>

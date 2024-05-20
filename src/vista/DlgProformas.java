@@ -959,7 +959,7 @@ public final class DlgProformas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-/**
+    /**
      * Método que cambia el color de fondo del botón "Crear" cuando el cursor
      * entra en él.
      *
@@ -1622,7 +1622,7 @@ public final class DlgProformas extends javax.swing.JDialog {
     } // Cierre del método.
 
     /**
-     * Método para cargar los datos del cliente seleccioando en el combo box.
+     * Método para cargar los datos del cliente seleccionado en el combo box.
      */
     private void datosClienteCombo() {
         // Agrega un ActionListener al JComboBox cbCliente
@@ -1894,7 +1894,7 @@ public final class DlgProformas extends javax.swing.JDialog {
     } // Cierre del método.
 
     /**
-     * Listeners para deterctar cambios en transporte, seguro y descuento.
+     * Listeners para detectar cambios en transporte, seguro y descuento.
      */
     private void listenersCalculos() {
         // Listener para txtTransporte para detectar cambios en el texto

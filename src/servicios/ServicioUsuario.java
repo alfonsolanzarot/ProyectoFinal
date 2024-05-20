@@ -16,7 +16,7 @@ public class ServicioUsuario {
     /**
      * Constructor por defecto de la clase ServicioUsuario.
      *
-     * Este constructor crea una instancia del ServicioCliente.
+     * Este constructor crea una instancia del ServicioUsuario.
      */
     public ServicioUsuario() {
         // Constructor por defecto

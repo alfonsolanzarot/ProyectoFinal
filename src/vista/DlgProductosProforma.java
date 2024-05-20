@@ -115,12 +115,11 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1120, 270));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlProductos.setBackground(new java.awt.Color(247, 247, 252));
         pnlProductos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 98, 139), 1, true));
-        pnlProductos.setPreferredSize(new java.awt.Dimension(1130, 300));
+        pnlProductos.setPreferredSize(new java.awt.Dimension(1130, 270));
         pnlProductos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 pnlProductosMouseDragged(evt);
@@ -845,7 +844,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
             // Eliminar el símbolo de porcentaje si está presente
             tipoIvaStr = tipoIvaStr.replace("%", "");
 
-            // Convertir a n�mero
+            // Convertir a número
             double tipoIva = Double.parseDouble(tipoIvaStr.replace(",", ".")) / 100.0;
 
             // Analizar el subtotal

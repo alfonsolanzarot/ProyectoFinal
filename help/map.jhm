@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0">
 	<mapID target="ayudaboms" url="html/ayudaboms.html" />
 	<mapID target="acceso" url="html/acceso.html" />
@@ -7,5 +6,6 @@
 	<mapID target="proveedores" url="html/proveedores.html" />
 	<mapID target="productos" url="html/productos.html" />
 	<mapID target="proformas" url="html/proformas.html" />
+	<mapID target="recibidas" url="html/recibidas.html" />
 	<mapID target="usuarios" url="html/usuarios.html" />	
 </map>
