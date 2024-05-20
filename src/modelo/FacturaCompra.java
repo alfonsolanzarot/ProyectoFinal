@@ -4,7 +4,7 @@ package modelo;
  * Representa una factura de compra en el sistema. Contiene información sobre la
  * factura, el proveedor, y otros detalles relevantes.
  *
- * @autor Alfonso Lanzarot
+ * @author Alfonso Lanzarot
  */
 public class FacturaCompra {
 

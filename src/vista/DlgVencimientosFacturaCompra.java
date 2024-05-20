@@ -354,6 +354,8 @@ public class DlgVencimientosFacturaCompra extends javax.swing.JDialog {
     } // Cierre del método.
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

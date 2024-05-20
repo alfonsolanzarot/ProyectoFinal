@@ -12,8 +12,17 @@ import java.sql.SQLException;
 public class Conexion {
 
     /**
+     * Constructor por defecto de la clase Conexion. Este constructor no realiza
+     * ninguna acción específica.
+     */
+    public Conexion() {
+        // Constructor por defecto
+    }
+
+    /**
      * Constructor por defecto para la clase Conexion.
-     * @return 
+     *
+     * @return La conexión
      */
     public static Connection conectar() {
         try {

@@ -1050,6 +1050,8 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
     }//GEN-LAST:event_txtRetencionFocusLost
 
     /**
+     * El método principal que se ejecuta al iniciar la aplicación.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
