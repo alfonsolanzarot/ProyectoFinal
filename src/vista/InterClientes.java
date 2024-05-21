@@ -1,5 +1,6 @@
 package vista;
 
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import controlador.Ctrl_Cliente;
 import java.awt.Color;
 import java.awt.Component;
@@ -212,7 +213,25 @@ public class InterClientes extends javax.swing.JInternalFrame {
          * valores predeterminados.
          */
         public ConexionBD() {
-            // Inicialización de la conexión a la base de datos
+            try {
+                // Cargar el controlador JDBC
+                Class.forName(driver);
+                // Establecer la conexión
+                con = DriverManager.getConnection(url, usuario, clave);
+                System.out.println("Conexión exitosa a la base de datos " + dbName);
+            } catch (CommunicationsException e) {
+                System.out.println("Error de comunicación con la base de datos: " + e.toString());
+                JOptionPane.showMessageDialog(null, "No se puede conectar a la base de datos. Verifique su conexión a internet y el estado del servidor.",
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            } catch (SQLException e) {
+                System.out.println("Error al iniciar sesión: " + e.toString());
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            } catch (ClassNotFoundException e) {
+                System.out.println("Error al cargar el controlador JDBC: " + e.toString());
+                JOptionPane.showMessageDialog(null, "Error al cargar el controlador JDBC: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
+            }
         }
     } // Cierre de la clase.
 

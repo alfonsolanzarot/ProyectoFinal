@@ -869,7 +869,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                 txtImporteIva.setText(importeIvaFormatted);
             } catch (ParseException ex) {
                 // Manejar la excepción si ocurre un error al analizar el subtotal
-                System.out.println("Error al obtener el importe de IVA: " + ex);
+                JOptionPane.showMessageDialog(null, "Error al obtener el importe de IVA: " + ex,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
     } // Cierre del método.

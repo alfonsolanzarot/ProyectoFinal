@@ -430,26 +430,27 @@ public class FrmLogin extends javax.swing.JFrame {
             usuario.setEmail(txtUsuario.getText().trim());
             usuario.setClave(txtClave.getText().trim());
 
-            if (controlUsuario.loginUser(usuario)) {
-                String nombre = usuario.getNombre();
-                String apellidos = usuario.getApellidos();
-                int idRol = usuario.getIdRoles();
+            try {
+                if (controlUsuario.loginUser(usuario)) {
+                    String nombre = usuario.getNombre();
+                    String apellidos = usuario.getApellidos();
+                    int idRol = usuario.getIdRoles();
 
-                FrmMenu menu = new FrmMenu();
-                menu.setNombreUsuario(nombre);
-                menu.setApellidosUsuario(apellidos);
-                menu.setIdRol(idRol);
-                menu.setVisible(true);
-                this.dispose();
-
-            } else {
-
-                txtUsuario.setText("");
-                txtClave.setText("");
-                txtUsuario.requestFocus();
-
+                    FrmMenu menu = new FrmMenu();
+                    menu.setNombreUsuario(nombre);
+                    menu.setApellidosUsuario(apellidos);
+                    menu.setIdRol(idRol);
+                    menu.setVisible(true);
+                    this.dispose();
+                } else {
+                    txtUsuario.setText("");
+                    txtClave.setText("");
+                    txtUsuario.requestFocus();
+                }
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(this, "Error al conectar a la base de datos: " + e.getMessage(),
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese sus credenciales.", "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
             txtUsuario.requestFocus();

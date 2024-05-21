@@ -168,23 +168,19 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
-    /**
-     * Método para autenticar a un usuario en el sistema.
-     *
-     * @param objeto El objeto Usuario que contiene los datos de inicio de
-     * sesión.
-     * @return true si el inicio de sesión fue exitoso, false en caso contrario.
-     */
     public boolean loginUser(Usuario objeto) {
         boolean respuesta = false;
-        Connection cn = Conexion.conectar();
-        String sql = "SELECT email, clave, idRoles, nombre, apellidos, estado FROM tb_usuarios WHERE email = ? AND clave = ?";
-        PreparedStatement consulta;
+        Connection cn = null;
+        PreparedStatement consulta = null;
+        ResultSet rs = null;
+
         try {
+            cn = Conexion.conectar();
+            String sql = "SELECT email, clave, idRoles, nombre, apellidos, estado FROM tb_usuarios WHERE email = ? AND clave = ?";
             consulta = cn.prepareStatement(sql);
             consulta.setString(1, objeto.getEmail());
             consulta.setString(2, objeto.getClave());
-            ResultSet rs = consulta.executeQuery();
+            rs = consulta.executeQuery();
 
             if (rs.next()) {
                 int estadoUsuario = rs.getInt("estado");
@@ -206,7 +202,15 @@ public class Ctrl_Usuario {
                     "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
-                cn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (consulta != null) {
+                    consulta.close();
+                }
+                if (cn != null) {
+                    cn.close();
+                }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
                         "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
@@ -214,6 +218,7 @@ public class Ctrl_Usuario {
         }
         return respuesta;
     }
+
 
     /**
      * Método para obtener un icono redimensionado de atención o advertencia.
