@@ -1228,7 +1228,8 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Error al cargar los proveedores." + ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar los proveedores: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
 
             if (cn != null) {
@@ -1239,7 +1240,8 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }
@@ -1272,14 +1274,16 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
                 return -1;
             }
         } catch (SQLException ex) {
-            System.out.println("Error al obtener el ID del proveedor." + ex);
+            JOptionPane.showMessageDialog(null, "Error al obtener el ID del proveedor: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             return -1;
         } finally {
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException ex) {
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
@@ -1369,13 +1373,15 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los datos de la factura de compra: " + e);
+            JOptionPane.showMessageDialog(null, "Error al obtener los datos de la factura de compra: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (conexion.con != null) {
                 try {
                     conexion.con.close();
                 } catch (SQLException ex) {
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
@@ -1690,12 +1696,14 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla de vencimientos: " + e);
+                JOptionPane.showMessageDialog(null, "Error al llenar la tabla de vencimientos: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } catch (SQLException e) {
 
-            System.out.println("Error al conectar con la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
         } finally {
 
@@ -1707,7 +1715,8 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }

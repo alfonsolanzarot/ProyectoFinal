@@ -1603,7 +1603,8 @@ public final class DlgProformas extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Error al cargar los clientes." + ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar los clientes: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
 
             if (cn != null) {
@@ -1614,7 +1615,8 @@ public final class DlgProformas extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }
@@ -1659,7 +1661,8 @@ public final class DlgProformas extends javax.swing.JDialog {
 
                     }
                 } catch (SQLException ex) {
-                    System.out.println("Error al obtener la información del cliente: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al obtener la información del cliente: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 } finally {
                     try {
                         if (rs != null) {
@@ -1672,7 +1675,8 @@ public final class DlgProformas extends javax.swing.JDialog {
                             cn.close();
                         }
                     } catch (SQLException ex) {
-                        System.out.println("Error al cerrar la conexión: " + ex);
+                        JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                                "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                     }
                 }
             }
@@ -2218,12 +2222,14 @@ public final class DlgProformas extends javax.swing.JDialog {
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla productos: " + e);
+                JOptionPane.showMessageDialog(null, "Error al llenar la tabla de productos: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } catch (SQLException e) {
 
-            System.out.println("Error al conectar con la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
         } finally {
 
@@ -2235,7 +2241,8 @@ public final class DlgProformas extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }
@@ -2277,13 +2284,15 @@ public final class DlgProformas extends javax.swing.JDialog {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los datos de la proforma: " + e);
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la proforma: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (conexion.con != null) {
                 try {
                     conexion.con.close();
                 } catch (SQLException ex) {
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }

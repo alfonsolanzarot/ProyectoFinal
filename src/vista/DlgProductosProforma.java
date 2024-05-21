@@ -609,7 +609,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
             }
 
         } catch (SQLException ex) {
-            System.out.println("Error al cargar los productos." + ex);
+            JOptionPane.showMessageDialog(null, "Error al cargar los productos: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
 
             if (cn != null) {
@@ -620,7 +621,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexi�n: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }
@@ -689,7 +691,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
                     }
                 } catch (SQLException ex) {
-                    System.out.println("Error al obtener la información del producto: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al obtener la información del producto: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 } finally {
                     try {
                         if (rs != null) {
@@ -702,7 +705,8 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
                             cn.close();
                         }
                     } catch (SQLException ex) {
-                        System.out.println("Error al cerrar la conexión: " + ex);
+                        JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                                "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                     }
                 }
             }
@@ -918,6 +922,7 @@ public final class DlgProductosProforma extends javax.swing.JDialog {
 
                 } catch (SQLException e) {
                     e.printStackTrace();
+
                 } finally {
                     // Cerrar ResultSet, Statement y conexi�n
                     if (rs != null) {

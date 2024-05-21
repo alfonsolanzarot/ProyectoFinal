@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import modelo.Proforma;
 
 /**
@@ -67,7 +70,8 @@ public class Ctrl_Proforma {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear la proforma: " + e);
+            JOptionPane.showMessageDialog(null, "Error al crear la proforma: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -95,7 +99,8 @@ public class Ctrl_Proforma {
                 existe = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al consultar la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al consultar la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
                 if (rs != null) {
@@ -108,7 +113,8 @@ public class Ctrl_Proforma {
                     cn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("Error al cerrar conexiones: " + e);
+                JOptionPane.showMessageDialog(null, "Error al cerrar las conexiones: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
         return existe;
@@ -139,6 +145,8 @@ public class Ctrl_Proforma {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener el próximo ID de la proforma: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
                 if (rs != null) {
@@ -152,6 +160,8 @@ public class Ctrl_Proforma {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al cerrar las conexiones: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
 
@@ -191,10 +201,23 @@ public class Ctrl_Proforma {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar la proforma: " + e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar la proforma: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
 
         return respuesta;
     }
 
+    /**
+     * Método para obtener un icono redimensionado de atención o advertencia.
+     *
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    }
 }

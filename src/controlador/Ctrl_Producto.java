@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import modelo.Producto;
 
 /**
@@ -51,7 +54,8 @@ public class Ctrl_Producto {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear el producto: " + e);
+            JOptionPane.showMessageDialog(null, "Error al crear el producto: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -81,7 +85,8 @@ public class Ctrl_Producto {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al consultar el producto: " + e);
+            JOptionPane.showMessageDialog(null, "Error al consultar el producto: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -117,21 +122,24 @@ public class Ctrl_Producto {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar el producto: " + e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar el producto: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
@@ -159,25 +167,41 @@ public class Ctrl_Producto {
                 respuesta = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el producto: " + e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el producto: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             // Cerramos los recursos en un bloque finally para asegurarnos de que se cierren correctamente, independientemente de si hay una excepción o no.
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
         return respuesta;
     }
+
+    /**
+     * Método para obtener un icono redimensionado de atención o advertencia.
+     *
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
 
 }

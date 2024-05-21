@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import modelo.FacturaCompra;
 
 /**
- * Controlador para manejar las operaciones relacionadas con las fcturas de compra.
- * Permite registrar, verificar la existencia, obtener el próximo ID disponible
- * y actualizar facturas de compra en la base de datos.
+ * Controlador para manejar las operaciones relacionadas con las fcturas de
+ * compra. Permite registrar, verificar la existencia, obtener el próximo ID
+ * disponible y actualizar facturas de compra en la base de datos.
  *
  * @author Alfonso Lanzarot
  */
@@ -60,7 +63,8 @@ public class Ctrl_FacturaCompra {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear la factura de compra: " + e);
+            JOptionPane.showMessageDialog(null, "Error al crear la factura de compra: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -88,7 +92,8 @@ public class Ctrl_FacturaCompra {
                 existe = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al consultar la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al consultar la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
                 if (rs != null) {
@@ -101,7 +106,8 @@ public class Ctrl_FacturaCompra {
                     cn.close();
                 }
             } catch (SQLException e) {
-                System.out.println("Error al cerrar conexiones: " + e);
+                JOptionPane.showMessageDialog(null, "Error al cerrar las conexiones: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
         return existe;
@@ -132,6 +138,8 @@ public class Ctrl_FacturaCompra {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener el próximo ID de la factura de compra: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
                 if (rs != null) {
@@ -145,6 +153,8 @@ public class Ctrl_FacturaCompra {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al cerrar las conexiones: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
 
@@ -190,7 +200,8 @@ public class Ctrl_FacturaCompra {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar la factura de compra: " + e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar la factura de compra: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
 
         return respuesta;
@@ -200,8 +211,8 @@ public class Ctrl_FacturaCompra {
      * Método para eliminar una factura de compra de la base de datos.
      *
      * @param idFacturaCompra El ID de la factura de compra a eliminar.
-     * @return true si la factura de compra fue eliminada exitosamente, false en caso
-     * contrario.
+     * @return true si la factura de compra fue eliminada exitosamente, false en
+     * caso contrario.
      */
     public boolean eliminar(int idFacturaCompra) {
         boolean respuesta = false;
@@ -217,24 +228,40 @@ public class Ctrl_FacturaCompra {
                 respuesta = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar la factura de compra: " + e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar la factura de compra: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
         return respuesta;
     }
+
+    /**
+     * Método para obtener un icono redimensionado de atención o advertencia.
+     *
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
+    } // Cierre del método.
 
 }

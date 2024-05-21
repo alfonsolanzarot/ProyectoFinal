@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import modelo.Proveedor;
 import java.sql.ResultSet;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * Controlador para gestionar las operaciones relacionadas con los proveedores
@@ -59,7 +62,8 @@ public class Ctrl_Proveedor {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear el proveedor: " + e);
+            JOptionPane.showMessageDialog(null, "Error al crear el proveedor: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -88,7 +92,8 @@ public class Ctrl_Proveedor {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al consultar el proveedor: " + e);
+            JOptionPane.showMessageDialog(null, "Error al consultar el proveedor: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -126,24 +131,28 @@ public class Ctrl_Proveedor {
             if (filasActualizadas > 0) {
                 respuesta = true;
             } else {
-                System.out.println("No se actualizó ninguna fila.");
+                JOptionPane.showMessageDialog(null, "No se actualizó ninguna fila",
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar el proveedor: " + e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar el proveedor: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
@@ -172,24 +181,40 @@ public class Ctrl_Proveedor {
                 respuesta = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el proveedor: " + e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
         return respuesta;
+    }
+
+    /**
+     * Método para obtener un icono redimensionado de atención o advertencia.
+     *
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
+     */
+    public Icon icono(String path, int width, int heigth) {
+        Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
+        return img;
     }
 
 }

@@ -675,12 +675,14 @@ public class InterFacturasCompra extends javax.swing.JInternalFrame {
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla de facturas de compra: " + e);
+                JOptionPane.showMessageDialog(null, "Error al llenar la tabla facturas de compra: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } catch (SQLException e) {
 
-            System.out.println("Error al conectar con la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
         } finally {
 
@@ -692,7 +694,8 @@ public class InterFacturasCompra extends javax.swing.JInternalFrame {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }

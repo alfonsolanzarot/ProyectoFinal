@@ -53,7 +53,8 @@ public class Ctrl_Usuario {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al crear el usuario: " + e);
+            JOptionPane.showMessageDialog(null, "Error al crear el usuario: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -81,7 +82,8 @@ public class Ctrl_Usuario {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al consultar el usuario: " + e);
+            JOptionPane.showMessageDialog(null, "Error al consultar el usuarios: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
         return respuesta;
     }
@@ -115,7 +117,8 @@ public class Ctrl_Usuario {
             cn.close();
 
         } catch (SQLException e) {
-            System.out.println("Error al actualizar el usuario: " + e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar el usuarios: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         }
 
         return respuesta;
@@ -142,20 +145,23 @@ public class Ctrl_Usuario {
                 respuesta = true;
             }
         } catch (SQLException e) {
-            System.out.println("Error al eliminar el usuario: " + e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar el usuario: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             if (consulta != null) {
                 try {
                     consulta.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la consulta: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la consulta: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
             if (cn != null) {
                 try {
                     cn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error al cerrar la conexión: " + e);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
                 }
             }
         }
@@ -196,12 +202,14 @@ public class Ctrl_Usuario {
             }
         } catch (SQLException e) {
             System.out.println("Error al iniciar sesión: " + e.toString());
-            JOptionPane.showMessageDialog(null, "Error al iniciar sesión");
+            JOptionPane.showMessageDialog(null, "Error al iniciar sesión: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
         } finally {
             try {
                 cn.close();
             } catch (SQLException ex) {
-                System.out.println("Error al cerrar la conexión: " + ex.toString());
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
         }
         return respuesta;

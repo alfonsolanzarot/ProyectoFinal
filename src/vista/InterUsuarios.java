@@ -614,12 +614,14 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
 
             } catch (SQLException e) {
 
-                System.out.println("Error al llenar la tabla usuarios: " + e);
+                JOptionPane.showMessageDialog(null, "Error al llenar la tabla usuarios: " + e,
+                        "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
             }
 
         } catch (SQLException e) {
 
-            System.out.println("Error al conectar con la base de datos: " + e);
+            JOptionPane.showMessageDialog(null, "Error al conectar con la base de datos: " + e,
+                    "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
         } finally {
 
@@ -631,7 +633,8 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
 
                 } catch (SQLException ex) {
 
-                    System.out.println("Error al cerrar la conexión: " + ex);
+                    JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex,
+                            "ERROR", JOptionPane.ERROR_MESSAGE, icono("/img/cancelar.png", 40, 40));
 
                 }
             }
@@ -784,13 +787,12 @@ public class InterUsuarios extends javax.swing.JInternalFrame {
     }
 
     /**
-     * Retorna un icono escalado de acuerdo a la ruta y las dimensiones
-     * especificadas.
+     * Método para obtener un icono redimensionado de atención o advertencia.
      *
-     * @param path La ruta del icono.
-     * @param width La anchura del icono.
-     * @param heigth La altura del icono.
-     * @return La imagen del icono.
+     * @param path Ruta del icono.
+     * @param width Ancho del icono.
+     * @param heigth Altura del icono.
+     * @return El icono redimensionado.
      */
     public Icon icono(String path, int width, int heigth) {
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(path)).getImage().getScaledInstance(width, heigth, java.awt.Image.SCALE_SMOOTH));
