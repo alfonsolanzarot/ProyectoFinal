@@ -477,7 +477,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
         Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
 
         if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtEmail.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, los apellidos y el correo.",
+            JOptionPane.showMessageDialog(null, "Debe completar todos los datos del usuario incluyendo los permisos y el estado.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
         } else {
@@ -557,7 +557,7 @@ public class DlgUsuarios extends javax.swing.JDialog {
         Ctrl_Usuario controlUsuario = new Ctrl_Usuario();
 
         if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() || txtEmail.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos el nombre, los apellidos y el correo.",
+            JOptionPane.showMessageDialog(null, "Debe completar todos los datos del usuario incluyendo los permisos y el estado.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
         } else {
