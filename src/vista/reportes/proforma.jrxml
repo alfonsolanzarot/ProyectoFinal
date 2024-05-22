@@ -192,8 +192,8 @@ ORDER BY
 	<title>
 		<band height="110">
 			<image>
-				<reportElement x="0" y="0" width="555" height="110" uuid="71014d01-4bfe-438c-a4f6-bd23c231f501"/>
-				<imageExpression><![CDATA[".\\Fondo facturas1.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="110" uuid="d4a167dc-140c-418a-9912-5e7b3d123d9e"/>
+				<imageExpression><![CDATA["vista/reportes/Fondo facturas1.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -723,10 +723,6 @@ ORDER BY
 				</textElement>
 				<text><![CDATA[BIC: BSABESBB]]></text>
 			</staticText>
-			<image>
-				<reportElement x="380" y="123" width="160" height="141" uuid="b1455999-62d8-45a8-ac8a-49a8af9ff383"/>
-				<imageExpression><![CDATA[".\\Firma facturas.png"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="0" y="38" width="195" height="50" uuid="fd3e3903-cbf1-4762-b0f1-f3b4eb36a496"/>
 				<textElement>
@@ -745,10 +741,14 @@ ORDER BY
 				</textElement>
 				<text><![CDATA[Observaciones/Remarks:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="370" y="120" width="150" height="140" uuid="5d94fd18-263d-4a9c-8da6-7dac63c27190"/>
+				<imageExpression><![CDATA["vista/reportes/Firma facturas.png"]]></imageExpression>
+			</image>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="82" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
 				<reportElement x="420" y="13" width="135" height="16" uuid="717b2754-da58-4cb3-9a4e-e417202699b3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -801,12 +801,12 @@ www.terracottem.com]]></text>
 ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="60" y="25" width="70" height="34" uuid="7327e763-fe7e-4145-9aa8-dce95a7e52f0"/>
-				<imageExpression><![CDATA[".\\watermark.png"]]></imageExpression>
+				<reportElement x="72" y="27" width="70" height="30" uuid="5ca98849-421a-459f-ad18-79c1d73efce3"/>
+				<imageExpression><![CDATA["vista/reportes/watermark.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="5" y="15" width="45" height="44" uuid="0abe9873-24d5-40d6-86b2-bb601beb32f2"/>
-				<imageExpression><![CDATA[".\\WWA.png"]]></imageExpression>
+				<reportElement x="10" y="13" width="50" height="50" uuid="91f52da5-53d5-4f2e-af74-8c7ba1b36a5c"/>
+				<imageExpression><![CDATA["vista/reportes/WWA.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>

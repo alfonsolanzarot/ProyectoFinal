@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -37,6 +38,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import modelo.Proforma;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -768,23 +770,22 @@ public class InterProformas extends javax.swing.JInternalFrame {
         idProforma = idProformaPorFila.get(filaSeleccionada);
 
         try {
-            // Establecer la conexión con la base de datos
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_boms", "root", "dugu&7Photh&");
-
-            // Crear un mapa de parámetros para pasar al informe
-            Map<String, Object> parametros = new HashMap<>();
-            parametros.put("idProforma", idProforma);
-
-            // Generar el informe con los parámetros y la conexión a la base de datos
-            JasperPrint jasperPrint = JasperFillManager.fillReport("informes/proforma.jasper", parametros, conn);
-
-            // Mostrar el informe en una ventana
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setVisible(true);
-
-            // Cerrar la conexión
-            conn.close();
-        } catch (Exception e) {
+            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_boms", "root", "dugu&7Photh&")) {
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("idProforma", idProforma);
+                
+                // Cargar el archivo Jasper desde el JAR
+                InputStream reportStream = getClass().getResourceAsStream("/vista/reportes/proforma.jasper");
+                if (reportStream == null) {
+                    throw new RuntimeException("No se pudo encontrar el archivo de informe proforma.jasper");
+                }
+                
+                JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, parametros, conn);
+                
+                JasperViewer viewer = new JasperViewer(jasperPrint, false);
+                viewer.setVisible(true);
+            }
+        } catch (SQLException | JRException e) {
             JOptionPane.showMessageDialog(this, "Error al imprimir la proforma: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     } // Cierre del método.
