@@ -1143,7 +1143,7 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
      */
     private void insertarVencimientos() {
         if (txtFecha.getText().isEmpty() || cbProveedor.getSelectedItem().equals("Seleccionar Proveedor:") || cbEstado.getSelectedItem().equals("Seleccionar estado:")) {
-            JOptionPane.showMessageDialog(null, "Antes de insertar valores debe completar la fecha, el nombre \ndel proveedor y el estado de la factura de compra.",
+            JOptionPane.showMessageDialog(null, "Antes de insertar valores debe completar todos los campos.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
         } else {
 
