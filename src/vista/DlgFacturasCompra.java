@@ -798,7 +798,7 @@ public class DlgFacturasCompra extends javax.swing.JDialog {
         Ctrl_FacturaCompra controlFacturaCompra = new Ctrl_FacturaCompra();
 
         if (txtFecha.getText().isEmpty() || cbProveedor.getSelectedItem().equals("Seleccionar proveedor:") || cbEstado.getSelectedItem().equals("Seleccionar estado:")) {
-            JOptionPane.showMessageDialog(null, "Debe completar la fecha, el nombre del proveedor y el estado de la factura de compra.",
+            JOptionPane.showMessageDialog(null, "Debe completar todos los campos.",
                     "INFORMACIÓN", JOptionPane.PLAIN_MESSAGE, icono("/img/informacion.png", 40, 40));
 
         } else {
